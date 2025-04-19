@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>静時ねこちゃん</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Yuji+Syuku&family=Hachi+Maru+Pop&family=Kosugi+Maru&family=M+PLUS+Rounded+1c:wght@500&family=Comic+Neue&display=swap">
+    <style>
+        :root {
+            --primary-pink: #FF69B4;
+            --secondary-pink: #FFB6C1;
+            --text-dark: #2c2c2c;
+            --container-bg: #FFF0F5;
+            --animation-duration: 0.4s;
+            --easing: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --surface-dark: #3a3a3a;
+        }
+
+        /* 基础动画 */
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes gentleFloat {
+            0%, 100% { transform: translateY(0) rotate(-1deg); }
+            50% { transform: translateY(-8px) rotate(1deg); }
+        }
+
+        /* 新增：初始向上浮动动画 */
+        @keyframes floatInUp {
+            0% { transform: translateY(20px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        /* 时间翻转动画 */
+        .time-flip {
+            display: flex;
+            gap: 8px;
+            height: 50px;
+            perspective: 500px;
+            justify-content: center;
+        }
+
+        .flip-card {
+            position: relative;
+            width: 36px;
+            height: 50px;
+            margin: 0 1px;
+            transform-style: preserve-3d;
+            overflow: hidden;
+        }
+
+        .flip-card span {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Hachi Maru Pop', cursive;
+            font-size: 2.4rem;
+            border-radius: 6px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            background: rgba(255,255,255,0.9);
+            color: #FF69B4;
+        }
+
+        @keyframes flipUp {
+            0% { transform: rotateX(0deg); }
+            100% { transform: rotateX(-180deg); }
+        }
+
+        @keyframes flipDown {
+            0% { transform: rotateX(180deg); }
+            100% { transform: rotateX(0deg); }
+        }
+
+        /* 新增动画 */
+        @keyframes slideOutRight {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+
+        /* 输入框动画样式 */
+        .diary-input-box textarea {
+            transition: 
+                transform 0.3s var(--easing),
+                height 0.4s var(--easing);
+            transform-origin: top center;
+        }
+
+        .diary-input-box textarea:focus {
+            animation: inputClick 0.4s var(--easing) forwards;
+            height: 110px !important; /* 保持高度扩展 */
+        }
+
+        @keyframes inputClick {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* 修改3：容器动画 */
+        .diary-container {
+            transition: transform 0.3s var(--easing);
+        }
+
+        .diary-container.expanded {
+            transform: translateY(15px); /* 容器下移15px */
+        }
+
+        .diary-entry {
+            transition: all 0.4s var(--easing);
+            overflow: hidden; /* 新增 */
+        }
+
+        /* 删除按钮样式 */
+        .delete-btn {
+            background: none;
+            border: none;
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .diary-entry:hover .delete-btn {
+            opacity: 1;
+        }
+
+        /* 全局样式 */
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 20px 0;
+            font-family: 'M PLUS Rounded 1c', -apple-system;
+            line-height: 1.7;
+            opacity: 0;
+            animation: fadeIn 1.2s var(--easing) forwards;
+            will-change: opacity, transform;
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
+        }
+
+        .flip-card {
+            will-change: transform;
+            backface-visibility: hidden;
+            transform-style: preserve-3d;
+        }
+
+        .time-flip {
+            will-change: contents;
+            contain: strict;
+        }
+
+        /* 时间表示 */
+        .time-container {
+            text-align: center;
+            padding: 15px;
+            margin: 0 auto 20px;
+            animation: gentleFloat 5s ease-in-out infinite;
+        }
+
+        #current-date {
+            font-family: 'Hachi Maru Pop', cursive;
+            font-size: 1.4rem;
+            color: #000;
+            letter-spacing: 0.1em;
+            margin-bottom: 8px;
+        }
+
+        /* 猫のコンテナ */
+        .cat-container {
+            background: var(--container-bg);
+            padding: 25px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            margin: 20px auto;
+            text-align: center;
+            animation: 
+                scaleEntrance 0.8s var(--easing),
+                gentleFloat 6s ease-in-out infinite;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+        }
+
+        @keyframes scaleEntrance {
+            0% { transform: scale(0.96) rotate(-2deg); opacity: 0; }
+            100% { transform: scale(1) rotate(0); opacity: 1; }
+        }
+
+        .cat-text {
+            font-family: 'Comic Neue', cursive;
+            font-size: 1.5rem !important;
+            line-height: 1.8 !important;
+            display: block !important;
+            margin: 15px auto !important;
+            white-space: pre-line;
+            word-break: break-word;
+            text-shadow: 
+                1px 1px 0px rgba(255,182,193,0.3),
+                2px 2px 4px rgba(255,105,180,0.15);
+            opacity: 0;
+            animation: 
+                floatInUp 1s var(--easing) forwards,
+                gentleFloat 4s ease-in-out infinite;
+        }
+
+        @keyframes textReveal {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 猫のテキストカラー */
+        .cat-text-1 { color: #FF6EC7 !important; }
+        .cat-text-2 {
+            background: linear-gradient(45deg, #FF69B4, #FFB6C1) !important;
+            -webkit-background-clip: text !important;
+            background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            color: transparent !important;
+        }
+        .cat-text-3 { color: #FFD700 !important; }
+        .cat-text-4 { color: #70DB93 !important; }
+        .cat-text-5 { 
+            color: #FF4500 !important;
+            text-shadow: 1px 1px 2px pink !important;
+        }
+        .cat-text-6 { color: #9370DB !important; }
+
+        /* 日記機能 */
+        .diary-container {
+            background: linear-gradient(135deg, var(--container-bg) 0%, #FFE4E1 100%);
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(255,105,180,0.15);
+            width: 90%;
+            max-width: 600px;
+            margin: 30px auto;
+            padding: 25px;
+        }
+
+        .diary-input-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .diary-input-box textarea {
+            width: 93%;
+            height: 100px;
+            padding: 15px;
+            border: 2px solid #FFB6C1;
+            border-radius: 12px;
+            resize: none;
+            font-family: 'Hachi Maru Pop', cursive;
+            font-size: 1.1rem;
+            background: rgba(255,255,255,0.9);
+            transition: all 0.3s ease;
+        }
+
+        .neko-button {
+            background: linear-gradient(45deg, var(--primary-pink), var(--secondary-pink));
+            color: white !important;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-family: 'Pacifico', cursive;
+            font-size: 1.1rem;
+            margin-top: 15px;
+            transition: transform 0.2s var(--easing);
+        }
+
+        .diary-history {
+            margin-top: 30px;
+            background: rgba(255,255,255,0.9);
+            border-radius: 15px;
+            padding: 20px;
+        }
+
+        .diary-entry {
+            position: relative;
+            background: #FFF;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 4px solid #FFB6C1;
+            transition: all 0.4s var(--easing);
+            font-family: 'Hachi Maru Pop', cursive;
+        }
+
+        .history-title {
+            font-family: 'Yuji Syuku', serif !important;
+            font-size: 1.8rem !important;
+            color: #FF69B4;
+            text-align: center;
+            margin: 0 0 20px 0;
+            position: relative;
+        }
+
+        .history-title::before,
+        .history-title::after {
+            content: '🌸';
+            position: absolute;
+            font-size: 1.2rem;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .history-title::before { left: -35px; }
+        .history-title::after { right: -35px; }
+
+        /* 深色モード */
+        @media (prefers-color-scheme: dark) {
+            body { background: var(--text-dark); }
+            #current-date, .counter-box { color: #D1D5DB !important; }
+            .cat-container { background: var(--surface-dark); }
+            .diary-container { 
+                background: linear-gradient(135deg, #4a4a4a 0%, var(--surface-dark) 100%);
+            }
+            .diary-input-box textarea { 
+                background: #333;
+                color: #E5E7EB;
+                border-color: #666;
+            }
+            .diary-history { background: #333; }
+            .diary-entry { 
+                background: #444;
+                border-left-color: #666;
+            }
+            .diary-content { color: #E5E7EB !important; }
+            .diary-date { color: #9CA3AF !important; }
+            #current-time { color: #FBCFE8 !important; }
+            .history-title { 
+                color: #FBCFE8 !important;
+                text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            }
+            .history-title::before,
+            .history-title::after { color: #F9A8D4; }
+            .flip-card span {
+                background: linear-gradient(145deg, #5A2E38 0%, #7A4A54 100%);
+                box-shadow: 0 4px 12px rgba(30, 10, 15, 0.7);
+            }
+            .diary-input-box textarea:focus {
+                background: #2B1A1F;
+                border-color: #9E5A6B;
+            }
+        }
+
+        /* 移動端最適化 */
+        @media (max-width: 480px) {
+            body {
+                padding: 10px 0;
+            }
+
+            #current-date {
+                font-size: 1.2rem;
+            }
+
+            #current-time {
+                font-size: 1.8rem;
+            }
+
+            .cat-text {
+                font-size: 1.2rem !important;
+            }
+
+            .diary-input-box textarea {
+                font-size: 1rem;
+                height: 100px;
+                padding: 10px;
+            }
+
+            .neko-button {
+                font-size: 1rem;
+                padding: 10px 20px;
+            }
+
+            .history-title {
+                font-size: 1.5rem !important;
+            }
+
+            .history-title::before,
+            .history-title::after {
+                font-size: 1rem;
+                left: -25px;
+                right: -25px;
+            }
+
+            .cat-container {
+                padding: 20px;
+            }
+
+            .diary-container {
+                padding: 20px;
+            }
+
+            .diary-entry {
+                padding: 10px;
+            }
+
+            .delete-btn {
+                right: 5px;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="time-container">
+        <div id="current-date"></div>
+        <div id="current-time"></div>
+    </div>
+
+    <section class="cat-container">
+        <span class="cat-text cat-text-1">はじめましてにゃん♡</span>
+        <span class="cat-text cat-text-2">静時ねこちゃんだにゃ！</span>
+        <span class="cat-text cat-text-3">これからも一緒に遊ぼうね～</span>
+        <span class="cat-text cat-text-4">ฅ^•ﻌ•^ฅ♡</span>
+        <span class="cat-text cat-text-5">よろしくにゃんっ</span>
+        <span class="cat-text cat-text-6">☆彡</span>
+    </section>
+
+    <article class="diary-container">
+        <div class="diary-input-box">
+            <textarea id="diary-content" 
+                      placeholder="今日の出来事を教えてにゃん♪ (最大1000文字)"
+                      maxlength="1000"></textarea>
+            <div class="counter-box">
+                <span id="char-count">0</span>/1000
+            </div>
+            <button id="save-diary" class="neko-button">
+                <span class="button-icon">📝</span>
+                保存するにゃ！
+            </button>
+        </div>
+        
+        <div class="diary-history">
+            <h3 class="history-title">🐾 過去のにっき 🐾</h3>
+            <ul id="diary-list"></ul>
+        </div>
+    </article>
+
+    <script>
+        let diaryManager;
+
+        class TimeUpdater {
+            constructor() {
+                this.lastTime = '00:00:00'; // 初期値設定
+                this.rafId = null;
+                this.weekdays = ["日", "月", "火", "水", "木", "金", "土"];
+            }
+
+            init() {
+                this.update();
+            }
+
+            update() {
+                const now = new Date();
+                this.updateDate(now);
+                this.updateTime(now);
+                this.rafId = requestAnimationFrame(() => this.update());
+            }
+
+            updateDate(date) {
+                const year = date.getFullYear();
+                const month = (date.getMonth() + 1).toString().padStart(2, '0');
+                const day = date.getDate().toString().padStart(2, '0');
+                const weekday = this.weekdays[date.getDay()];
+                document.getElementById('current-date').textContent = 
+                    `${year}年${month}月${day}日\u00A0\u00A0${weekday}曜日`;
+            }
+
+            updateTime(date) {
+                const timeStr = [
+                    date.getHours().toString().padStart(2, '0'),
+                    date.getMinutes().toString().padStart(2, '0'),
+                    date.getSeconds().toString().padStart(2, '0')
+                ].join(':');
+
+                if (timeStr !== this.lastTime) {
+                    this.animateDigits(timeStr);
+                    this.lastTime = timeStr;
+                }
+            }
+
+            animateDigits(newTime) {
+                const timeElement = document.getElementById('current-time');
+                const chars = newTime.split('');
+                let html = '';
+                
+                // 旧アニメーション削除
+                timeElement.innerHTML = '';
+                
+                chars.forEach((char, index) => {
+                    const prevChar = this.lastTime[index] || '';
+                    const isChanging = prevChar !== char;
+                    html += `
+                        <div class="flip-card${isChanging ? ' flipping' : ''}">
+                            <span class="front">${isChanging ? prevChar : char}</span>
+                            <span class="back">${char}</span>
+                        </div>
+                    `;
+                });
+
+                const wrapper = document.createElement('div');
+                wrapper.className = 'time-flip';
+                wrapper.innerHTML = html;
+                timeElement.appendChild(wrapper);
+
+                // 自動でアニメーションクラスを削除
+                setTimeout(() => {
+                    wrapper.querySelectorAll('.flip-card').forEach(card => {
+                        card.classList.remove('flipping');
+                    });
+                }, 600);
+            }
+        }
+
+        class DiaryManager {
+            constructor() {
+                this.diaries = [];
+                this.loadDiaries();
+            }
+
+            loadDiaries() {
+                try {
+                    this.diaries = JSON.parse(localStorage.getItem('diaries')) || [];
+                } catch (e) {
+                    console.error('ローカルストレージ読み取り失敗:', e);
+                    this.diaries = [];
+                }
+            }
+
+            saveDiary(content) {
+                const newDiary = {
+                    id: Date.now(),
+                    date: new Date().toISOString(),
+                    content: content.trim()
+                };
+
+                this.diaries.unshift(newDiary);
+                
+                try {
+                    localStorage.setItem('diaries', JSON.stringify(this.diaries));
+                    return true;
+                } catch (e) {
+                    console.error('ローカルストレージ書き込み失敗:', e);
+                    return false;
+                }
+            }
+
+            deleteDiary(id) {
+                this.diaries = this.diaries.filter(d => d.id !== id);
+                try {
+                    localStorage.setItem('diaries', JSON.stringify(this.diaries));
+                } catch (e) {
+                    console.error('ローカルストレージ更新失敗:', e);
+                }
+            }
+
+            getFormattedDate(isoString) {
+                try {
+                    const date = new Date(isoString);
+                    const weekday = ["日", "月", "火", "水", "木", "金", "土"][new Date(isoString).getDay()];
+                    return `${date.getFullYear()}年${(date.getMonth()+1).toString().padStart(2,'0')}月${date.getDate().toString().padStart(2,'0')}日（${weekday}）${date.getHours().toString().padStart(2,'0')}：${date.getMinutes().toString().padStart(2,'0')}：${date.getSeconds().toString().padStart(2,'0')}`;
+                } catch (e) {
+                    return isoString;
+                }
+            }
+        }
+
+        function renderDiaries() {
+            const list = document.getElementById('diary-list');
+            list.innerHTML = diaryManager.diaries.map(diary => `
+                <li class="diary-entry" data-id="${diary.id}">
+                    <div class="diary-header">
+                        <span class="diary-date">📅 ${diaryManager.getFormattedDate(diary.date)}</span>
+                        <button onclick="deleteDiary(${diary.id})" class="delete-btn">🗑️</button>
+                    </div>
+                    <p class="diary-content">${diary.content}</p>
+                </li>
+            `).join('');
+        }
+
+        window.deleteDiary = function(id) {
+            const entry = document.querySelector(`[data-id="${id}"]`);
+            if (!entry) return;
+
+            entry.style.animation = 'slideOutRight 0.4s var(--easing) forwards';
+            entry.addEventListener('animationend', () => {
+                diaryManager.deleteDiary(id);
+                renderDiaries();
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            new TimeUpdater().init();
+            diaryManager = new DiaryManager();
+            renderDiaries();
+
+            const diaryInput = document.getElementById('diary-content');
+            diaryInput.addEventListener('input', () => {
+                document.getElementById('char-count').textContent = diaryInput.value.length;
+            });
+
+            document.getElementById('save-diary').addEventListener('click', () => {
+                if (diaryInput.value.trim().length < 1) {
+                    showNekoAlert('❌ 1文字以上書いてにゃい！', '#FF4500');
+                    return;
+                }
+
+                if (diaryManager.saveDiary(diaryInput.value)) {
+                    diaryInput.value = '';
+                    document.getElementById('char-count').textContent = '0';
+                    showNekoAlert('🎉 保存できたにゃ！', '#70DB93');
+                    renderDiaries();
+                }
+            });
+
+            if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+                document.body.classList.add('ios-touch');
+                if (typeof FastClick !== 'undefined') {
+                    FastClick.attach(document.body);
+                }
+            }
+        });
+
+        // クリックしたときの処理
+        const diaryInput = document.getElementById('diary-content');
+        diaryInput.addEventListener('focus', () => {
+            diaryInput.style.animation = 'inputClick 0.4s var(--easing) forwards';
+        });
+
+        // 外部クリック時の処理
+        document.addEventListener('click', (e) => {
+            if (!diaryInput.contains(e.target) && 
+                !document.getElementById('save-diary').contains(e.target)) {
+                
+                // アニメーションなしに戻す
+                diaryInput.style.transform = 'scale(1)';
+            }
+        });
+
+        function showNekoAlert(message, color) {
+            const alertBox = document.createElement('div');
+            alertBox.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 12px 24px;
+                background: ${color};
+                color: white;
+                border-radius: 20px;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                font-family: 'Hachi Maru Pop', cursive;
+                z-index: 1000;
+                animation: gentleFloat 2s ease-in-out infinite;
+            `;
+            alertBox.textContent = message;
+            document.body.appendChild(alertBox);
+            setTimeout(() => alertBox.remove(), 2500);
+        }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+</body>
+</html>
+
+
+
