@@ -47,14 +47,23 @@ async function cleanupOldFiles(directory, retentionDays, filePattern) {
 
 // 日志文件处理
 async function writeLog(logs) {
-    const date = new Date().toISOString().split('T')[0];
-    const logFile = path.join(LOG_DIR, `${date}.log`);
-    
-    const logEntries = logs.map(log => 
-        `[${log.timestamp}] ${log.level}: ${log.message}${log.error ? '\n' + JSON.stringify(log.error, null, 2) : ''}`
-    ).join('\n') + '\n';
+    try {
+        // 确保日志目录存在
+        await fs.mkdir(LOG_DIR, { recursive: true });
+        
+        const date = new Date().toISOString().split('T')[0];
+        const logFile = path.join(LOG_DIR, `${date}.log`);
+        
+        const logEntries = logs.map(log => 
+            `[${new Date(log.timestamp).toISOString()}] ${log.level}: ${log.message}${log.error ? '\n' + JSON.stringify(log.error, null, 2) : ''}`
+        ).join('\n') + '\n';
 
-    await fs.appendFile(logFile, logEntries, 'utf8');
+        await fs.appendFile(logFile, logEntries, 'utf8');
+        console.log(`日志已写入: ${logFile}`);
+    } catch (error) {
+        console.error('写入日志时发生错误:', error);
+        throw error;
+    }
 }
 
 // CSV 文件备份
