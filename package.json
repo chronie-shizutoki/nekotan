@@ -1,0 +1,16 @@
+{
+  "name": "nekochan",
+  "version": "1.0.0",
+  "description": "にゃんにゃん☆こちらはねこちゃんの自己紹介と日記アプリだにゃ～♡ ぷにぷに肉球で書く毎日のおはなし、にゃんこライフをたのしんでほしいんだにゃ♪ （✧ω✧）ﾉｼ わんわん！じゃなくて…にゃーん！＞▽＜ ![image](https://github.com/user-attachments/assets/ce306c92-8f4c-4027-b833-94c0b71d7dd1) ![image](https://github.com/user-attachments/assets/b695d16d-2fb9-4592-bcd7-8aa5806eb487)",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
