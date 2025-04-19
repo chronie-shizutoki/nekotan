@@ -1,14 +1,48 @@
+require('dotenv').config();
 const express = require('express');
 const fs = require('fs').promises;
 const path = require('path');
+const helmet = require('helmet');
+const compression = require('compression');
+const cors = require('cors');
+const morgan = require('morgan');
 
 // 创建日志目录
 const LOG_DIR = path.join(__dirname, 'logs');
 const BACKUP_DIR = path.join(__dirname, 'backups');
+const UPLOADS_DIR = path.join(__dirname, 'public', 'uploads');
 
+// 确保必要的目录存在
 async function ensureDirectories() {
-    await fs.mkdir(LOG_DIR, { recursive: true });
-    await fs.mkdir(BACKUP_DIR, { recursive: true });
+    await Promise.all([
+        fs.mkdir(LOG_DIR, { recursive: true }),
+        fs.mkdir(BACKUP_DIR, { recursive: true }),
+        fs.mkdir(UPLOADS_DIR, { recursive: true })
+    ]);
+}
+
+// 日志清理（保留指定天数的日志）
+async function cleanupOldFiles(directory, retentionDays, filePattern) {
+    try {
+        const files = await fs.readdir(directory);
+        const now = Date.now();
+        const maxAge = retentionDays * 24 * 60 * 60 * 1000;
+
+        for (const file of files) {
+            if (filePattern && !file.match(filePattern)) continue;
+
+            const filePath = path.join(directory, file);
+            const stats = await fs.stat(filePath);
+            const age = now - stats.mtime.getTime();
+
+            if (age > maxAge) {
+                await fs.unlink(filePath);
+                console.log(`Deleted old file: ${file}`);
+            }
+        }
+    } catch (error) {
+        console.error('Error cleaning up old files:', error);
+    }
 }
 
 // 日志文件处理
@@ -37,6 +71,34 @@ async function backupCSV() {
 
 const app = express();
 
+// 基本安全设置
+app.use(helmet({
+    contentSecurityPolicy: {
+        directives: {
+            defaultSrc: ["'self'"],
+            scriptSrc: ["'self'", "'unsafe-inline'", 'cdnjs.cloudflare.com'],
+            styleSrc: ["'self'", "'unsafe-inline'", 'fonts.googleapis.com'],
+            fontSrc: ["'self'", 'fonts.gstatic.com'],
+            imgSrc: ["'self'", 'data:', 'blob:'],
+            connectSrc: ["'self'"]
+        }
+    }
+}));
+
+// 启用 CORS
+app.use(cors({
+    origin: process.env.CORS_ORIGIN || '*',
+    methods: ['GET', 'POST', 'DELETE'],
+    allowedHeaders: ['Content-Type']
+}));
+
+// 启用压缩
+app.use(compression());
+
+// 请求日志记录
+const accessLogStream = fs.createWriteStream(path.join(LOG_DIR, 'access.log'), { flags: 'a' });
+app.use(morgan('combined', { stream: accessLogStream }));
+
 // 确保所有请求都能正确处理中文路径
 app.use((req, res, next) => {
     req.url = decodeURIComponent(req.url);
@@ -44,7 +106,7 @@ app.use((req, res, next) => {
 });
 
 // 设置静态文件服务
-app.use(express.static(__dirname));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.text({ type: 'text/csv' }));
 app.use(express.json());
 
@@ -58,7 +120,7 @@ async function ensureCSVFile() {
     try {
         await fs.access('diaries.csv');
     } catch {
-        await fs.writeFile('diaries.csv', 'id,date,content,category\n');
+        await fs.writeFile('diaries.csv', 'id,date,content,category,tags\n');
         console.log('Created new diaries.csv file');
     }
 }
@@ -79,7 +141,7 @@ app.post('/save-diary', async (req, res) => {
     try {
         await ensureCSVFile();
         await fs.writeFile('diaries.csv', req.body);
-        await backupCSV(); // 创建备份
+        await backupCSV();
         res.json({ success: true });
     } catch (error) {
         console.error('Error saving diary:', error);
@@ -114,9 +176,30 @@ app.use((err, req, res, next) => {
     });
 });
 
+// 404 处理
+app.use((req, res) => {
+    res.status(404).sendFile(path.join(__dirname, 'public', '404.html'));
+});
+
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, async () => {
+const server = app.listen(PORT, async () => {
     await ensureDirectories();
     await ensureCSVFile();
-    console.log(`Server is running on port ${PORT}`);
+    console.log(`Server is running on port ${PORT} in ${process.env.NODE_ENV} mode`);
+});
+
+// 定期清理任务
+setInterval(async () => {
+    const retentionDays = parseInt(process.env.BACKUP_RETENTION_DAYS) || 30;
+    await cleanupOldFiles(BACKUP_DIR, retentionDays, /^diaries-.*\.csv$/);
+    await cleanupOldFiles(LOG_DIR, retentionDays, /\.log$/);
+}, 24 * 60 * 60 * 1000); // 每24小时执行一次
+
+// 优雅关闭
+process.on('SIGTERM', () => {
+    console.log('SIGTERM received. Shutting down gracefully...');
+    server.close(() => {
+        console.log('Server closed.');
+        process.exit(0);
+    });
 });
