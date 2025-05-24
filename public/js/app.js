@@ -42,7 +42,13 @@ function addTag(tag) {
 
 function removeTag(tag) {
     currentTags.delete(tag);
-    updateTagsDisplay();
+    // 检查是否在编辑模式
+    const editBox = document.querySelector('.diary-edit-box');
+    if (editBox) {
+        updateEditTagsDisplay(editBox.closest('.diary-entry'));
+    } else {
+        updateTagsDisplay();
+    }
 }
 
 function toggleFilterTag(tag) {
@@ -136,7 +142,7 @@ function enterEditMode(diaryId) {
                             ${(diary.tags || []).map(tag => `
                                 <span class="tag">
                                     ${tag}
-                                    <span class="tag-remove" onclick="removeTag('${tag}')">&times;</span>
+                                    <span class="tag-remove" onclick="window.removeTag('${tag}')">&times;</span>
                                 </span>
                             `).join('')}
                         </div>
@@ -146,12 +152,33 @@ function enterEditMode(diaryId) {
                     </div>
                 </div>
                 <div class="edit-buttons">
-                    <button class="neko-button save-edit" onclick="saveDiaryEdit(${diaryId})">保存</button>
-                    <button class="neko-button cancel-edit" onclick="cancelDiaryEdit(${diaryId})">キャンセル</button>
+                    <button class="neko-button save-edit" onclick="window.saveDiaryEdit(${diaryId})">保存</button>
+                    <button class="neko-button cancel-edit" onclick="window.cancelDiaryEdit(${diaryId})">キャンセル</button>
                 </div>
             </div>
         </div>
     `;
+
+    // 为编辑模式下的标签输入添加事件监听
+    const tagInput = entry.querySelector('.tag-input');
+    tagInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && e.target.value.trim()) {
+            e.preventDefault();
+            window.addTag(e.target.value);
+            updateEditTagsDisplay(entry);
+        }
+    });
+}
+
+// 更新编辑模式下的标签显示
+function updateEditTagsDisplay(entryElement) {
+    const tagsDisplay = entryElement.querySelector('#edit-tags-display');
+    tagsDisplay.innerHTML = Array.from(currentTags).map(tag => `
+        <span class="tag">
+            ${tag}
+            <span class="tag-remove" onclick="window.removeTag('${tag}')">&times;</span>
+        </span>
+    `).join('');
 }
 
 async function saveDiaryEdit(diaryId) {
@@ -227,8 +254,8 @@ async function renderDiaries(diaries = null) {
                         `).join('')}
                     </div>
                     <div class="diary-actions">
-                        <button onclick="enterEditMode(${diary.id})" class="edit-btn">✏️</button>
-                        <button onclick="deleteDiary(${diary.id})" class="delete-btn">🗑️</button>
+                        <button class="edit-btn" onclick="window.enterEditMode(${diary.id})">✏️</button>
+                        <button class="delete-btn" onclick="window.deleteDiary(${diary.id})">🗑️</button>
                     </div>
                 </div>
                 <p class="diary-content">${diary.content}</p>
@@ -425,7 +452,24 @@ document.addEventListener('click', (e) => {
 window.addTag = addTag;
 window.removeTag = removeTag;
 window.toggleFilterTag = toggleFilterTag;
-window.deleteDiary = deleteDiary;
+window.deleteDiary = async (id) => {
+    const entry = document.querySelector(`[data-id="${id}"]`);
+    if (!entry) return;
+
+    if (!confirm('本当に削除しますか？')) return;
+
+    try {
+        entry.style.animation = 'slideOutRight 0.4s var(--easing) forwards';
+        await new Promise(resolve => entry.addEventListener('animationend', resolve, { once: true }));
+        await diaryManager.deleteDiary(id);
+        await renderDiaries();
+        showNekoAlert('🗑️ 削除したにゃ！', '#70DB93');
+    } catch (error) {
+        console.error('削除エラー:', error);
+        await logger.error('日記の削除中にエラー', error);
+        showNekoAlert('❌ 削除できなかったにゃ...もう一度試してみて！', '#FF4500', 3500);
+    }
+};
 window.enterEditMode = enterEditMode;
 window.saveDiaryEdit = saveDiaryEdit;
 window.cancelDiaryEdit = cancelDiaryEdit;

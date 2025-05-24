@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const fs = require('fs').promises;
+const fsSync = require('fs');
 const path = require('path');
 const helmet = require('helmet');
 const compression = require('compression');
@@ -105,7 +106,7 @@ app.use(cors({
 app.use(compression());
 
 // 请求日志记录
-const accessLogStream = fs.createWriteStream(path.join(LOG_DIR, 'access.log'), { flags: 'a' });
+const accessLogStream = fsSync.createWriteStream(path.join(LOG_DIR, 'access.log'), { flags: 'a' });
 app.use(morgan('combined', { stream: accessLogStream }));
 
 // 确保所有请求都能正确处理中文路径
