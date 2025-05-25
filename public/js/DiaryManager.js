@@ -1,12 +1,49 @@
 import { Logger } from './Logger.js';
 
 export class DiaryManager {
+    static defaultCategories = [
+        '未分類',
+        '日常', // 日常生活
+        '仕事', // 工作相关
+        '勉強', // 学习笔记
+        '趣味', // 兴趣爱好
+        '思考', // 思考感悟
+        '旅行', // 旅行见闻
+        '健康', // 健康运动
+        '創作', // 创作灵感
+        '読書', // 读书笔记
+        '料理', // 美食烹饪
+        '夢', // 梦境记录
+        '目標', // 目标计划
+        '映画', // 电影观后感
+        'ゲーム', // 游戏体验
+        '音楽' // 音乐感想
+    ];
+
+    static instance = null;
+
+    static async getInstance() {
+        if (!DiaryManager.instance) {
+            const instance = new DiaryManager();
+            await instance.initialize();
+            DiaryManager.instance = instance;
+        }
+        return DiaryManager.instance;
+    }
+
     constructor() {
+        if (DiaryManager.instance) {
+            return DiaryManager.instance;
+        }
         this.diaries = [];
         this.logger = Logger.getInstance();
         this.pageSize = 10;
         this.currentPage = 1;
-        this.loadDiaries();
+    }
+
+    async initialize() {
+        await this.loadDiaries();
+        return this;
     }
 
     async loadDiaries() {
@@ -129,7 +166,10 @@ export class DiaryManager {
 
     // 获取所有分类
     getCategories() {
-        return [...new Set(this.diaries.map(diary => diary.category))];
+        // 获取所有已使用的分类
+        const usedCategories = new Set(this.diaries.map(diary => diary.category));
+        // 合并默认分类和已使用分类，去重
+        return Array.from(new Set([...DiaryManager.defaultCategories, ...usedCategories]));
     }
 
     // 获取所有标签

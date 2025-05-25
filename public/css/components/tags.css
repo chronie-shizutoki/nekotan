@@ -1,0 +1,61 @@
+/* 标签组件样式 */
+.tags-input-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 8px;
+    border: 2px solid var(--secondary-pink);
+    border-radius: 12px;
+    background: white;
+    min-height: 42px;
+    align-items: center;
+}
+
+/* 标签样式 */
+.tag {
+    background: var(--secondary-pink);
+    color: white;
+    padding: 4px 10px;
+    border-radius: 15px;
+    font-size: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    animation: popIn 0.3s var(--easing);
+}
+
+.tag-remove {
+    cursor: pointer;
+    font-size: 1.2rem;
+    line-height: 1;
+    padding: 2px;
+}
+
+.tag-remove:hover {
+    transform: scale(1.2);
+}
+
+.tag-suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border: 2px solid var(--secondary-pink);
+    border-radius: 12px;
+    margin-top: 5px;
+    max-height: 150px;
+    overflow-y: auto;
+    z-index: 10;
+    box-shadow: 0 4px 12px rgba(255, 105, 180, 0.1);
+}
+
+.tag-suggestion-item {
+    padding: 8px 15px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.tag-suggestion-item:hover {
+    background: var(--container-bg);
+}

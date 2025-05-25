@@ -1,0 +1,77 @@
+/* 深色模式主题 */
+@media (prefers-color-scheme: dark) {
+    body { 
+        background: var(--text-dark); 
+    }
+
+    #current-date, 
+    .counter-box { 
+        color: #D1D5DB !important; 
+    }
+
+    .cat-container { 
+        background: var(--surface-dark); 
+    }
+
+    .diary-container { 
+        background: linear-gradient(135deg, #4a4a4a 0%, var(--surface-dark) 100%);
+    }
+
+    .diary-input-box textarea { 
+        background: #333;
+        color: #E5E7EB;
+        border-color: #666;
+    }
+
+    .diary-history { 
+        background: #333; 
+    }
+
+    .diary-entry { 
+        background: #444;
+        border-left-color: #666;
+    }
+
+    .diary-content { 
+        color: #E5E7EB !important; 
+    }
+
+    .diary-date { 
+        color: #9CA3AF !important; 
+    }
+
+    .history-title { 
+        color: #FBCFE8 !important;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .search-container {
+        background: var(--surface-dark);
+    }
+
+    .search-input,
+    .category-select {
+        background: #333;
+        color: #E5E7EB;
+        border-color: #666;
+    }
+
+    .tags-input-container {
+        background: #333;
+        border-color: #666;
+    }
+
+    #tag-input {
+        background: #333;
+        color: #E5E7EB;
+    }
+
+    .tag-suggestions {
+        background: var(--surface-dark);
+        border-color: #666;
+    }
+
+    .tag-suggestion-item:hover {
+        background: #4a4a4a;
+    }
+}

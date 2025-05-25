@@ -1,0 +1,52 @@
+/* 输入框动画样式 */
+.input-field-animation {
+    transition: all 0.3s var(--easing);
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.input-field-animation.new-entry {
+    opacity: 0;
+    animation: floatUp 0.8s var(--easing) forwards;
+}
+
+/* 日记输入框动画 */
+#diary-content {
+    transition: all 0.3s var(--easing);
+    transform-origin: center;
+    will-change: transform, box-shadow, border-color;
+}
+
+#diary-content:focus {
+    transform: scale(1.01);
+    box-shadow: 0 8px 24px rgba(255, 105, 180, 0.15);
+    border-color: var(--primary-pink);
+    outline: none;
+}
+
+/* 标签和搜索输入框动画 */
+#tag-input,
+#search-input {
+    transition: all 0.3s var(--easing);
+    transform-origin: center;
+    will-change: transform, box-shadow, border-color;
+}
+
+#tag-input:focus,
+#search-input:focus {
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px rgba(255, 105, 180, 0.1);
+    border-color: var(--primary-pink);
+    outline: none;
+}
+
+/* 输入框占位符动画 */
+.input-field-animation::placeholder {
+    transition: all 0.3s var(--easing);
+    opacity: 0.7;
+}
+
+.input-field-animation:focus::placeholder {
+    opacity: 0.4;
+    transform: translateX(5px);
+}

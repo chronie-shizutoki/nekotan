@@ -1,0 +1,187 @@
+/* 基础页面布局 */
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px 0;
+    background-color: #f9f9f9;
+}
+
+/* 容器通用布局 */
+.container {
+    width: 90%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* 猫咪容器样式 */
+.cat-container {
+    background: var(--container-bg);
+    padding: 25px;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 500px;
+    margin: 20px auto;
+    text-align: center;
+    animation: 
+        scaleEntrance 0.8s var(--easing),
+        gentleFloat 6s ease-in-out infinite;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+/* 时间容器样式 */
+.time-container {
+    text-align: center;
+    padding: 15px;
+    margin: 0 auto 20px;
+    animation: gentleFloat 5s ease-in-out infinite;
+}
+
+#current-date {
+    font-family: 'Hachi Maru Pop', cursive;
+    font-size: 1.4rem;
+    color: #000;
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+}
+
+/* 猫咪文本样式 */
+.cat-text {
+    font-family: 'Comic Neue', cursive;
+    font-size: 1.5rem !important;
+    line-height: 1.8 !important;
+    display: block !important;
+    margin: 15px auto !important;
+    white-space: pre-line;
+    word-break: break-word;
+    text-shadow: 
+        1px 1px 0px rgba(255,182,193,0.3),
+        2px 2px 4px rgba(255,105,180,0.15);
+    opacity: 0;
+    animation: 
+        floatInUp 1s var(--easing) forwards,
+        gentleFloat 4s ease-in-out infinite;
+}
+
+.cat-text-1 { color: #FF6EC7 !important; }
+.cat-text-2 {
+    background: linear-gradient(45deg, #FF69B4, #FFB6C1) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    color: transparent !important;
+}
+.cat-text-3 { color: #FFD700 !important; }
+.cat-text-4 { color: #70DB93 !important; }
+.cat-text-5 { 
+    color: #FF4500 !important;
+    text-shadow: 1px 1px 2px pink !important;
+}
+.cat-text-6 { color: #9370DB !important; }
+
+/* 输入控件布局 */
+.input-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    width: 100%;
+    margin-top: 15px;
+}
+
+.input-group {
+    flex: 1;
+    min-width: 200px;
+    position: relative;
+}
+
+/* 布局优化 */
+.diary-actions-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    width: 100%;
+    margin-top: 15px;
+}
+
+/* 滚动条样式 */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 182, 193, 0.1);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--secondary-pink);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-pink);
+}
+
+/* iOS优化 */
+.ios-touch {
+    -webkit-tap-highlight-color: transparent;
+}
+
+.ios-touch input[type="text"],
+.ios-touch textarea,
+.ios-touch select {
+    font-size: 16px;
+}
+
+/* 移动端优化 */
+@media (max-width: 480px) {
+    body { 
+        padding: 10px 0; 
+    }
+    
+    #current-date { 
+        font-size: 1.2rem; 
+    }
+    
+    .cat-container,
+    .diary-container,
+    .search-container {
+        width: 95%;
+        padding: 15px;
+    }
+    
+    .diary-input-box textarea {
+        width: 90%;
+    }
+    
+    .pagination {
+        gap: 4px;
+    }
+    
+    .page-button {
+        padding: 6px 12px;
+        font-size: 0.9rem;
+    }
+    
+    .input-controls {
+        flex-direction: column;
+    }
+    
+    .input-group {
+        width: 100%;
+    }
+    
+    .diary-actions-bar {
+        flex-direction: column;
+    }
+    
+    .action-button {
+        width: 100%;
+        text-align: center;
+    }
+}

@@ -22,78 +22,7 @@ async function ensureDirectories() {
     ]);
 }
 
-// 日志清理（保留指定天数的日志）
-async function cleanupOldFiles(directory, retentionDays, filePattern) {
-    try {
-        const files = await fs.readdir(directory);
-        const now = Date.now();
-        const maxAge = retentionDays * 24 * 60 * 60 * 1000;
-
-        for (const file of files) {
-            if (filePattern && !file.match(filePattern)) continue;
-
-            const filePath = path.join(directory, file);
-            const stats = await fs.stat(filePath);
-            const age = now - stats.mtime.getTime();
-
-            if (age > maxAge) {
-                await fs.unlink(filePath);
-                console.log(`Deleted old file: ${file}`);
-            }
-        }
-    } catch (error) {
-        console.error('Error cleaning up old files:', error);
-    }
-}
-
-// 日志文件处理
-async function writeLog(logs) {
-    try {
-        // 确保日志目录存在
-        await fs.mkdir(LOG_DIR, { recursive: true });
-        
-        const date = new Date().toISOString().split('T')[0];
-        const logFile = path.join(LOG_DIR, `${date}.log`);
-        
-        const logEntries = logs.map(log => 
-            `[${new Date(log.timestamp).toISOString()}] ${log.level}: ${log.message}${log.error ? '\n' + JSON.stringify(log.error, null, 2) : ''}`
-        ).join('\n') + '\n';
-
-        await fs.appendFile(logFile, logEntries, 'utf8');
-        console.log(`日志已写入: ${logFile}`);
-    } catch (error) {
-        console.error('写入日志时发生错误:', error);
-        throw error;
-    }
-}
-
-// CSV 文件备份
-async function backupCSV() {
-    const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-    const backupPath = path.join(BACKUP_DIR, `diaries-${timestamp}.csv`);
-    try {
-        await fs.copyFile('diaries.csv', backupPath);
-        console.log(`Backup created: ${backupPath}`);
-    } catch (error) {
-        console.error('Backup failed:', error);
-    }
-}
-
 const app = express();
-
-// 基本安全设置
-app.use(helmet({
-    contentSecurityPolicy: {
-        directives: {
-            defaultSrc: ["'self'"],
-            scriptSrc: ["'self'", "'unsafe-inline'", 'cdnjs.cloudflare.com'],
-            styleSrc: ["'self'", "'unsafe-inline'", 'fonts.googleapis.com'],
-            fontSrc: ["'self'", 'fonts.gstatic.com'],
-            imgSrc: ["'self'", 'data:', 'blob:'],
-            connectSrc: ["'self'"]
-        }
-    }
-}));
 
 // 启用 CORS
 app.use(cors({
@@ -105,111 +34,86 @@ app.use(cors({
 // 启用压缩
 app.use(compression());
 
-// 请求日志记录
+// 启用请求日志
 const accessLogStream = fsSync.createWriteStream(path.join(LOG_DIR, 'access.log'), { flags: 'a' });
 app.use(morgan('combined', { stream: accessLogStream }));
 
-// 确保所有请求都能正确处理中文路径
-app.use((req, res, next) => {
-    req.url = decodeURIComponent(req.url);
-    next();
-});
-
-// 设置静态文件服务
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.text({ type: 'text/csv' }));
+// 请求解析
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// 静态文件服务配置
+app.use('/', express.static(path.join(__dirname, 'public'), {
+    setHeaders: (res, filePath) => {
+        if (filePath.endsWith('.css')) {
+            res.setHeader('Content-Type', 'text/css');
+        } else if (filePath.endsWith('.js')) {
+            res.setHeader('Content-Type', 'application/javascript');
+        } else if (filePath.endsWith('.ttf')) {
+            res.setHeader('Content-Type', 'font/ttf');
+        }
+    }
+}));
 
 // 根路由处理
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '静時ねこちゃん.html'));
 });
 
+// 基本安全设置
+app.use(helmet({
+    contentSecurityPolicy: {
+        directives: {
+            defaultSrc: ["'self'"],
+            scriptSrc: ["'self'", "'unsafe-inline'"],
+            styleSrc: ["'self'", "'unsafe-inline'"],
+            fontSrc: ["'self'"],
+            imgSrc: ["'self'", 'data:', 'blob:'],
+            connectSrc: ["'self'"]
+        }
+    }
+}));
+
 // 确保 CSV 文件存在
 async function ensureCSVFile() {
+    const csvPath = path.join(__dirname, 'diaries.csv');
     try {
-        await fs.access('diaries.csv');
+        await fs.access(csvPath);
     } catch {
-        await fs.writeFile('diaries.csv', 'id,date,content,category,tags\n');
-        console.log('Created new diaries.csv file');
+        await fs.writeFile(csvPath, 'id,date,content,category,tags\n', 'utf8');
     }
 }
 
-// API 路由
-app.post('/api/logs', async (req, res) => {
+// 初始化
+async function initialize() {
     try {
-        await writeLog(req.body);
-        res.json({ success: true });
+        await ensureDirectories();
+        await ensureCSVFile();
+        console.log('初始化完成');
     } catch (error) {
-        console.error('Error writing logs:', error);
-        res.status(500).json({ success: false, error: 'Failed to write logs' });
+        console.error('初始化失败:', error);
+        process.exit(1);
     }
-});
+}
 
-// CSV 文件保存处理
+// API路由处理
 app.post('/save-diary', async (req, res) => {
     try {
-        await ensureCSVFile();
-        await fs.writeFile('diaries.csv', req.body);
+        const csvData = req.body;
+        await fs.writeFile('diaries.csv', csvData, 'utf8');
         await backupCSV();
-        res.json({ success: true });
+        res.status(200).send('保存成功');
     } catch (error) {
-        console.error('Error saving diary:', error);
-        res.status(500).json({ 
-            success: false, 
-            error: '日記の保存中にエラーが発生しました。' 
-        });
+        console.error('保存失败:', error);
+        res.status(500).send('保存失败');
     }
 });
 
-// CSV 文件读取处理
-app.get('/diaries.csv', async (req, res) => {
-    try {
-        await ensureCSVFile();
-        const data = await fs.readFile('diaries.csv', 'utf-8');
-        res.type('text/csv').send(data);
-    } catch (error) {
-        console.error('Error reading diary:', error);
-        res.status(500).json({ 
-            success: false, 
-            error: '日記の読み込み中にエラーが発生しました。' 
-        });
-    }
-});
-
-// 错误处理中间件
-app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).json({
-        success: false,
-        error: 'サーバーエラーが発生しました。'
-    });
-});
-
-// 404 处理
-app.use((req, res) => {
-    res.status(404).sendFile(path.join(__dirname, 'public', '404.html'));
-});
-
+// 启动服务器
 const PORT = process.env.PORT || 3000;
-const server = app.listen(PORT, async () => {
-    await ensureDirectories();
-    await ensureCSVFile();
-    console.log(`Server is running on port ${PORT} in ${process.env.NODE_ENV} mode`);
-});
 
-// 定期清理任务
-setInterval(async () => {
-    const retentionDays = parseInt(process.env.BACKUP_RETENTION_DAYS) || 30;
-    await cleanupOldFiles(BACKUP_DIR, retentionDays, /^diaries-.*\.csv$/);
-    await cleanupOldFiles(LOG_DIR, retentionDays, /\.log$/);
-}, 24 * 60 * 60 * 1000); // 每24小时执行一次
-
-// 优雅关闭
-process.on('SIGTERM', () => {
-    console.log('SIGTERM received. Shutting down gracefully...');
-    server.close(() => {
-        console.log('Server closed.');
-        process.exit(0);
+initialize().then(() => {
+    app.listen(PORT, () => {
+        console.log(`Server is running on port ${PORT}`);
     });
 });

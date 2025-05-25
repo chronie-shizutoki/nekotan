@@ -2,6 +2,25 @@
 
 可愛い猫のように優しい日記アプリ！
 
+## 本地化リソース
+
+本アプリケーションで使用している外部リソースは全て本地化されています：
+
+### フォント
+
+`public/vendor/fonts` ディレクトリに格納：
+
+- HachiMaruPop-Regular.woff2 - はちまるポップ体
+- MPLUSRounded1c-Light.woff2 - M PLUS Rounded 1c Light
+- MPLUSRounded1c-Medium.woff2 - M PLUS Rounded 1c Medium
+- YujiSyuku-Regular.woff2 - 遊筆修
+
+### JavaScriptライブラリ
+
+`public/vendor/js` ディレクトリに格納：
+
+- fastclick.min.js - FastClick ライブラリ (v1.0.6)
+
 ## 特徴
 
 - 💕 シンプルで使いやすいインターフェース
@@ -68,7 +87,10 @@ nekochan/
 ├── public/           # 静的ファイル
 │   ├── css/         # スタイルシート
 │   ├── js/          # クライアントサイドJS
-│   └── uploads/     # アップロードファイル
+│   ├── uploads/     # アップロードファイル
+│   └── vendor/      # サードパーティリソース
+│       ├── fonts/   # フォントファイル
+│       └── js/      # JavaScriptライブラリ
 ├── logs/            # ログファイル
 ├── backups/         # バックアップファイル
 ├── server.js        # サーバーエントリーポイント
@@ -98,3 +120,13 @@ nekochan/
 ## ライセンス
 
 ISC License
+
+### サードパーティライセンス
+
+フォントファイルは SIL Open Font License 1.1 でライセンスされています：
+
+- Hachi Maru Pop: Copyright 2020 The Hachi Maru Pop Project Authors
+- M PLUS Rounded 1c: Copyright 2016 The M+ FONTS Project Authors
+- Yuji Syuku: Copyright 2021 The Yuji Project Authors
+
+FastClick は MIT ライセンスで提供されています。

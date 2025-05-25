@@ -1,0 +1,47 @@
+/* 搜索组件样式 */
+.search-container {
+    margin: 20px auto;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+    width: 90%;
+    max-width: 600px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    animation: slideInLeft 0.4s var(--easing);
+}
+
+.search-input {
+    flex: 1;
+    min-width: 200px;
+    padding: 10px 15px;
+    border: 2px solid var(--secondary-pink);
+    border-radius: 20px;
+    font-family: 'Hachi Maru Pop', cursive;
+    transition: all 0.3s var(--easing);
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: var(--primary-pink);
+    box-shadow: 0 4px 12px rgba(255, 105, 180, 0.1);
+    transform: scale(1.02);
+}
+
+.category-select {
+    padding: 10px 15px;
+    border: 2px solid var(--secondary-pink);
+    border-radius: 20px;
+    font-family: 'Hachi Maru Pop', cursive;
+    cursor: pointer;
+    transition: all 0.3s var(--easing);
+    background: white;
+}
+
+.category-select:focus {
+    outline: none;
+    border-color: var(--primary-pink);
+    box-shadow: 0 4px 12px rgba(255, 105, 180, 0.1);
+    transform: scale(1.02);
+}

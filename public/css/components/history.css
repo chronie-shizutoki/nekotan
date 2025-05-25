@@ -1,0 +1,63 @@
+/* 历史记录组件样式 */
+.diary-history {
+    margin-top: 30px;
+    background: rgba(255,255,255,0.9);
+    border-radius: 15px;
+    padding: 20px;
+}
+
+.diary-entry {
+    position: relative;
+    background: #FFF;
+    padding: 15px;
+    margin: 10px 0;
+    border-left: 4px solid #FFB6C1;
+    transition: all 0.4s var(--easing);
+    font-family: 'Hachi Maru Pop', cursive;
+    overflow: hidden;
+    animation: slideInRight 0.4s var(--easing);
+}
+
+.diary-entry:hover {
+    transform: translateX(5px);
+    border-left: 5px solid var(--primary-pink);
+}
+
+.history-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Yuji Syuku', serif;
+    color: var(--text-dark);
+    margin: 0;
+    padding: 15px 0;
+    font-size: 1.8rem;
+    width: 100%;
+    position: relative;
+    animation: gentleFloat 3s ease-in-out infinite;
+}
+
+.history-title::before,
+.history-title::after {
+    content: '❀';
+    font-size: 1.4rem;
+    color: var(--primary-pink);
+    margin: 0 15px;
+    animation: gentleFloat 3s ease-in-out infinite;
+}
+
+.history-title::before {
+    animation-delay: -0.5s;
+}
+
+.history-title::after {
+    animation-delay: -1s;
+}
+
+.history-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+    width: 100%;
+}

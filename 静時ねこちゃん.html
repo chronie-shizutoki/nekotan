@@ -4,9 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>静時ねこちゃんの日記帳</title>
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Hachi+Maru+Pop&family=M+PLUS+Rounded+1c:wght@300;500&family=Yuji+Syuku&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <script>
+        // 确保所有字体和资源加载完成
+        document.fonts.ready.then(function () {
+            document.body.style.opacity = '1';
+        });
+    </script>
 </head>
 <body>
     <div class="time-container">
@@ -24,6 +28,7 @@
     <article class="diary-container">
         <div class="diary-input-box">
             <textarea id="diary-content" 
+                      class="input-field-animation"
                       placeholder="今日の出来事を書いてにゃ～♪"
                       maxlength="5000"></textarea>
             <div style="width: 100%; text-align: right; color: #666; font-size: 0.9rem;">
@@ -41,6 +46,7 @@
                     <div class="tags-input-container">
                         <div id="tags-display"></div>
                         <input type="text" id="tag-input" 
+                               class="input-field-animation"
                                placeholder="タグを入力 (最大10個)"
                                maxlength="20">
                     </div>
@@ -51,7 +57,7 @@
 
         <!-- 搜索区域 -->
         <div class="search-container">
-            <input type="text" id="search-input" class="search-input" placeholder="日記を検索するにゃ～">
+            <input type="text" id="search-input" class="search-input input-field-animation" placeholder="日記を検索するにゃ～">
             <select id="search-category" class="category-select">
                 <option value="">全てのカテゴリー</option>
             </select>
@@ -81,8 +87,8 @@
     <!-- 添加标签建议列表 -->
     <div id="tag-suggestions" class="tag-suggestions"></div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
-    <script type="module" src="js/app.js"></script>
+    <script src="/vendor/js/fastclick.min.js"></script>
+    <script type="module" src="/js/app.js"></script>
 </body>
 </html>
 
