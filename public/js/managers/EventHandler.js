@@ -224,31 +224,48 @@ export class EventHandler {
         }
 
         try {
-            const saved = await window.diaryManager.saveDiary(content, category, tags);
-            if (saved) {
-                diaryInput.value = '';
-                charCount.textContent = '0';
-                window.tagManager.setCurrentTags([]);
-                window.uiManager.showNekoAlert('🎉 保存できたにゃ！', '#70DB93');
-                await window.uiManager.renderDiaries();
-            } else {
-                throw new Error('保存に失敗しました');
-            }
+            await window.diaryManager.saveDiary(content, category, tags);
+            diaryInput.value = '';
+            charCount.textContent = '0';
+            window.tagManager.setCurrentTags([]);
+            window.uiManager.showNekoAlert('🎉 保存できたにゃ！', '#70DB93');
+            await window.uiManager.renderDiaries();
         } catch (error) {
             console.error('保存エラー:', error);
             await window.logger.error('日記の保存中にエラー', error);
-            window.uiManager.showNekoAlert('❌ 保存できなかったにゃ...もう一度試してみて！', '#FF4500', 3500);
+            window.uiManager.showNekoAlert(
+                `❌ ${error.message || '保存できなかったにゃ...'}もう一度試してみて！`, 
+                '#FF4500', 
+                3500
+            );
         }
     }
 
     async handleExport(format) {
+        if (!['csv', 'json'].includes(format.toLowerCase())) {
+            window.uiManager.showNekoAlert('❌ 未対応のファイル形式にゃ...', '#FF4500', 3500);
+            return;
+        }
+
         try {
-            await window.diaryManager.exportData(format);
-            window.uiManager.showNekoAlert(`✨ ${format.toUpperCase()}ファイルを出力したにゃ！`, '#70DB93');
+            const result = await window.diaryManager.exportData(format);
+            if (result) {
+                window.uiManager.showNekoAlert(
+                    `✨ ${format.toUpperCase()}ファイルを出力したにゃ！`, 
+                    '#70DB93'
+                );
+                await window.logger.info(`${format}ファイルのエクスポートに成功`);
+            } else {
+                throw new Error('エクスポートに失敗しました');
+            }
         } catch (error) {
             console.error('エクスポートエラー:', error);
             await window.logger.error(`${format}エクスポート中にエラー`, error);
-            window.uiManager.showNekoAlert('❌ 出力できなかったにゃ...', '#FF4500', 3500);
+            window.uiManager.showNekoAlert(
+                `❌ ${error.message || '出力できなかったにゃ...'}`, 
+                '#FF4500', 
+                3500
+            );
         }
     }
 

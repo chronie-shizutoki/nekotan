@@ -1,0 +1,84 @@
+/* 时间翻转动画 */
+.time-flip {
+    display: flex;
+    gap: 8px;
+    height: 50px;
+    perspective: 500px;
+    justify-content: center;
+}
+
+.flip-card {
+    position: relative;
+    width: 36px;
+    height: 50px;
+    margin: 0 1px;
+    transform-style: preserve-3d;
+    overflow: hidden;
+    will-change: transform;
+    backface-visibility: hidden;
+}
+
+.flip-card span {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Hachi Maru Pop', cursive;
+    font-size: 2.4rem;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    background: rgba(255,255,255,0.9);
+    color: #FF69B4;
+}
+
+/* 时间容器 */
+.time-container {
+    text-align: center;
+    padding: 15px;
+    margin: 0 auto 20px;
+    animation: gentleFloat 5s ease-in-out infinite;
+}
+
+#current-date {
+    font-family: 'Hachi Maru Pop', cursive;
+    font-size: 1.4rem;
+    color: #000;
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+}
+
+/* 深色模式适配 */
+@media (prefers-color-scheme: dark) {
+    .flip-card span {
+        background: rgba(58, 58, 58, 0.9);
+        color: #FFB6C1;
+    }
+
+    #current-date {
+        color: #FFB6C1;
+    }
+}
+
+/* 移动端适配 */
+@media (max-width: 480px) {
+    .time-flip {
+        gap: 4px;
+        height: 40px;
+    }
+
+    .flip-card {
+        width: 30px;
+        height: 40px;
+    }
+
+    .flip-card span {
+        font-size: 2rem;
+    }
+
+    #current-date {
+        font-size: 1.2rem;
+    }
+}

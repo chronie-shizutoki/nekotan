@@ -48,7 +48,18 @@ export class DiaryManager {
 
     async loadDiaries() {
         try {
-            const response = await fetch('diaries.csv');
+            const baseUrl = window.location.origin;
+            const response = await fetch(`${baseUrl}/diaries.csv`, {
+                method: 'GET',
+                headers: {
+                    'Accept': 'text/csv',
+                    'Content-Type': 'text/csv'
+                },
+                credentials: 'same-origin'
+            });
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
             const text = await response.text();
             this.diaries = this.parseCSV(text);
             await this.logger.info('日記データを読み込みました');
@@ -81,11 +92,12 @@ export class DiaryManager {
     toCSV() {
         const header = 'id,date,content,category,tags\n';
         const rows = this.diaries.map(diary => {
-            const escapedContent = diary.content.replace(/"/g, '""');
-            const escapedCategory = diary.category.replace(/"/g, '""');
-            const escapedTags = (diary.tags || []).join(';').replace(/"/g, '""');
-            return `${diary.id},"${diary.date}","${escapedContent}","${escapedCategory}","${escapedTags}"`;
-        }).join('\n');
+            if (!diary || !diary.content) return '';
+            const escapedContent = (diary.content || '').replace(/"/g, '""');
+            const escapedCategory = (diary.category || '未分類').replace(/"/g, '""');
+            const escapedTags = ((diary.tags && Array.isArray(diary.tags)) ? diary.tags : []).join(';').replace(/"/g, '""');
+            return `${diary.id || Date.now()},"${diary.date || new Date().toISOString()}","${escapedContent}","${escapedCategory}","${escapedTags}"`;
+        }).filter(row => row).join('\n');
         return header + rows;
     }
 
@@ -107,20 +119,29 @@ export class DiaryManager {
         
         try {
             const csvContent = this.toCSV();
-            const response = await fetch('/save-diary', {
+            const baseUrl = window.location.origin;
+            const response = await fetch(`${baseUrl}/save-diary`, {
                 method: 'POST',
                 headers: {
+                    'Accept': 'application/json',
                     'Content-Type': 'text/csv',
                 },
+                credentials: 'same-origin',
                 body: csvContent
             });
 
-            if (!response.ok) throw new Error('保存に失敗しました');
+            if (!response.ok) {
+                const error = await response.json();
+                throw new Error(error.message || '保存に失敗しました');
+            }
+            
             await this.logger.info('日記を保存しました');
             return true;
         } catch (e) {
             await this.logger.error('CSV書き込み失敗:', e);
-            return false;
+            // 移除失败的条目
+            this.diaries.shift();
+            throw e;
         }
     }
 
@@ -128,7 +149,8 @@ export class DiaryManager {
         try {
             this.diaries = this.diaries.filter(d => d.id !== id);
             const csvContent = this.toCSV();
-            const response = await fetch('/save-diary', {
+            const baseUrl = window.location.origin;
+            const response = await fetch(`${baseUrl}/save-diary`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'text/csv',

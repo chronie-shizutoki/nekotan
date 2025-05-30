@@ -137,26 +137,30 @@ export class UIManager {
         const categorySelect = document.getElementById('diary-category');
         const searchCategorySelect = document.getElementById('search-category');
         
-        // 分类频率统计
+        // 分类频率统计（不包括当前查看的分类，避免重复）
         const categoryFrequency = {};
         diaryManager.diaries.forEach(diary => {
-            categoryFrequency[diary.category] = (categoryFrequency[diary.category] || 0) + 1;
+            if (diary.category) {
+                const category = diary.category.trim();
+                categoryFrequency[category] = (categoryFrequency[category] || 0);
+            }
         });
 
         // 生成选项HTML
         const generateOptions = (includeAll = false) => {
             let html = includeAll ? '<option value="">全てのカテゴリー</option>' : '';
             
-            // 添加常用分类组（使用频率前5的分类）
+            // 添加默认分类组（使用频率前5的分类）
             const frequentCategories = Object.entries(categoryFrequency)
                 .sort(([,a], [,b]) => b - a)
                 .slice(0, 5)
-                .map(([cat]) => cat);
+                .map(([cat]) => cat)
+                .filter(cat => !!cat); // 过滤掉空类别
             
             if (frequentCategories.length > 0) {
                 html += '<optgroup label="よく使うカテゴリー">';
                 frequentCategories.forEach(category => {
-                    html += `<option value="${category}">${category} (${categoryFrequency[category]})</option>`;
+                    html += `<option value="${category}">${category}</option>`;
                 });
                 html += '</optgroup>';
             }
@@ -165,9 +169,7 @@ export class UIManager {
             html += '<optgroup label="すべてのカテゴリー">';
             DiaryManager.defaultCategories.forEach(category => {
                 if (!frequentCategories.includes(category)) {
-                    html += `<option value="${category}">${category}${
-                        categoryFrequency[category] ? ` (${categoryFrequency[category]})` : ''
-                    }</option>`;
+                    html += `<option value="${category}">${category}</option>`;
                 }
             });
             html += '</optgroup>';
@@ -179,7 +181,7 @@ export class UIManager {
             if (customCategories.length > 0) {
                 html += '<optgroup label="カスタムカテゴリー">';
                 customCategories.forEach(category => {
-                    html += `<option value="${category}">${category} (${categoryFrequency[category]})</option>`;
+                    html += `<option value="${category}">${category}</option>`;
                 });
                 html += '</optgroup>';
             }

@@ -2,6 +2,8 @@ export class Logger {
     constructor() {
         this.logQueue = [];
         this.isProcessing = false;
+        this.failedLogs = [];
+        this.maxRetries = 3;
     }
 
     static getInstance() {
@@ -34,7 +36,12 @@ export class Logger {
         try {
             while (this.logQueue.length > 0) {
                 const batch = this.logQueue.splice(0, 10);
-                await this.sendLogs(batch);
+                try {
+                    await this.sendLogs(batch);
+                } catch (error) {
+                    this.failedLogs.push(...batch);
+                    console.error('Failed to send logs:', error);
+                }
             }
         } finally {
             this.isProcessing = false;
@@ -42,20 +49,48 @@ export class Logger {
     }
 
     async sendLogs(logs) {
-        try {
-            const response = await fetch('/api/logs', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(logs)
-            });
+        let lastError;
+        for (let attempt = 1; attempt <= this.maxRetries; attempt++) {
+            try {
+                const baseUrl = window.location.origin;
+                const response = await fetch(`${baseUrl}/api/logs`, {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'same-origin',
+                    body: JSON.stringify(logs)
+                });
 
-            if (!response.ok) {
-                console.error('Failed to send logs to server');
+                if (!response.ok) {
+                    const error = await response.json().catch(() => ({ message: 'Failed to send logs to server' }));
+                    throw new Error(error.message || `HTTP error! status: ${response.status}`);
+                }
+                return;
+            } catch (error) {
+                lastError = error;
+                if (attempt < this.maxRetries) {
+                    await new Promise(resolve => setTimeout(resolve, 1000 * attempt));
+                    continue;
+                }
+                throw error;
             }
+        }
+    }
+
+    async retryFailedLogs() {
+        if (this.failedLogs.length === 0) return;
+
+        const logsToRetry = [...this.failedLogs];
+        this.failedLogs = [];
+
+        try {
+            await this.sendLogs(logsToRetry);
+            console.log('Successfully resent failed logs');
         } catch (error) {
-            console.error('Error sending logs:', error);
+            this.failedLogs.push(...logsToRetry);
+            console.error('Failed to resend logs:', error);
         }
     }
 
