@@ -1,0 +1,64 @@
+/* 可爱风格的筛选标签样式 */
+
+/* 日记分类标签样式 */
+.diary-category {
+    display: inline-block;
+    padding: 5px 12px;
+    background: linear-gradient(135deg, #fff0f3 0%, #ffccd5 100%);
+    color: #ff69b4;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    margin-left: 10px;
+    box-shadow: 0 2px 5px rgba(255, 105, 180, 0.2);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    animation: floatIn 0.4s ease-out;
+}
+
+.diary-category:hover {
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 4px 8px rgba(255, 105, 180, 0.3);
+    background: linear-gradient(135deg, #ffccd5 0%, #ffb6c1 100%);
+    color: white;
+}
+
+@keyframes floatIn {
+    0% { transform: translateY(10px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+}
+
+
+.filter-tag {
+    display: inline-flex;
+    align-items: center;
+    background: linear-gradient(135deg, #ffccd5 0%, #ffb6c1 100%);
+    border: none;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 2px 4px rgba(255, 105, 180, 0.2);
+    order: 1;
+    width: auto;
+    justify-content: center;
+    margin: 0 4px 4px 0;
+    animation: bounceIn 0.5s ease-out;
+}
+
+.filter-tag:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 5px 12px rgba(255, 105, 180, 0.3);
+}
+
+.filter-tag.active {
+    background: linear-gradient(135deg, #ff69b4 0%, #ff1493 100%);
+    transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(255, 105, 180, 0.4);
+}
+
+@keyframes bounceIn {
+    0% { transform: scale(0.8); opacity: 0; }
+    60% { transform: scale(1.1); opacity: 1; }
+    100% { transform: scale(1); }
+}

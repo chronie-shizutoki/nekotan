@@ -19,6 +19,7 @@
 @import 'components/history.css';
 @import 'components/search.css';
 @import 'components/tags.css';
+@import 'style.css';
 
 /* 最后导入主题覆盖 */
 @import 'themes/dark.css';
