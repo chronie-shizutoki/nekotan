@@ -57,6 +57,62 @@
     box-shadow: 0 6px 15px rgba(255, 105, 180, 0.4);
 }
 
+/* 编辑和删除按钮样式 */
+.diary-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    width: 100%;
+}
+
+.edit-btn, .delete-btn {
+    flex: 1;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 15px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    opacity: 1 !important;
+    position: static !important;
+    transform: none !important;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.4s ease-out;
+}
+
+.edit-btn {
+    background: linear-gradient(135deg, #e6f7ff 0%, #b3e0ff 100%);
+    color: #1890ff;
+}
+
+.delete-btn {
+    background: linear-gradient(135deg, #fff0f0 0%, #ffcccc 100%);
+    color: #ff4d4f;
+}
+
+.edit-btn:hover {
+    background: linear-gradient(135deg, #b3e0ff 0%, #80c2ff 100%);
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 5px 12px rgba(24, 144, 255, 0.2);
+}
+
+.delete-btn:hover {
+    background: linear-gradient(135deg, #ffcccc 0%, #ff9999 100%);
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 5px 12px rgba(255, 77, 79, 0.2);
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(10px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+
+
 @keyframes bounceIn {
     0% { transform: scale(0.8); opacity: 0; }
     60% { transform: scale(1.1); opacity: 1; }
