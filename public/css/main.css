@@ -1,0 +1,38 @@
+
+/* 首先导入字体 */
+@import '../vendor/fonts/fonts.css';
+
+/* 导入基础样式 */
+@import 'base/variables.css';
+@import 'base/performance.css';
+
+/* 导入动画定义 */
+@import 'animations/keyframes.css';
+@import 'animations/input-animations.css';
+
+/* 导入布局组件 */
+@import 'components/layout.css';
+
+/* 导入功能组件 */
+@import 'components/clock.css';
+@import 'components/diary.css';
+@import 'components/history.css';
+@import 'components/search.css';
+@import 'components/tags.css';
+
+/* 最后导入主题覆盖 */
+@import 'themes/dark.css';
+
+/* 重置默认样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 字体定义 */
+@font-face {
+    font-family: 'Yuji Syuku';
+    src: url('../vendor/fonts/YujiSyuku.ttf') format('truetype');
+    font-display: swap;
+}

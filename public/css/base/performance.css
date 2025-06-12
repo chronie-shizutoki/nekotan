@@ -1,0 +1,57 @@
+/* 性能优化：使用GPU加速和动画优化 */
+.gpu-accelerated {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+    will-change: transform;
+}
+
+/* 减少重绘的动画组 */
+.animate-transform {
+    transition-property: transform;
+}
+
+.animate-opacity {
+    transition-property: opacity;
+}
+
+.animate-all {
+    transition-property: all;
+}
+
+/* 优化动画性能的容器 */
+.cat-container,
+.diary-container,
+.search-container,
+.diary-entry,
+.neko-button {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* 优化滚动性能 */
+.diary-history,
+.tag-suggestions {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+}
+
+/* 减少页面重排 */
+.diary-input-box textarea,
+.search-input,
+.category-select {
+    contain: content;
+}
+
+/* 动画延迟加载 */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}

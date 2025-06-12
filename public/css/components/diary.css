@@ -1,0 +1,78 @@
+/* 日记输入组件样式 */
+.diary-container {
+    background: linear-gradient(135deg, var(--container-bg) 0%, #FFE4E1 100%);
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(255,105,180,0.15);
+    width: 90%;
+    max-width: 600px;
+    margin: 30px auto;
+    padding: 25px;
+    transition: transform 0.3s var(--easing);
+}
+
+.diary-input-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: scaleIn 0.4s var(--easing);
+}
+
+.diary-input-box textarea {
+    width: 93%;
+    height: 100px;
+    padding: 15px;
+    border: 2px solid #FFB6C1;
+    border-radius: 12px;
+    resize: none;
+    font-family: 'Hachi Maru Pop', cursive;
+    font-size: 1.1rem;
+    background: rgba(255,255,255,0.9);
+    transition: all 0.3s ease;
+}
+
+/* 按钮样式 */
+.neko-button {
+    background: linear-gradient(45deg, var(--primary-pink), var(--secondary-pink));
+    color: white !important;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-family: 'Pacifico', cursive;
+    font-size: 1.1rem;
+    flex: 1;
+    transition: all 0.3s var(--easing);
+    position: relative;
+    overflow: hidden;
+}
+
+.neko-button::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    animation: shimmer 2s infinite;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.neko-button:hover::after {
+    opacity: 1;
+}
+
+.neko-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 105, 180, 0.2);
+}
+
+.neko-button:active {
+    transform: translateY(1px);
+}

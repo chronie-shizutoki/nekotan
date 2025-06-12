@@ -1,0 +1,26 @@
+:root {
+    --primary-pink: #FF69B4;
+    --secondary-pink: #FFB6C1;
+    --text-dark: #2c2c2c;
+    --container-bg: #FFF0F5;
+    --animation-duration: 0.4s;
+    --easing: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --surface-dark: #3a3a3a;
+}
+
+/* 全局样式 */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 20px 0;
+    font-family: 'M PLUS Rounded 1c', -apple-system;
+    line-height: 1.7;
+    opacity: 0;
+    animation: fadeIn 1.2s var(--easing) forwards;
+    will-change: opacity, transform;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
