@@ -117,6 +117,31 @@ body {
     margin-top: 15px;
 }
 
+.diary-actions-bar .action-button {
+    padding: 8px 15px;
+    border: 2px solid var(--secondary-pink);
+    border-radius: 20px;
+    background: linear-gradient(135deg, #fff0f5 0%, #ffe4e1 100%);
+    color: var(--primary-pink);
+    font-family: 'Hachi Maru Pop', cursive;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    box-shadow: 0 2px 4px rgba(255, 182, 193, 0.2);
+    animation: floatIn 0.4s ease-out;
+}
+
+.diary-actions-bar .action-button:hover {
+    background: linear-gradient(135deg, var(--secondary-pink) 0%, var(--primary-pink) 100%);
+    color: white;
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 4px 8px rgba(255, 105, 180, 0.3);
+}
+
 /* 滚动条样式 */
 ::-webkit-scrollbar {
     width: 8px;
@@ -135,6 +160,50 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
     background: var(--primary-pink);
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    padding: 10px 0;
+}
+
+.page-button {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 15px;
+    background: linear-gradient(135deg, #fff0f5 0%, #ffe4e1 100%);
+    color: var(--primary-pink);
+    font-family: 'Hachi Maru Pop', cursive;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 2px 4px rgba(255, 182, 193, 0.2);
+    animation: floatIn 0.4s ease-out;
+}
+
+.page-button:hover:not(:disabled) {
+    background: linear-gradient(135deg, #ffccd5 0%, #ffb6c1 100%);
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 4px 8px rgba(255, 105, 180, 0.3);
+    color: white;
+}
+
+.page-button.active {
+    background: linear-gradient(135deg, #ff69b4 0%, #ff1493 100%);
+    color: white;
+    transform: scale(1.05);
+    box-shadow: 0 5px 12px rgba(255, 105, 180, 0.4);
+}
+
+.page-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+    background: #f0f0f0;
+    color: #999;
 }
 
 /* iOS优化 */
@@ -170,13 +239,48 @@ body {
     }
     
     .pagination {
-        gap: 4px;
-    }
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    padding: 10px 0;
+}
     
     .page-button {
-        padding: 6px 12px;
-        font-size: 0.9rem;
-    }
+    padding: 8px 15px;
+    border: none;
+    border-radius: 15px;
+    background: linear-gradient(135deg, #fff0f5 0%, #ffe4e1 100%);
+    color: var(--primary-pink);
+    font-family: 'Hachi Maru Pop', cursive;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 2px 4px rgba(255, 182, 193, 0.2);
+    animation: floatIn 0.4s ease-out;
+}
+
+.page-button:hover:not(:disabled) {
+    background: linear-gradient(135deg, #ffccd5 0%, #ffb6c1 100%);
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 4px 8px rgba(255, 105, 180, 0.3);
+    color: white;
+}
+
+.page-button.active {
+    background: linear-gradient(135deg, #ff69b4 0%, #ff1493 100%);
+    color: white;
+    transform: scale(1.05);
+    box-shadow: 0 5px 12px rgba(255, 105, 180, 0.4);
+}
+
+.page-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+    background: #f0f0f0;
+    color: #999;
+}
     
     .input-controls {
         flex-direction: column;
