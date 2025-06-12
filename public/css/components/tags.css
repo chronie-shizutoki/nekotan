@@ -2,14 +2,57 @@
 .tags-input-container {
     display: flex;
     flex-wrap: wrap;
-    border: none;
-    padding: 0;
-    border: 2px solid var(--secondary-pink);
+    background-color: none;
     border-radius: 12px;
-    background: white;
     min-height: 42px;
     align-items: center;
     box-sizing: border-box;
+    
+}
+
+.tag-input {
+    flex: 1;
+    min-width: 120px;
+    border: pink 1px solid;
+    outline: none;
+    font-family: 'Hachi Maru Pop', cursive;
+    font-size: 0.9rem;
+    border-radius: 12px;
+    min-height: 30px;
+    line-height: 1.2;
+    box-sizing: border-box;
+    background: transparent;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    animation: floatIn 0.4s ease-out;
+}
+
+.tag-input:focus {
+    transform: translateX(5px);
+    box-shadow: 0 4px 12px rgba(255, 105, 180, 0.1);
+}
+
+/* 深色模式适配 */
+body.dark-mode .tags-input-container {
+    border-color: none;
+    background: none;
+}
+
+body.dark-mode .tag-input {
+    background: var(--dark-bg);
+    color: var(--dark-text);
+}
+
+body.dark-mode .tag {
+    background: var(--dark-secondary-pink);
+}
+
+body.dark-mode .tag-input:focus {
+    border-color: var(--dark-primary-pink);
+    box-shadow: 0 4px 12px rgba(255, 105, 180, 0.3);
+}
+
+body.dark-mode .tag-input::placeholder {
+    color: var(--dark-placeholder);
 }
 
 /* 标签样式 */

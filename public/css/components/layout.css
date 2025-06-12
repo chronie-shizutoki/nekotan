@@ -16,6 +16,14 @@ body {
     padding: 20px;
 }
 
+/* 搜索区域 */
+.search-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px 0;
+}
+
 /* 猫咪容器样式 */
 .cat-container {
     background: var(--container-bg);

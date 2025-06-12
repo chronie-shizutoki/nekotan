@@ -48,7 +48,7 @@ export class EventHandler {
         
         entry.innerHTML = `
             <div class="diary-edit-box">
-                <textarea class="diary-edit-input">${diary.content}</textarea>
+                <textarea id="diary-edit-input" name="diary-edit-input" class="diary-edit-input">${diary.content}</textarea>
                 <div class="diary-edit-footer">
                     <div class="input-group">
                         <select class="category-select edit-category">

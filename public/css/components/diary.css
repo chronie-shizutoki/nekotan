@@ -17,17 +17,46 @@
     animation: scaleIn 0.4s var(--easing);
 }
 
-.diary-input-box textarea {
+.diary-input-box textarea, .diary-edit-input {
     width: 93%;
     height: 100px;
     padding: 15px;
-    border: 2px solid #FFB6C1;
+    border: 2px solid var(--secondary-pink);
     border-radius: 12px;
     resize: none;
     font-family: 'Hachi Maru Pop', cursive;
     font-size: 1.1rem;
-    background: rgba(255,255,255,0.9);
-    transition: all 0.3s ease;
+    background: transparent;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    animation: floatIn 0.4s ease-out;
+}
+
+.diary-edit-input:focus {
+    transform: translateX(5px);
+    box-shadow: 0 8px 24px rgba(255, 105, 180, 0.15);
+    border-color: var(--primary-pink);
+    outline: none;
+}
+
+/* 深色模式适配 */
+body.dark-mode .diary-container {
+    background: linear-gradient(135deg, var(--dark-container-bg) 0%, var(--dark-secondary-bg) 100%);
+}
+
+body.dark-mode .diary-input-box textarea,
+body.dark-mode .diary-edit-input {
+    background: var(--dark-bg);
+    color: var(--dark-text);
+    border-color: var(--dark-secondary-pink);
+}
+
+body.dark-mode .diary-edit-input:focus {
+    border-color: var(--dark-primary-pink);
+    box-shadow: 0 8px 24px rgba(255, 105, 180, 0.3);
+}
+
+body.dark-mode .diary-edit-input::placeholder {
+    color: var(--dark-placeholder);
 }
 
 /* 按钮样式 */
