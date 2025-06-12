@@ -119,7 +119,7 @@ nekochan/
 
 ## ライセンス
 
-ISC License
+AGPL-3.0 license
 
 ### サードパーティライセンス
 
