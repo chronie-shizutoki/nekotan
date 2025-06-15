@@ -63,7 +63,7 @@ export class UIManager {
                             `).join('')}
                         </div>
                     </div>
-                    <p class="diary-content">${diary.content}</p>
+                    <p class="diary-content">${diary.content.replace(/\n/g, '<br>')}</p>
                     <div class="diary-actions">
                         <button class="edit-btn" data-action="edit" data-id="${diary.id}">✏️</button>
                         <button class="delete-btn" data-action="delete" data-id="${diary.id}">🗑️</button>

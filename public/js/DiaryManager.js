@@ -71,7 +71,7 @@ export class DiaryManager {
 
     parseCSV(text) {
         if (!text.trim()) return [];
-        const lines = text.trim().split('\n');
+        const lines = text.trim().split(/\r?\n(?=(?:[^"]*"[^"]*")*[^"]*$)/);
         if (lines.length > 1) {
             return lines.slice(1).map(line => {
                 const [id, date, content, category = '未分類', tags = ''] = line.split(',').map(field => 
@@ -162,6 +162,43 @@ export class DiaryManager {
             await this.logger.info(`日記(ID: ${id})を削除しました`);
         } catch (e) {
             await this.logger.error(`日記(ID: ${id})の削除に失敗:`, e);
+            throw e;
+        }
+    }
+
+    async updateDiary(id, content, category, tags) {
+        const index = this.diaries.findIndex(d => d.id === id);
+        if (index === -1) {
+            throw new Error('日記が見つかりません');
+        }
+
+        this.diaries[index] = {
+            ...this.diaries[index],
+            content: content.trim(),
+            category: category.trim() || '未分類',
+            tags: tags.map(tag => tag.trim()).filter(Boolean),
+            date: new Date().toISOString()
+        };
+
+        try {
+            const csvContent = this.toCSV();
+            const baseUrl = window.location.origin;
+            const response = await fetch(`${baseUrl}/save-diary`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'text/csv',
+                },
+                body: csvContent
+            });
+
+            if (!response.ok) {
+                throw new Error('保存に失敗しました');
+            }
+            
+            await this.logger.info(`日記(ID: ${id})を更新しました`);
+            return true;
+        } catch (e) {
+            await this.logger.error(`日記(ID: ${id})の更新に失敗:`, e);
             throw e;
         }
     }
