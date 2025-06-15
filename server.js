@@ -7,6 +7,9 @@ const helmet = require('helmet');
 const compression = require('compression');
 const cors = require('cors');
 const morgan = require('morgan');
+const rateLimit = require('express-rate-limit');
+const csrf = require('csurf');
+const cookieParser = require('cookie-parser');
 
 // 创建日志目录
 const LOG_DIR = path.join(__dirname, 'logs');
@@ -27,7 +30,13 @@ const app = express();
 // 启用 CORS
 app.use(cors({
     origin: function(origin, callback) {
-        callback(null, true); // 允许所有来源
+        // 只允许特定域名访问
+        const allowedOrigins = ['http://localhost:3000', 'https://your-trusted-domain.com'];
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('不允许的跨域请求'));
+        }
     },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
@@ -38,9 +47,21 @@ app.use(cors({
 // 启用压缩
 app.use(compression());
 
+// 解析Cookie
+app.use(cookieParser());
+
+// CSRF保护配置
+const csrfProtection = csrf({
+  cookie: {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'strict'
+  }
+});
+
 // 请求解析
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
 app.use(express.text({ type: 'text/csv' }));  // 添加对 text/csv 的支持
 
 // 启用请求日志
@@ -53,7 +74,7 @@ app.use(helmet({
         directives: {
             defaultSrc: ["'none'"],
             scriptSrc: ["'self'"],
-            styleSrc: ["'self'", "'unsafe-inline'"],
+            styleSrc: ["'self'"],
             fontSrc: ["'self'"],
             imgSrc: ["'self'"],
             connectSrc: ["'self'"],
@@ -80,7 +101,16 @@ app.use(helmet({
 }));
 
 // API路由配置必须在静态文件服务之前
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15分钟
+  max: 100, // 每个IP限制100请求
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: '请求过于频繁，请稍后再试' }
+});
+app.use('/api', apiLimiter);
 app.use('/api', express.json());
+app.use('/save-diary', apiLimiter);
 
 // 静态文件服务配置
 app.use(express.static(path.join(__dirname, 'public'), {
@@ -94,6 +124,11 @@ app.use(express.static(path.join(__dirname, 'public'), {
         }
     }
 }));
+
+// CSRF令牌获取端点
+app.get('/api/csrf-token', csrfProtection, (req, res) => {
+  res.json({ csrfToken: req.csrfToken() });
+});
 
 // 根路由处理
 app.get('/', (req, res) => {
@@ -137,7 +172,8 @@ async function initialize() {
 }
 
 // API路由处理
-app.post('/save-diary', async (req, res) => {
+app.post('/save-diary', csrfProtection, async (req, res) => {
+  res.cookie('XSRF-TOKEN', req.csrfToken());
     try {
         const csvData = req.body;
         if (!csvData || typeof csvData !== 'string') {
@@ -159,24 +195,54 @@ app.post('/save-diary', async (req, res) => {
             await backupCSV();
         }
         
-        await fs.writeFile(csvPath, csvData, 'utf8');
+        // 净化CSV内容防止注入攻击
+        const sanitizedCsv = csvData.split('\n').map(line => {
+          if (!line.trim()) return line;
+          return line.split(',').map(cell => {
+            // 转义以=、+、-、@开头的单元格
+            if (/^[=+\-@]/.test(cell.trim())) {
+              return `'${cell}`;
+            }
+            return cell;
+          }).join(',');
+        }).join('\n');
+        await fs.writeFile(csvPath, sanitizedCsv, 'utf8');
         res.status(200).json({ message: '保存成功' });
     } catch (error) {
         console.error('保存失败:', error.stack);
         res.status(500).json({ 
             error: '保存失败',
-            message: error.message,
-            stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+            message: process.env.NODE_ENV === 'development' ? error.message : '服务器内部错误'
         });
     }
 });
 
 // API路由处理
-app.post('/api/logs', async (req, res) => {
+app.post('/api/logs', csrfProtection, async (req, res) => {
+  res.cookie('XSRF-TOKEN', req.csrfToken());
     try {
         const logs = req.body;
         if (!Array.isArray(logs)) {
             return res.status(400).json({ error: '无效的日志格式' });
+        }
+        // 验证每个日志条目的结构
+        for (const log of logs) {
+            if (typeof log !== 'object' || !log.timestamp || !log.level || !log.message) {
+                return res.status(400).json({ error: '日志条目格式无效' });
+            }
+            // 验证timestamp格式
+            if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/.test(log.timestamp)) {
+                return res.status(400).json({ error: '无效的时间戳格式' });
+            }
+            // 验证日志级别
+            const allowedLevels = ['info', 'warn', 'error', 'debug'];
+            if (!allowedLevels.includes(log.level)) {
+                return res.status(400).json({ error: '无效的日志级别' });
+            }
+            // 限制message长度
+            if (log.message.length > 1000) {
+                return res.status(400).json({ error: '日志消息过长' });
+            }
         }
         
         // 确保日志目录存在
@@ -193,7 +259,7 @@ app.post('/api/logs', async (req, res) => {
         res.status(200).json({ message: '日志已保存' });
     } catch (error) {
         console.error('保存日志失败:', error);
-        res.status(500).json({ error: '保存日志失败', details: error.message });
+        res.status(500).json({ error: '保存日志失败', details: process.env.NODE_ENV === 'development' ? error.message : '服务器内部错误' });
     }
 });
 
@@ -213,7 +279,7 @@ app.get('/diaries.csv', async (req, res) => {
         res.send(data);
     } catch (error) {
         console.error('读取日记失败:', error);
-        res.status(500).json({ error: '读取日记失败', details: error.message });
+        res.status(500).json({ error: '读取日记失败', details: process.env.NODE_ENV === 'development' ? error.message : '服务器内部错误' });
     }
 });
 
