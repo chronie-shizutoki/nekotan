@@ -72,7 +72,7 @@ export class EventHandler {
                                     html += '<optgroup label="よく使うカテゴリー">';
                                     frequentCategories.forEach(cat => {
                                         html += `<option value="${cat}" ${cat === diary.category ? 'selected' : ''}>
-                                            ${cat} (${categoryFrequency[cat]})
+                                            ${cat}
                                         </option>`;
                                     });
                                     html += '</optgroup>';
@@ -84,7 +84,7 @@ export class EventHandler {
                                     .filter(cat => !frequentCategories.includes(cat))
                                     .forEach(cat => {
                                         html += `<option value="${cat}" ${cat === diary.category ? 'selected' : ''}>
-                                            ${cat}${categoryFrequency[cat] ? ` (${categoryFrequency[cat]})` : ''}
+                                            ${cat}
                                         </option>`;
                                     });
                                 html += '</optgroup>';
@@ -98,7 +98,7 @@ export class EventHandler {
                                     html += '<optgroup label="カスタムカテゴリー">';
                                     customCategories.forEach(cat => {
                                         html += `<option value="${cat}" ${cat === diary.category ? 'selected' : ''}>
-                                            ${cat} (${categoryFrequency[cat]})
+                                            ${cat}
                                         </option>`;
                                     });
                                     html += '</optgroup>';

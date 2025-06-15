@@ -37,7 +37,7 @@ export class DiaryManager {
         }
         this.diaries = [];
         this.logger = Logger.getInstance();
-        this.pageSize = 10;
+        this.pageSize = 5;
         this.currentPage = 1;
     }
 

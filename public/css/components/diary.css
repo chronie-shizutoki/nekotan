@@ -17,7 +17,7 @@
     animation: scaleIn 0.4s var(--easing);
 }
 
-.diary-input-box textarea, .diary-edit-input {
+.diary-input-box textarea {
     width: 93%;
     height: 100px;
     padding: 15px;
@@ -27,16 +27,87 @@
     font-family: 'Hachi Maru Pop', cursive;
     font-size: 1.1rem;
     background: transparent;
-    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition: all 0.3s var(--easing);
+    transform-origin: center;
+    will-change: transform, box-shadow, border-color;
     animation: floatIn 0.4s ease-out;
 }
 
-.diary-edit-input:focus {
-    transform: translateX(5px);
+/* 输入框动画样式 */
+.diary-edit-input {
+    font-family: 'Hachi Maru Pop', cursive;
+    transition: all 0.3s var(--easing);
+    transform: translateY(0);
+    opacity: 1;
+    padding: 12px 15px;
+    border-radius: 12px;
+    min-height: 42px;
+    box-sizing: border-box;
+    flex: 1;
+    min-width: 120px;
+}
+
+.diary-edit-input.new-entry {
+    opacity: 0;
+    animation: floatUp 0.8s var(--easing) forwards;
+}
+
+/* 日记输入框动画 */
+.diary-edit-input {
+    transition: all 0.3s var(--easing);
+    transform-origin: center;
+    will-change: transform, box-shadow, border-color;
+}
+
+.diary-input-box textarea:focus {
+    transform: scale(1.02);
     box-shadow: 0 8px 24px rgba(255, 105, 180, 0.15);
     border-color: var(--primary-pink);
     outline: none;
 }
+
+.diary-edit-input:focus {
+    transform: scale(1.02);
+    box-shadow: 0 8px 24px rgba(255, 105, 180, 0.15);
+    border-color: var(--primary-pink);
+    outline: none;
+}
+
+/* 输入框占位符动画 */
+.diary-edit-input::placeholder {
+    transition: all 0.3s var(--easing);
+    opacity: 0.7;
+}
+
+.diary-edit-input:focus::placeholder {
+    opacity: 0.4;
+    transform: translateX(5px);
+}
+
+.diary-edit-box {
+    padding: 10px;
+}
+
+.diary-edit-box .diary-edit-input {
+    width: 100%;
+    min-height: 100px;
+    padding: 12px;
+    border: 2px solid var(--secondary-pink);
+    border-radius: 12px;
+    font-family: 'Hachi Maru Pop', cursive;
+    font-size: 1rem;
+    resize: vertical;
+    margin-bottom: 10px;
+}
+
+.diary-edit-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
 
 /* 深色模式适配 */
 body.dark-mode .diary-container {

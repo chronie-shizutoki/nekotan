@@ -64,7 +64,7 @@ app.use(helmet({
             frameAncestors: ["'none'"],
             formAction: ["'self'"],
             baseUri: ["'none'"],
-            sandbox: ['allow-same-origin', 'allow-scripts', 'allow-forms', 'allow-modals']
+            sandbox: ['allow-same-origin', 'allow-scripts', 'allow-forms', 'allow-modals', 'allow-downloads']
         }
     },
     crossOriginEmbedderPolicy: true,

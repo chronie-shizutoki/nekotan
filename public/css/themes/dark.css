@@ -32,8 +32,10 @@
         border-left-color: #666;
     }
 
-    .diary-content { 
+    .diary-content, .diary-edit-input { 
+        background: #333; 
         color: #E5E7EB !important; 
+        border-color: #666; 
     }
 
     .diary-date { 

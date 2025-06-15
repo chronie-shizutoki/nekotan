@@ -18,7 +18,7 @@
 }
 
 /* 日记输入框动画 */
-#diary-content {
+#diary-content{
     transition: all 0.3s var(--easing);
     transform-origin: center;
     will-change: transform, box-shadow, border-color;
