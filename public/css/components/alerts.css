@@ -1,0 +1,55 @@
+.neko-alert {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 12px 24px;
+    color: white;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    font-family: 'KleeOne-Regular';
+    z-index: 1000;
+    animation: gentleFloat 2s ease-in-out infinite;
+}
+
+.hidden-element {
+    display: none;
+}
+
+.slide-out-right {
+    animation: slideOutRight 0.4s var(--easing) forwards;
+}
+
+.input-click-animation {
+    animation: inputClick 0.4s var(--easing) forwards;
+}
+
+.scale-normal {
+    transform: scale(1);
+}
+
+.fade-out {
+    animation: fadeOut 0.5s forwards;
+}
+
+.tag-suggestions-position {
+    position: absolute;
+}
+
+.body-visible {
+    opacity: 1;
+}
+
+.tag-suggestions {
+    --top: 0;
+    --left: 0;
+    --min-width: auto;
+    position: absolute;
+    top: var(--top);
+    left: var(--left);
+    min-width: var(--min-width);
+    display: none;
+}
+
+.tag-suggestions-visible {
+    display: block;
+}

@@ -36,7 +36,7 @@ async function deleteDiary(id) {
     if (!entry) return;
 
     try {
-        entry.style.animation = 'slideOutRight 0.4s var(--easing) forwards';
+        entry.classList.add('slide-out-right');
         await new Promise(resolve => entry.addEventListener('animationend', resolve, { once: true }));
         await diaryManager.deleteDiary(id);
         await renderDiaries();
@@ -51,12 +51,12 @@ async function deleteDiary(id) {
 // Click event for diary input animation
 const diaryInput = document.getElementById('diary-content');
 diaryInput.addEventListener('focus', () => {
-    diaryInput.style.animation = 'inputClick 0.4s var(--easing) forwards';
+    diaryInput.classList.add('input-click-animation');
 });
 
 document.addEventListener('click', (e) => {
     if (!diaryInput.contains(e.target) && 
         !document.getElementById('save-diary').contains(e.target)) {
-        diaryInput.style.transform = 'scale(1)';
+        diaryInput.classList.add('scale-normal');
     }
 });

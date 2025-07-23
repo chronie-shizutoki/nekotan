@@ -19,28 +19,18 @@ export class UIManager {
 
     hideSuggestions() {
         const suggestions = document.getElementById('tag-suggestions');
-        suggestions.style.display = 'none';
+        suggestions.classList.add('hidden-element');
     }
 
     showNekoAlert(message, color, duration = 2500) {
         const alertBox = document.createElement('div');
-        alertBox.style.cssText = `
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 12px 24px;
-            background: ${color};
-            color: white;
-            border-radius: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            font-family: 'KleeOne-Regular';
-            z-index: 1000;
-            animation: gentleFloat 2s ease-in-out infinite;
-        `;
+        alertBox.className = 'neko-alert';
+        alertBox.style.backgroundColor = color;
+        alertBox.textContent = message;
         alertBox.textContent = message;
         document.body.appendChild(alertBox);
         setTimeout(() => {
-            alertBox.style.animation = 'fadeOut 0.5s forwards';
+            alertBox.classList.add('fade-out');
             setTimeout(() => alertBox.remove(), 500);
         }, duration);
     }
@@ -219,9 +209,9 @@ export class UIManager {
 
     handleDiaryInputAnimation(diaryInput, isActive) {
         if (isActive) {
-            diaryInput.style.animation = 'inputClick 0.4s var(--easing) forwards';
+            diaryInput.classList.add('input-click-animation');
         } else {
-            diaryInput.style.transform = 'scale(1)';
+            diaryInput.classList.add('scale-normal');
         }
     }
 }

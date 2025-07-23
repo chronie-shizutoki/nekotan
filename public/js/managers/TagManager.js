@@ -98,10 +98,10 @@ export class TagManager {
             });
             
             const inputRect = document.getElementById('tag-input').getBoundingClientRect();
-            suggestions.style.top = `${inputRect.bottom + window.scrollY + 5}px`;
-            suggestions.style.left = `${inputRect.left}px`;
-            suggestions.style.minWidth = `${inputRect.width}px`;
-            suggestions.style.display = 'block';
+            suggestions.style.setProperty('--top', `${inputRect.bottom + window.scrollY + 5}px`);
+        suggestions.style.setProperty('--left', `${inputRect.left}px`);
+        suggestions.style.setProperty('--min-width', `${inputRect.width}px`);
+        suggestions.classList.add('tag-suggestions-visible');
         } else {
             window.uiManager.hideSuggestions();
         }

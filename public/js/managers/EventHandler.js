@@ -25,7 +25,7 @@ export class EventHandler {
         if (!confirm('本当に削除しますか？')) return;
     
         try {
-            entry.style.animation = 'slideOutRight 0.4s var(--easing) forwards';
+            entry.classList.add('slide-out-right');
             await new Promise(resolve => entry.addEventListener('animationend', resolve, { once: true }));
             await window.diaryManager.deleteDiary(id);
             await window.uiManager.renderDiaries();
