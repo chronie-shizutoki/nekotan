@@ -1,4 +1,4 @@
-/* 性能优化：使用GPU加速和动画优化 */
+/* パフォーマンス最適化：GPU加速とアニメーション最適化 */
 .gpu-accelerated {
     transform: translateZ(0);
     backface-visibility: hidden;
@@ -6,7 +6,7 @@
     will-change: transform;
 }
 
-/* 减少重绘的动画组 */
+/* 重绘を減らすアニメーショングループ */ 
 .animate-transform {
     transition-property: transform;
 }
@@ -19,7 +19,8 @@
     transition-property: all;
 }
 
-/* 优化动画性能的容器 */
+/* 最適化アニメーションパフォーマンス */
+/* 最適化コンテナ */
 .cat-container,
 .diary-container,
 .search-container,
@@ -30,21 +31,22 @@
     -webkit-font-smoothing: antialiased;
 }
 
-/* 优化滚动性能 */
+/* 最適化スクロールパフォーマンス */
+/* 最適化コンテナ */
 .diary-history,
 .tag-suggestions {
     -webkit-overflow-scrolling: touch;
     scroll-behavior: smooth;
 }
 
-/* 减少页面重排 */
+/* ページ再配置を減らす */
 .diary-input-box textarea,
 .search-input,
 .category-select {
     contain: content;
 }
 
-/* 动画延迟加载 */
+/* アニメーション遅延ロード */
 @media (prefers-reduced-motion: reduce) {
     *,
     *::before,

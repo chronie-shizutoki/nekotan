@@ -8,7 +8,7 @@
     --surface-dark: #3a3a3a;
 }
 
-/* 全局样式 */
+/* グローバルスタイル */
 body {
     display: flex;
     flex-direction: column;

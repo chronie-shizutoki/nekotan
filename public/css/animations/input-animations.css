@@ -1,4 +1,4 @@
-/* 输入框动画样式 */
+/* 入力フィールドアニメーション */
 .input-field-animation {
     font-family: 'Hachi Maru Pop', cursive;
     transition: all 0.3s var(--easing);
@@ -17,7 +17,7 @@
     animation: floatUp 0.8s var(--easing) forwards;
 }
 
-/* 日记输入框动画 */
+/* 入力フィールドアニメーション */
 #diary-content{
     transition: all 0.3s var(--easing);
     transform-origin: center;
@@ -31,7 +31,7 @@
     outline: none;
 }
 
-/* 标签和搜索输入框动画 */
+/* タグと検索入力フィールドアニメーション */
 #tag-input,
 #search-input {
     transition: all 0.3s var(--easing);
@@ -47,7 +47,7 @@
     outline: none;
 }
 
-/* 输入框占位符动画 */
+/* 入力フィールドプレースホルダーアニメーション */
 .input-field-animation::placeholder {
     transition: all 0.3s var(--easing);
     opacity: 0.7;

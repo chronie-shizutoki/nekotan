@@ -1,4 +1,4 @@
-/* 深色模式主题 */
+/* 深色モードのテーマ */
 @media (prefers-color-scheme: dark) {
     body { 
         background: var(--text-dark); 
@@ -75,5 +75,29 @@
 
     .tag-suggestion-item:hover {
         background: #4a4a4a;
+    }
+
+    /* tag コンポーネント */
+    .tags-input-container {
+        border-color: none;
+        background: none;
+    }
+
+    .tag-input {
+        background: var(--dark-bg);
+        color: var(--dark-text);
+    }
+
+    .tag {
+        background: var(--dark-secondary-pink);
+    }
+
+    .tag-input:focus {
+        border-color: var(--dark-primary-pink);
+        box-shadow: 0 4px 12px rgba(255, 105, 180, 0.3);
+    }
+
+    .tag-input::placeholder {
+        color: var(--dark-placeholder);
     }
 }

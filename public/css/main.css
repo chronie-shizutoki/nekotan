@@ -1,19 +1,19 @@
 
-/* 首先导入字体 */
+/* まずフォントをインポート */
 @import '../vendor/fonts/fonts.css';
 
-/* 导入基础样式 */
+/* 基本スタイルをインポート */
 @import 'base/variables.css';
 @import 'base/performance.css';
 
-/* 导入动画定义 */
+/* アニメーションの定義をインポート */
 @import 'animations/keyframes.css';
 @import 'animations/input-animations.css';
 
-/* 导入布局组件 */
+/* レイアウトコンポーネントをインポート */
 @import 'components/layout.css';
 
-/* 导入功能组件 */
+/* 機能コンポーネントをインポート */
 @import 'components/clock.css';
 @import 'components/diary.css';
 @import 'components/history.css';
@@ -21,19 +21,12 @@
 @import 'components/tags.css';
 @import 'style.css';
 
-/* 最后导入主题覆盖 */
+/* 最後にテーマをオーバーライド */
 @import 'themes/dark.css';
 
-/* 重置默认样式 */
+/* デフォルトのスタイルをリセット */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
-
-/* 字体定义 */
-@font-face {
-    font-family: 'Yuji Syuku';
-    src: url('../vendor/fonts/YujiSyuku.ttf') format('truetype');
-    font-display: swap;
 }

@@ -1,6 +1,6 @@
-/* 可爱风格的筛选标签样式 */
+/* 可愛いスタイルのフィルタータグのスタイル */
 
-/* 日记分类标签样式 */
+/* 日記のカテゴリータグのスタイル */
 .diary-category {
     display: inline-block;
     padding: 5px 12px;
@@ -58,7 +58,7 @@
     box-shadow: 0 6px 15px rgba(255, 105, 180, 0.4);
 }
 
-/* 编辑和删除按钮样式 */
+/* 編集と削除ボタンのスタイル */
 .diary-actions {
     display: flex;
     gap: 10px;
@@ -111,8 +111,6 @@
     0% { opacity: 0; transform: translateY(10px); }
     100% { opacity: 1; transform: translateY(0); }
 }
-
-
 
 @keyframes bounceIn {
     0% { transform: scale(0.8); opacity: 0; }
