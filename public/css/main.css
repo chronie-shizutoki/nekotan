@@ -9,6 +9,7 @@
 /* Styles for the animations */
 @import 'animations/keyframes.css';
 @import 'animations/input-animations.css';
+@import 'animations/sakura.css';
 
 /* Import layout components */
 @import 'components/layout.css';
@@ -19,6 +20,7 @@
 @import 'components/history.css';
 @import 'components/search.css';
 @import 'components/tags.css';
+@import 'components/alerts.css';
 @import 'style.css';
 
 /* Finally, override the theme */

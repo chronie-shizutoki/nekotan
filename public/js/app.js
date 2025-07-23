@@ -5,6 +5,7 @@ import { TagManager } from './managers/TagManager.js';
 import { UIManager } from './managers/UIManager.js';
 import { EventHandler } from './managers/EventHandler.js';
 import { InputAnimator } from './InputAnimator.js';
+import { SakuraEffect } from './sakura.js';
 
 // DOMContentLoaded event listener
 document.addEventListener('DOMContentLoaded', async () => {
@@ -24,6 +25,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         await window.uiManager.renderDiaries();
 
         // Show loading success message
+        new SakuraEffect();
         window.uiManager.showNekoAlert('✨ 日記を読み込みました！', '#70DB93');
     } catch (error) {
         console.error('初期化エラー:', error);
