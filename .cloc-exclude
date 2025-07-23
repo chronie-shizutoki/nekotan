@@ -1,2 +1,4 @@
 backup-*.tar.gz
 nekochan-*.tgz
+package.json
+package-lock.json
