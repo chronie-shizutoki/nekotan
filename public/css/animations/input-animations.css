@@ -1,6 +1,6 @@
 /* Styles for the input field animation */
 .input-field-animation {
-    font-family: 'KleeOne-Regular', cursive;
+    font-family: 'KleeOne-Regular';
     transition: all 0.3s var(--easing);
     transform: translateY(0);
     opacity: 1;

@@ -53,7 +53,7 @@ body {
 }
 
 #current-date {
-    font-family: 'KleeOne-Regular', cursive;
+    font-family: 'KleeOne-Regular';
     font-size: 1.4rem;
     color: #000;
     letter-spacing: 0.1em;
@@ -62,7 +62,7 @@ body {
 
 /* Styles for the text of the cat */
 .cat-text {
-    font-family: 'KleeOne-Regular', cursive;
+    font-family: 'KleeOne-Regular';
     font-size: 1.5rem !important;
     line-height: 1.8 !important;
     display: block !important;
@@ -135,7 +135,7 @@ body {
     border-radius: 20px;
     background: linear-gradient(135deg, #fff0f5 0%, #ffe4e1 100%);
     color: var(--primary-pink);
-    font-family: 'KleeOne-Regular', cursive;
+    font-family: 'KleeOne-Regular';
     font-size: 0.9rem;
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -188,7 +188,7 @@ body {
     border-radius: 15px;
     background: linear-gradient(135deg, #fff0f5 0%, #ffe4e1 100%);
     color: var(--primary-pink);
-    font-family: 'KleeOne-Regular', cursive;
+    font-family: 'KleeOne-Regular';
     font-size: 0.9rem;
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -265,7 +265,7 @@ body {
     border-radius: 15px;
     background: linear-gradient(135deg, #fff0f5 0%, #ffe4e1 100%);
     color: var(--primary-pink);
-    font-family: 'KleeOne-Regular', cursive;
+    font-family: 'KleeOne-Regular';
     font-size: 0.9rem;
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -316,7 +316,7 @@ body {
         border-radius: 25px;
         background: linear-gradient(45deg, #fff0f5, #ffe4e1);
         color: var(--primary-pink);
-        font-family: 'KleeOne-Regular', cursive;
+        font-family: 'KleeOne-Regular';
         font-size: 1rem;
         cursor: pointer;
         transition: all 0.3s var(--easing);

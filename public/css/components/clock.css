@@ -26,7 +26,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: 'KleeOne-Regular', cursive;
+    font-family: 'KleeOne-Regular';
     font-size: 2.4rem;
     border-radius: 6px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -43,7 +43,7 @@
 }
 
 #current-date {
-    font-family: 'KleeOne-Regular', cursive;
+    font-family: 'KleeOne-Regular';
     font-size: 1.4rem;
     color: #000;
     letter-spacing: 0.1em;

@@ -33,7 +33,7 @@ export class UIManager {
             color: white;
             border-radius: 20px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            font-family: 'KleeOne-Regular', cursive;
+            font-family: 'KleeOne-Regular';
             z-index: 1000;
             animation: gentleFloat 2s ease-in-out infinite;
         `;

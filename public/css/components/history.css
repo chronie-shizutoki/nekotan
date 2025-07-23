@@ -13,7 +13,7 @@
     margin: 10px 0;
     border-left: 4px solid #FFB6C1;
     transition: all 0.4s var(--easing);
-    font-family: 'KleeOne-Regular', cursive;
+    font-family: 'KleeOne-Regular';
     overflow: hidden;
     animation: slideInRight 0.4s var(--easing);
 }
@@ -27,7 +27,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: 'KleeOne-Regular', cursive;
+    font-family: 'KleeOne-Regular';
     color: var(--text-dark);
     margin: 0;
     padding: 15px 0;
