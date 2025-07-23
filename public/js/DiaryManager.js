@@ -101,7 +101,11 @@ export class DiaryManager {
         return header + rows;
     }
 
-    async saveDiary(content, category = '未分類', tags = []) {
+    getCsrfToken() {
+        const metaTag = document.querySelector('meta[name="csrf-token"]');
+        return metaTag ? metaTag.content : null;
+    }
+        async saveDiary(content, category = '未分類', tags = []) {
         const errors = this.validateDiary(content, category, tags);
         if (errors.length > 0) {
             throw new Error(errors.join('\n'));
@@ -125,8 +129,8 @@ export class DiaryManager {
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'text/csv',
-                },
-                credentials: 'same-origin',
+                    'X-CSRF-Token': this.getCsrfToken()},
+                credentials: 'include',
                 body: csvContent
             });
 
@@ -150,11 +154,13 @@ export class DiaryManager {
             this.diaries = this.diaries.filter(d => d.id !== id);
             const csvContent = this.toCSV();
             const baseUrl = window.location.origin;
-            const response = await fetch(`${baseUrl}/save-diary`, {
-                method: 'POST',
+            const response = await fetch(`${baseUrl}/delete-diary/${id}`, {
+                method: 'DELETE',
                 headers: {
                     'Content-Type': 'text/csv',
+                    'X-CSRF-Token': this.getCsrfToken()
                 },
+                credentials: 'include',
                 body: csvContent
             });
 
@@ -322,7 +328,9 @@ export class DiaryManager {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'text/csv',
+                    'X-CSRF-Token': this.getCsrfToken()
                 },
+                credentials: 'include',
                 body: csvContent
             });
 
@@ -399,7 +407,9 @@ export class DiaryManager {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'text/csv',
+                    'X-CSRF-Token': this.getCsrfToken()
                 },
+                credentials: 'include',
                 body: csvContent
             });
 

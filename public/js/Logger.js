@@ -14,16 +14,18 @@ export class Logger {
         return Logger.instance;
     }
 
-    async log(level, message, error = null) {
+    async log(level, message) {
+        // verify log level
+        const allowedLevels = ['info', 'warn', 'error', 'debug'];
+        const validLevel = allowedLevels.includes(level) ? level : 'info';
+        
+        // limit message length to 1000 characters
+        const truncatedMessage = message.length > 1000 ? message.substring(0, 900) + '...' : message;
+        
         const logEntry = {
             timestamp: new Date().toISOString(),
-            level,
-            message,
-            error: error ? {
-                name: error.name,
-                message: error.message,
-                stack: error.stack
-            } : null
+            level: validLevel,
+            message: truncatedMessage
         };
 
         this.logQueue.push(logEntry);
@@ -49,25 +51,32 @@ export class Logger {
         }
     }
 
-    async sendLogs(logs) {
+    async sendLogs(batch) {
         let lastError;
         for (let attempt = 1; attempt <= this.maxRetries; attempt++) {
             try {
                 const baseUrl = window.location.origin;
+                    console.log('Sending log batch:', batch);
                 const response = await fetch(`${baseUrl}/api/logs`, {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${this.apiToken}`
+                        'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]')?.content || ''
                     },
                     credentials: 'same-origin',
-                    body: JSON.stringify(logs)
+                    body: JSON.stringify(batch)
                 });
 
                 if (!response.ok) {
-                    const error = await response.json().catch(() => ({ message: 'Failed to send logs to server' }));
-                    throw new Error(error.message || `HTTP error! status: ${response.status}`);
+                    const responseText = await response.text();
+                    let error;
+                    try {
+                        error = JSON.parse(responseText);
+                    } catch {
+                        error = { error: responseText };
+                    }
+                    throw new Error(`${error.error || `HTTP error! status: ${response.status}`}\nResponse: ${responseText.substring(0, 200)}`);
                 }
                 return;
             } catch (error) {

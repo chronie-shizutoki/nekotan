@@ -31,7 +31,7 @@ const app = express();
 app.use(cors({
     origin: function(origin, callback) {
         // Allow only specific domains
-        const allowedOrigins = ['http://localhost:3000', 'https://your-trusted-domain.com'];
+        const allowedOrigins = process.env.NODE_ENV === 'development' ? ['http://localhost:3000', 'http://localhost:8080', 'http://127.0.0.1:3000', 'http://127.0.0.1:8080'] : ['https://your-trusted-domain.com'];
         if (!origin || allowedOrigins.includes(origin)) {
             callback(null, true);
         } else {
@@ -40,8 +40,8 @@ app.use(cors({
     },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    exposedHeaders: ['Content-Type', 'Content-Disposition']
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-CSRF-Token'],
+    exposedHeaders: ['Content-Type', 'Content-Disposition', 'X-CSRF-Token']
 }));
 
 // Enable compression
@@ -77,7 +77,7 @@ app.use(helmet({
             styleSrc: ["'self'"],
             fontSrc: ["'self'"],
             imgSrc: ["'self'"],
-            connectSrc: ["'self'"],
+            connectSrc: process.env.NODE_ENV === 'development' ? ["'self'", "http://localhost:*", "ws://localhost:*"] : ["'self'"],
             manifestSrc: ["'self'"],
             frameSrc: ["'none'"],
             objectSrc: ["'none'"],
@@ -131,9 +131,17 @@ app.get('/api/csrf-token', csrfProtection, (req, res) => {
   res.json({ csrfToken: req.csrfToken() });
 });
 
-// Root route handler
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '静時ねこたん.html'));
+// Root route handler with CSRF token injection
+app.get('/', csrfProtection, async (req, res) => {
+    try {
+        const htmlPath = path.join(__dirname, '静時ねこたん.html');
+        let htmlContent = await fs.readFile(htmlPath, 'utf8');
+        htmlContent = htmlContent.replace('{{csrfToken}}', req.csrfToken());
+        res.send(htmlContent);
+    } catch (error) {
+        console.error('HTMLファイルの読み込みエラー:', error);
+        res.status(500).send('サーバーエラーが発生しました');
+    }
 });
 
 // Create backup
@@ -174,6 +182,10 @@ async function initialize() {
 
 // API route handler for saving diary entries
 app.post('/save-diary', csrfProtection, async (req, res) => {
+  console.log('CSRF Token Validation:', req.csrfToken());
+  console.log('Incoming X-CSRF-Token header:', req.headers['x-csrf-token']);
+  res.setHeader('X-CSRF-Token', req.csrfToken());
+  
   res.cookie('XSRF-TOKEN', req.csrfToken());
     try {
         const csvData = req.body;
@@ -228,20 +240,36 @@ app.post('/api/logs', csrfProtection, async (req, res) => {
         }
         // Validate log entry structure
         for (const log of logs) {
-            if (typeof log !== 'object' || !log.timestamp || !log.level || !log.message) {
-                return res.status(400).json({ error: 'ログ条目形式が無効です' });
+            if (typeof log !== 'object') {
+                console.error('Invalid log format - not an object:', log);
+                return res.status(400).json({ error: 'ログ条目形式が無効です: ログはオブジェクトである必要があります' });
+            }
+            if (!log.timestamp) {
+                console.error('Missing timestamp in log entry:', log);
+                return res.status(400).json({ error: 'ログ条目形式が無効です: timestampがありません' });
+            }
+            if (!log.level) {
+                console.error('Missing level in log entry:', log);
+                return res.status(400).json({ error: 'ログ条目形式が無効です: levelがありません' });
+            }
+            if (!log.message) {
+                console.error('Missing message in log entry:', log);
+                return res.status(400).json({ error: 'ログ条目形式が無効です: messageがありません' });
             }
             // Validate log timestamp format
             if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/.test(log.timestamp)) {
+                console.error('Invalid timestamp format:', log.timestamp);
                 return res.status(400).json({ error: 'ログのタイムスタンプ形式が無効です' });
             }
             // Validate log level
             const allowedLevels = ['info', 'warn', 'error', 'debug'];
             if (!allowedLevels.includes(log.level)) {
+                console.error('Invalid log level:', log.level);
                 return res.status(400).json({ error: 'ログレベルが無効です' });
             }
             // Validate log message length
             if (log.message.length > 1000) {
+                console.error('Log message too long:', log.message.length, 'characters:', log.message);
                 return res.status(400).json({ error: 'ログメッセージが过长です' });
             }
         }
@@ -262,6 +290,33 @@ app.post('/api/logs', csrfProtection, async (req, res) => {
         console.error('保存ログに失敗しました:', error);
         res.status(500).json({ error: '保存ログに失敗しました', code: error.code, details: process.env.NODE_ENV === 'development' ? error.message : 'サーバー内部エラー' });
     }
+});
+
+// API route handler for deleting diary entries
+app.delete('/delete-diary/:id', csrfProtection, async (req, res) => {
+  res.cookie('XSRF-TOKEN', req.csrfToken());
+  try {
+    const diaryId = req.params.id;
+    if (!diaryId || isNaN(diaryId)) {
+      return res.status(400).json({ error: '無効な日記IDです' });
+    }
+
+    const csvPath = path.join(__dirname, 'diaries.csv');
+    await backupCSV();
+    const data = await fs.readFile(csvPath, 'utf8');
+    const lines = data.split('\n');
+    const header = lines[0];
+    const entries = lines.slice(1).filter(line => line.trim() !== '');
+
+    const updatedEntries = entries.filter(line => !line.startsWith(`${diaryId},`));
+    const updatedData = [header, ...updatedEntries].join('\n');
+
+    await fs.writeFile(csvPath, updatedData, 'utf8');
+    res.status(200).json({ message: '日記を削除しました' });
+  } catch (error) {
+    console.error('日記削除エラー:', error);
+    res.status(500).json({ error: '日記削除に失敗しました', details: process.env.NODE_ENV === 'development' ? error.message : 'サーバー内部エラー' });
+  }
 });
 
 // API route handler for retrieving diary data
