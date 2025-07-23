@@ -19,4 +19,4 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Run cloc
-        run: npx cloc --exclude-dir=node_modules --exclude=backup-*.tar.gz,nekochan-*.tgz .
+        run: npx cloc --exclude-dir=node_modules --exclude-list-file=.cloc-exclude .
