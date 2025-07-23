@@ -1,7 +1,7 @@
 {
-  "name": "nekochan",
+  "name": "nekotan",
   "version": "2.0.0",
-  "description": "静時ねこちゃんの日記帳",
+  "description": "静時ねこたんの日記帳",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
