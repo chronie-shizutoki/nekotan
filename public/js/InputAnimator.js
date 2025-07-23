@@ -1,11 +1,11 @@
-// 输入框动画管理类
+// 入力フィールドのアニメーションを管理するクラス
 export class InputAnimator {
     constructor() {
         this.initializeInputs();
     }
 
     initializeInputs() {
-        // 为新创建的输入框添加动画类
+        // 新しく作成された入力フィールドにアニメーションクラスを追加する
         document.querySelectorAll('.input-field-animation').forEach(input => {
             if (!input.classList.contains('initialized')) {
                 input.classList.add('new-entry');
@@ -13,11 +13,11 @@ export class InputAnimator {
             }
         });
 
-        // 移除已完成动画的类
+        // アニメーションが完了したクラスを削除する
         setTimeout(() => {
             document.querySelectorAll('.new-entry').forEach(input => {
                 input.classList.remove('new-entry');
             });
-        }, 800); // 与 CSS 动画时长匹配
+        }, 800); // CSSアニメーションの時間と一致させる
     }
 }

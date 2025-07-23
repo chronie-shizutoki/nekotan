@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>静時ねこちゃんの日記帳</title>
+    <title>静時ねこたんの日記帳</title>
     <link rel="stylesheet" type="text/css" href="/css/main.css">
     <script src="/js/font-loader.js" defer></script>
 </head>
@@ -15,7 +15,7 @@
 
     <section class="cat-container">
         <span class="cat-text cat-text-1">はじめましてにゃん♡</span>
-        <span class="cat-text cat-text-2">静時ねこちゃんだにゃ！</span>
+        <span class="cat-text cat-text-2">静時ねこたんだにゃ！</span>
         <span class="cat-text cat-text-3">これからも一緒に遊ぼうね～</span>
         <span class="cat-text cat-text-4">よろしくにゃんっ</span>
     </section>
@@ -26,11 +26,11 @@
                       class="input-field-animation will-change-transform"
                       placeholder="今日の出来事を書いてにゃ～♪"
                       maxlength="5000"></textarea>
-            <div style="width: 100%; text-align: right; color: #666; font-size: 0.9rem;">
+            <div class="char-count-container">
                 <span id="char-count">0</span> / 5000
             </div>
             
-            <!-- 分类和标签输入区域 -->
+            <!-- カテゴリーとタグ入力エリア -->
             <div class="input-controls">
                 <div class="input-group">
                     <select id="diary-category" class="category-select">
@@ -50,19 +50,19 @@
             </div>
         </div>
 
-        <!-- 日记列表区域 -->
+        <!-- 日記の履歴リストエリア -->
         <div class="diary-history">
             <div class="history-header">
                 <h2 class="history-title">ねこの思い出</h2>
                 
-                <!-- 搜索区域 -->
+                <!-- 検索エリア -->
                 <div class="search-container">
                     <input type="text" id="search-input" class="search-input input-field-animation" placeholder="日記を検索するにゃ～">
                     <select id="search-category" class="category-select">
                         <option value="">全てのカテゴリー</option>
                     </select>
                     <div class="tags-filter" id="tags-filter">
-                        <!-- 标签过滤器将通过 JavaScript 动态填充 -->
+                        <!-- タグフィルターは JavaScript を使って動的に埋め込まれます -->
                     </div>
                 </div>
 
@@ -80,11 +80,11 @@
         </div>
     </article>
 
-    <!-- 添加标签建议列表 -->
+    <!-- タグの建议リスト -->
     <div id="tag-suggestions" class="tag-suggestions"></div>
 
-    <!-- 确认对话框 -->
-    <div id="confirm-dialog" class="confirm-dialog" style="display: none;">
+    <!-- 確認ダイアログ -->
+    <div id="confirm-dialog" class="confirm-dialog">
         <div class="confirm-dialog-content">
             <p class="confirm-message">日記を削除してもよろしいですか？</p>
             <div class="confirm-buttons">
@@ -98,6 +98,3 @@
     <script type="module" src="/js/app.js"></script>
 </body>
 </html>
-
-
-

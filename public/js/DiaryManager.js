@@ -4,20 +4,20 @@ export class DiaryManager {
     static defaultCategories = [
         '未分類',
         '日常', // 日常生活
-        '仕事', // 工作相关
-        '勉強', // 学习笔记
-        '趣味', // 兴趣爱好
-        '思考', // 思考感悟
-        '旅行', // 旅行见闻
-        '健康', // 健康运动
-        '創作', // 创作灵感
-        '読書', // 读书笔记
-        '料理', // 美食烹饪
-        '夢', // 梦境记录
-        '目標', // 目标计划
-        '映画', // 电影观后感
-        'ゲーム', // 游戏体验
-        '音楽' // 音乐感想
+        '仕事', // 仕事関連
+        '勉強', // 勉強ノート
+        '趣味', // 趣味・娯楽
+        '思考', // 思考・感想
+        '旅行', // 旅行の出来事
+        '健康', // 健康・運動
+        '創作', // 創作のインスピレーション
+        '読書', // 読書ノート
+        '料理', // 料理体験
+        '夢', // 夢の記録
+        '目標', // 目標・計画
+        '映画', // 映画の感想
+        'ゲーム', // ゲーム体験
+        '音楽' // 音楽感想
     ];
 
     static instance = null;
@@ -139,7 +139,7 @@ export class DiaryManager {
             return true;
         } catch (e) {
             await this.logger.error('CSV書き込み失敗:', e);
-            // 移除失败的条目
+            // 保存に失敗したため、先ほど追加したエントリを削除します
             this.diaries.shift();
             throw e;
         }
@@ -203,7 +203,7 @@ export class DiaryManager {
         }
     }
 
-    // 搜索功能支持标签
+    // 検索機能をサポートする
     searchDiaries(query, category = null, selectedTags = [], page = 1) {
         const filteredDiaries = this.diaries.filter(diary => {
             const contentMatch = diary.content.toLowerCase().includes(query.toLowerCase());
@@ -223,15 +223,15 @@ export class DiaryManager {
         };
     }
 
-    // 获取所有分类
+    // すべてのカテゴリーを取得する
     getCategories() {
-        // 获取所有已使用的分类
+        // すべての使用中のカテゴリーを取得する
         const usedCategories = new Set(this.diaries.map(diary => diary.category));
-        // 合并默认分类和已使用分类，去重
+        // デフォルトカテゴリーと使用中のカテゴリーをマージし、重複を排除する
         return Array.from(new Set([...DiaryManager.defaultCategories, ...usedCategories]));
     }
 
-    // 获取所有标签
+    // すべてのタグを取得する
     getTags() {
         const tagSet = new Set();
         this.diaries.forEach(diary => {
@@ -253,7 +253,7 @@ export class DiaryManager {
         }
     }
 
-    // 分页功能
+    // ページング機能をサポートする
     getPageCount() {
         return Math.ceil(this.diaries.length / this.pageSize);
     }
@@ -269,7 +269,7 @@ export class DiaryManager {
         this.currentPage = Math.max(1, Math.min(page, maxPage));
     }
 
-    // 数据验证
+    // データの検証をサポートする
     validateDiary(content, category = '未分類', tags = []) {
         const errors = [];
         
@@ -296,7 +296,7 @@ export class DiaryManager {
         return errors;
     }
 
-    // 日记编辑功能更新
+    // 日記の更新をサポートする
     async updateDiary(id, content, category = '未分類', tags = []) {
         try {
             const errors = this.validateDiary(content, category, tags);
@@ -335,7 +335,7 @@ export class DiaryManager {
         }
     }
 
-    // 导出数据功能
+    // データのエクスポートをサポートする
     async exportData(format = 'csv') {
         try {
             let data;
@@ -369,7 +369,7 @@ export class DiaryManager {
         }
     }
 
-    // 导入数据功能
+    // データのインポートをサポートする
     async importData(file) {
         try {
             const content = await this.readFile(file);
@@ -382,18 +382,18 @@ export class DiaryManager {
                 importedDiaries = this.parseCSV(content);
             }
 
-            // 验证导入的数据
+            // インポートされたデータの形式を検証する
             if (!this.validateImportedData(importedDiaries)) {
                 throw new Error('インポートされたデータの形式が正しくありません');
             }
 
-            // 合并数据，避免重复
+            // データをマージし、重複を避ける
             const existingIds = new Set(this.diaries.map(d => d.id));
             const newDiaries = importedDiaries.filter(d => !existingIds.has(d.id));
             
             this.diaries = [...this.diaries, ...newDiaries].sort((a, b) => b.id - a.id);
             
-            // 保存合并后的数据
+            // 保存マージされたデータ
             const csvContent = this.toCSV();
             const response = await fetch('/save-diary', {
                 method: 'POST',
@@ -413,7 +413,7 @@ export class DiaryManager {
         }
     }
 
-    // 读取文件内容
+    // データを非同期的に読み取る
     async readFile(file) {
         return new Promise((resolve, reject) => {
             const reader = new FileReader();
@@ -423,7 +423,7 @@ export class DiaryManager {
         });
     }
 
-    // 解析 JSON 数据
+    // 解析 JSON データ
     async parseJSON(content) {
         try {
             const data = JSON.parse(content);
@@ -436,7 +436,7 @@ export class DiaryManager {
         }
     }
 
-    // 验证导入的数据
+    // インポートされたデータの形式を検証する
     validateImportedData(diaries) {
         if (!Array.isArray(diaries)) return false;
         

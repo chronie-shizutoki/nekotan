@@ -88,7 +88,7 @@ export class UIManager {
             this.updateCategorySelector(window.diaryManager);
             window.tagManager.updateTagsFilter(window.diaryManager);
             
-            // 重新初始化输入框动画
+            // 入力ボックスのアニメーションを再初期化する
             if (window.inputAnimator) {
                 window.inputAnimator.initializeInputs();
             }
@@ -137,7 +137,7 @@ export class UIManager {
         const categorySelect = document.getElementById('diary-category');
         const searchCategorySelect = document.getElementById('search-category');
         
-        // 分类频率统计（不包括当前查看的分类，避免重复）
+        // カテゴリーの使用頻度を統計する（現在のカテゴリーを除いて重複を避ける）
         const categoryFrequency = {};
         diaryManager.diaries.forEach(diary => {
             if (diary.category) {
@@ -146,11 +146,11 @@ export class UIManager {
             }
         });
 
-        // 生成选项HTML
+        // オプションHTMLを生成する
         const generateOptions = (includeAll = false) => {
             let html = includeAll ? '<option value="">全てのカテゴリー</option>' : '';
             
-            // 添加默认分类组（使用频率前5的分类）
+            // よく使うカテゴリーを追加する（使用頻度前5のカテゴリー）
             const frequentCategories = Object.entries(categoryFrequency)
                 .sort(([,a], [,b]) => b - a)
                 .slice(0, 5)
@@ -165,7 +165,7 @@ export class UIManager {
                 html += '</optgroup>';
             }
 
-            // 添加默认分类组
+            // デフォルトカテゴリーグループ
             html += '<optgroup label="すべてのカテゴリー">';
             DiaryManager.defaultCategories.forEach(category => {
                 if (!frequentCategories.includes(category)) {
@@ -174,7 +174,7 @@ export class UIManager {
             });
             html += '</optgroup>';
 
-            // 添加自定义分类组
+            // カスタムカテゴリーグループ
             const customCategories = categories.filter(cat => 
                 !DiaryManager.defaultCategories.includes(cat) && !frequentCategories.includes(cat)
             );

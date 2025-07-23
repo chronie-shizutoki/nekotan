@@ -60,14 +60,14 @@ export class EventHandler {
                                     categoryFrequency[d.category] = (categoryFrequency[d.category] || 0) + 1;
                                 });
 
-                                // 获取常用分类
+                                // よく使うカテゴリーを取得
                                 const frequentCategories = Object.entries(categoryFrequency)
                                     .sort(([,a], [,b]) => b - a)
                                     .slice(0, 5)
                                     .map(([cat]) => cat);
 
                                 let html = '';
-                                // 常用分类组
+                                // よく使うカテゴリーグループ
                                 if (frequentCategories.length > 0) {
                                     html += '<optgroup label="よく使うカテゴリー">';
                                     frequentCategories.forEach(cat => {
@@ -78,7 +78,7 @@ export class EventHandler {
                                     html += '</optgroup>';
                                 }
 
-                                // 默认分类组
+                                // デフォルトカテゴリーグループ
                                 html += '<optgroup label="すべてのカテゴリー">';
                                 DiaryManager.defaultCategories
                                     .filter(cat => !frequentCategories.includes(cat))
@@ -89,7 +89,7 @@ export class EventHandler {
                                     });
                                 html += '</optgroup>';
 
-                                // 自定义分类组
+                                // カスタムカテゴリーグループ
                                 const customCategories = categories.filter(cat => 
                                     !DiaryManager.defaultCategories.includes(cat) && 
                                     !frequentCategories.includes(cat)

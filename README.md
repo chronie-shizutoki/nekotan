@@ -40,7 +40,7 @@
 
 ```bash
 # リポジトリをクローン
-git clone [repository-url]
+git clone https://github.com/quiettimejsg/nekotan.git
 cd nekochan
 
 # 依存パッケージをインストール
