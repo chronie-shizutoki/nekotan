@@ -253,14 +253,14 @@ app.post('/api/logs', csrfProtection, async (req, res) => {
         const logFile = path.join(LOG_DIR, `${logDate}.log`);
         
         const logEntries = logs.map(log => 
-            `[${log.timestamp}] ${log.level}: ${log.message}${log.error ? '\n' + JSON.stringify(log.error, null, 2) : ''}`
+            `[${log.timestamp.replace(/`/g, '\\`')}] ${log.level.replace(/`/g, '\\`')}: ${log.message.replace(/`/g, '\\`')}${log.error ? '\n' + (() => { try { return JSON.stringify(log.error, null, 2).replace(/`/g, '\\`'); } catch (e) { return 'Error serializing error: ' + e.message.replace(/`/g, '\\`'); } })() : ''}`
         ).join('\n') + '\n';
         
         await fs.appendFile(logFile, logEntries);
         res.status(200).json({ message: 'ログを保存しました' });
     } catch (error) {
         console.error('保存ログに失敗しました:', error);
-        res.status(500).json({ error: '保存ログに失敗しました', details: process.env.NODE_ENV === 'development' ? error.message : 'サーバー内部エラー' });
+        res.status(500).json({ error: '保存ログに失敗しました', code: error.code, details: process.env.NODE_ENV === 'development' ? error.message : 'サーバー内部エラー' });
     }
 });
 
@@ -287,7 +287,7 @@ app.get('/diaries.csv', async (req, res) => {
 // Error handling middleware
 app.use((err, req, res, next) => {
     console.error(err.stack);
-    res.status(500).send('サーバーにエラーが発生しました！');
+    res.status(err.status || 500).send(err.message || 'サーバーにエラーが発生しました！');
 });
 
 // 404 Not Found handler

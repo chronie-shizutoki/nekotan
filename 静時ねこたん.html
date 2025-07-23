@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>静時ねこたんの日記帳</title>
+    <title>静時ねこたんのにゃん日記帳</title>
     <link rel="stylesheet" type="text/css" href="/css/main.css">
     <link rel="stylesheet" type="text/css" href="/css/components/alerts.css">
     <script src="/js/font-loader.js" defer></script>
@@ -15,27 +15,27 @@
     </div>
 
     <section class="cat-container">
-        <span class="cat-text cat-text-1">はじめましてにゃん♡</span>
-        <span class="cat-text cat-text-2">静時ねこたんだにゃ！</span>
-        <span class="cat-text cat-text-3">これからも一緒に遊ぼうね～</span>
-        <span class="cat-text cat-text-4">よろしくにゃんっ</span>
+        <span class="cat-text cat-text-1">はじめましてにゃん～♡</span>
+        <span class="cat-text cat-text-2">静時ねこたんだにゃん～！</span>
+        <span class="cat-text cat-text-3">これからも一緒に遊んでね～♪</span>
+        <span class="cat-text cat-text-4">よろしくにゃんっ♡</span>
     </section>
 
     <article class="diary-container optimize-legibility">
         <div class="diary-input-box hardware-accelerated">
             <textarea id="diary-content" 
                       class="input-field-animation will-change-transform"
-                      placeholder="今日の出来事を書いてにゃ～♪"
+                      placeholder="今日のかわいい出来事を書いてにゃ～♡"
                       maxlength="5000"></textarea>
             <div class="char-count-container">
-                <span id="char-count">0</span> / 5000
+                <span id="char-count">0</span>文字 / 5000文字
             </div>
             
             <!-- カテゴリーとタグ入力エリア -->
             <div class="input-controls">
                 <div class="input-group">
                     <select id="diary-category" class="category-select">
-                        <option value="未分類">未分類</option>
+                        <option value="にゃん分類">にゃん分類</option>
                     </select>
                 </div>
                 <div class="input-group">
@@ -43,35 +43,35 @@
                         <div id="tags-display"></div>
                         <input type="text" id="tag-input" name="tag-input"
                                class="input-field-animation"
-                               placeholder="タグを入力 (最大10個)"
+                               placeholder="タグを入力してにゃ～ (最大10個✨)"
                                maxlength="20">
                     </div>
                 </div>
-                <button id="save-diary" class="neko-button">にゃ～♪</button>
+                <button id="save-diary" class="neko-button">にゃ～ん♡</button>
             </div>
         </div>
 
         <!-- 日記の履歴リストエリア -->
         <div class="diary-history">
             <div class="history-header">
-                <h2 class="history-title">ねこの思い出</h2>
+                <h2 class="history-title">ねこのかわいい思い出</h2>
                 
                 <!-- 検索エリア -->
                 <div class="search-container">
-                    <input type="text" id="search-input" class="search-input input-field-animation" placeholder="日記を検索するにゃ～">
+                    <input type="text" id="search-input" class="search-input input-field-animation" placeholder="日記を検索してみてにゃ～🔍">
                     <select id="search-category" class="category-select">
-                        <option value="">全てのカテゴリー</option>
+                        <option value="">全てのカテゴリーだにゃ～</option>
                     </select>
                     <div class="tags-filter" id="tags-filter">
-                        <!-- タグフィルターは JavaScript を使って動的に埋め込まれます -->
+                        <!-- タグフィルターは JavaScript を使って動的に埋め込まれますよ～ -->
                     </div>
                 </div>
 
                 <div class="diary-actions-bar">
-                    <button id="export-csv" class="action-button">CSV出力📝</button>
-                    <button id="export-json" class="action-button">JSON出力📊</button>
+                    <button id="export-csv" class="action-button">CSVにゃ～出力📝</button>
+                    <button id="export-json" class="action-button">JSONにゃ～出力📊</button>
                     <label for="import-file" class="action-button">
-                        データ取込み📥
+                        データにゃ～取込み📥
                         <input type="file" id="import-file" accept=".csv,.json" class="hidden-element">
                     </label>
                 </div>
@@ -87,10 +87,10 @@
     <!-- 確認ダイアログ -->
     <div id="confirm-dialog" class="confirm-dialog">
         <div class="confirm-dialog-content">
-            <p class="confirm-message">日記を削除してもよろしいですか？</p>
+            <p class="confirm-message">日記を削除してもいいにゃんか？</p>
             <div class="confirm-buttons">
-                <button id="confirm-yes" class="confirm-button">はい</button>
-                <button id="confirm-no" class="confirm-button">いいえ</button>
+                <button id="confirm-yes" class="confirm-button">はいにゃ～</button>
+                <button id="confirm-no" class="confirm-button">いいえにゃ～</button>
             </div>
         </div>
     </div>
