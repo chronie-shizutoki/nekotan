@@ -4,6 +4,7 @@ export class Logger {
         this.isProcessing = false;
         this.failedLogs = [];
         this.maxRetries = 3;
+        this.apiToken = typeof window !== 'undefined' ? window.VITE_API_TOKEN || '' : '';
     }
 
     static getInstance() {
@@ -57,7 +58,8 @@ export class Logger {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${this.apiToken}`
                     },
                     credentials: 'same-origin',
                     body: JSON.stringify(logs)

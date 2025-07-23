@@ -99,7 +99,7 @@ body {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-    width: 100%;
+    width: 90%;
     margin-top: 15px;
 }
 
@@ -115,7 +115,8 @@ body {
 
 .input-group {
     flex: 1;
-    min-width: 200px;
+    left: 30px;
+    max-width: 130px;
     position: relative;
 }
 
