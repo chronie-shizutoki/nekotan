@@ -11,7 +11,7 @@
 - [日语](README.md)
 - [英语](README-en.md)
 - [韩语](README-ko.md)
-- [简体中文](README-zh.md)
+- [繁体中文](README-tw.md)
 
 ## 本地化资源
 
