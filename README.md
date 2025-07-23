@@ -10,10 +10,7 @@
 
 `public/vendor/fonts` ディレクトリに格納：
 
-- HachiMaruPop-Regular.woff2 - はちまるポップ体
-- MPLUSRounded1c-Light.woff2 - M PLUS Rounded 1c Light
-- MPLUSRounded1c-Medium.woff2 - M PLUS Rounded 1c Medium
-- YujiSyuku-Regular.woff2 - 遊筆修
+- KleeOne-Regular.woff2 - Klee One フォント
 
 ### JavaScriptライブラリ
 
@@ -125,8 +122,6 @@ AGPL-3.0 license
 
 フォントファイルは SIL Open Font License 1.1 でライセンスされています：
 
-- Hachi Maru Pop: Copyright 2020 The Hachi Maru Pop Project Authors
-- M PLUS Rounded 1c: Copyright 2016 The M+ FONTS Project Authors
-- Yuji Syuku: Copyright 2021 The Yuji Project Authors
+- Klee One: Copyright 2020 The Klee One Project Authors
 
 FastClick は MIT ライセンスで提供されています。

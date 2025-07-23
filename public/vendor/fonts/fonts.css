@@ -7,3 +7,7 @@
     src: url('KleeOne-Regular.ttf') format('truetype'),
          url('KleeOne-Regular.woff2') format('woff2');
 }
+
+* {
+    font-family: 'KleeOne-Regular';
+}
