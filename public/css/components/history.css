@@ -1,4 +1,4 @@
-/* ヒストリーレコードコンポーネントのスタイル */
+/* Styles for the history record component */
 .diary-history {
     margin-top: 30px;
     background: rgba(255,255,255,0.9);
@@ -13,7 +13,7 @@
     margin: 10px 0;
     border-left: 4px solid #FFB6C1;
     transition: all 0.4s var(--easing);
-    font-family: 'Hachi Maru Pop', cursive;
+    font-family: 'KleeOne-Regular', cursive;
     overflow: hidden;
     animation: slideInRight 0.4s var(--easing);
 }
@@ -27,7 +27,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: 'Yuji Syuku', serif;
+    font-family: 'KleeOne-Regular', cursive;
     color: var(--text-dark);
     margin: 0;
     padding: 15px 0;

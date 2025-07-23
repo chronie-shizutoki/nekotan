@@ -1,36 +1,9 @@
-/* ローカルフォント定義 */
+/* Local font definition */
 @font-face {
-    font-family: 'Hachi Maru Pop';
+    font-family: 'KleeOne-Regular';
     font-style: normal;
     font-weight: 400;
     font-display: swap;
-    src: url('HachiMaruPop.ttf') format('truetype'),
-         url('HachiMaruPop-Regular.woff2') format('woff2');
-}
-
-@font-face {
-    font-family: 'M PLUS Rounded 1c';
-    font-style: normal;
-    font-weight: 300;
-    font-display: swap;
-    src: url('MPLUSRounded1c-Light.ttf') format('truetype'),
-         url('MPLUSRounded1c-Light.woff2') format('woff2');
-}
-
-@font-face {
-    font-family: 'M PLUS Rounded 1c';
-    font-style: normal;
-    font-weight: 500;
-    font-display: swap;
-    src: url('MPLUSRounded1c-Medium.ttf') format('truetype'),
-         url('MPLUSRounded1c-Medium.woff2') format('woff2');
-}
-
-@font-face {
-    font-family: 'Yuji Syuku';
-    font-style: normal;
-    font-weight: 400;
-    font-display: swap;
-    src: url('YujiSyuku.ttf') format('truetype'),
-         url('YujiSyuku-Regular.woff2') format('woff2');
+    src: url('KleeOne-Regular.ttf') format('truetype'),
+         url('KleeOne-Regular.woff2') format('woff2');
 }

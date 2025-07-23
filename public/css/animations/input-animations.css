@@ -1,6 +1,6 @@
-/* 入力フィールドアニメーション */
+/* Styles for the input field animation */
 .input-field-animation {
-    font-family: 'Hachi Maru Pop', cursive;
+    font-family: 'KleeOne-Regular', cursive;
     transition: all 0.3s var(--easing);
     transform: translateY(0);
     opacity: 1;
@@ -17,7 +17,7 @@
     animation: floatUp 0.8s var(--easing) forwards;
 }
 
-/* 入力フィールドアニメーション */
+/* Styles for the input field animation */
 #diary-content{
     transition: all 0.3s var(--easing);
     transform-origin: center;
@@ -31,7 +31,7 @@
     outline: none;
 }
 
-/* タグと検索入力フィールドアニメーション */
+/* Styles for the tag and search input field animation */
 #tag-input,
 #search-input {
     transition: all 0.3s var(--easing);
@@ -47,7 +47,7 @@
     outline: none;
 }
 
-/* 入力フィールドプレースホルダーアニメーション */
+/* Styles for the input field placeholder animation */
 .input-field-animation::placeholder {
     transition: all 0.3s var(--easing);
     opacity: 0.7;

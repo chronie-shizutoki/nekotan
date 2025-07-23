@@ -8,7 +8,7 @@
     --surface-dark: #3a3a3a;
 }
 
-/* 基础动画 */
+/* Basic Animations */
 @keyframes fadeIn {
     0% { opacity: 0; transform: translateY(20px); }
     100% { opacity: 1; transform: translateY(0); }
@@ -34,7 +34,7 @@
     to { opacity: 0; transform: translateY(-20px); }
 }
 
-/* 新增动画关键帧 */
+/* New animation keyframes */
 @keyframes scaleIn {
     from { transform: scale(0.95); opacity: 0; }
     to { transform: scale(1); opacity: 1; }
@@ -66,7 +66,7 @@
     100% { background-position: 200% 0; }
 }
 
-/* 新增动画：文字闪耀效果 */
+/* New animation: Text shimmer effect */
 @keyframes textShimmer {
     0% { background-position: -100% 50%; }
     100% { background-position: 200% 50%; }
@@ -95,7 +95,7 @@
     100% { transform: scale(1.01); }
 }
 
-/* 标题动画 */
+/* Title Animation */
 .history-title {
     display: flex;
     align-items: center;
@@ -127,7 +127,7 @@
     animation-delay: -1s;
 }
 
-/* 所有输入框的基础动画样式 */
+/* Basic animation styles for all input fields */
 .input-field-animation {
     transition: all 0.3s var(--easing);
     transform: translateY(0);
@@ -139,7 +139,7 @@
     animation: floatUp 0.8s var(--easing) forwards;
 }
 
-/* 日记输入框动画 */
+/* Diary input box animation */
 #diary-content {
     transition: all 0.3s var(--easing);
     transform-origin: center;
@@ -153,7 +153,7 @@
     outline: none;
 }
 
-/* 标签和搜索输入框动画 */
+/* Tag and search input box animations */
 #tag-input,
 #search-input {
     transition: all 0.3s var(--easing);
@@ -169,7 +169,7 @@
     outline: none;
 }
 
-/* 输入框占位符动画 */
+/* Input placeholder animation */
 .input-field-animation::placeholder {
     transition: all 0.3s var(--easing);
     opacity: 0.7;
@@ -180,7 +180,7 @@
     transform: translateX(5px);
 }
 
-/* 时间翻转动画 */
+/* Time Flip Animation */
 .time-flip {
     display: flex;
     gap: 8px;
@@ -216,7 +216,7 @@
     color: #FF69B4;
 }
 
-/* 全局样式 */
+/* Global Styles */
 body {
     display: flex;
     flex-direction: column;
@@ -233,7 +233,7 @@ body {
     text-rendering: optimizeLegibility;
 }
 
-/* 时间容器 */
+/* Time Container */
 .time-container {
     text-align: center;
     padding: 15px;
@@ -249,7 +249,7 @@ body {
     margin-bottom: 8px;
 }
 
-/* 猫咪容器 */
+/* Cat Container */
 .cat-container {
     background: var(--container-bg);
     padding: 25px;
@@ -282,7 +282,7 @@ body {
         gentleFloat 4s ease-in-out infinite;
 }
 
-/* 猫咪文本颜色 */
+/* Cat text colors */
 .cat-text-1 { color: #FF6EC7 !important; }
 .cat-text-2 {
     background: linear-gradient(45deg, #FF69B4, #FFB6C1) !important;
@@ -299,7 +299,7 @@ body {
 }
 .cat-text-6 { color: #9370DB !important; }
 
-/* 日记功能 */
+/* Diary Functionality */
 .diary-container {
     background: linear-gradient(135deg, var(--container-bg) 0%, #FFE4E1 100%);
     border-radius: 20px;
@@ -463,7 +463,7 @@ body {
     opacity: 1;
 }
 
-/* 历史记录标题栏样式 */
+/* History header styles */
 .history-header {
     display: flex;
     justify-content: space-between;
@@ -500,7 +500,7 @@ body {
     transform: translateY(-2px);
 }
 
-/* 搜索功能 */
+/* Search Functionality */
 .search-container {
     margin: 20px auto;
     padding: 15px;
@@ -536,7 +536,7 @@ body {
     transition: all 0.3s var(--easing);
 }
 
-/* 分类标签样式 */
+/* Category Tag Styles */
 .diary-category {
     display: inline-block;
     padding: 4px 12px;
@@ -547,7 +547,7 @@ body {
     margin-left: 10px;
 }
 
-/* 分页控件样式 */
+/* Pagination control styles */
 .pagination {
     display: flex;
     justify-content: center;
@@ -590,7 +590,7 @@ body {
     padding: 0 4px;
 }
 
-/* 编辑模式样式 */
+/* Edit mode styles */
 .diary-edit-box {
     padding: 10px;
 }
@@ -655,7 +655,7 @@ body {
     font-size: 1.2rem;
 }
 
-/* 标签输入区域样式 */
+/* Tag input area styles */
 .input-controls {
     display: flex;
     flex-wrap: wrap;
@@ -719,7 +719,7 @@ body {
     opacity: 1;
 }
 
-/* 标签建议列表 */
+/* Tag Suggestion List */
 .tag-suggestions {
     position: absolute;
     background: white;
@@ -743,7 +743,7 @@ body {
     background-color: var(--secondary-pink);
 }
 
-/* 标签过滤器 */
+/* Tag Filter */
 .tags-filter {
     display: flex;
     flex-wrap: wrap;
@@ -775,7 +775,7 @@ body {
     color: white;
 }
 
-/* 字数统计动画 */
+/* Character count animation */
 #char-count {
     transition: color 0.3s var(--easing);
 }
@@ -790,7 +790,7 @@ body {
     50% { opacity: 0.6; }
 }
 
-/* 深色模式 */
+/* Dark Mode */
 @media (prefers-color-scheme: dark) {
     body { background: var(--text-dark); }
     #current-date, .counter-box { color: #D1D5DB !important; }
@@ -902,7 +902,7 @@ body {
     }
 }
 
-/* 移动端优化 */
+/* Mobile optimization */
 @media (max-width: 480px) {
     body { padding: 10px 0; }
     #current-date { font-size: 1.2rem; }
@@ -1030,7 +1030,7 @@ body {
     }
 }
 
-/* 触摸设备优化 */
+/* Touch device optimization */
 @media (hover: none) {
     .delete-btn {
         opacity: 0.8;
@@ -1045,7 +1045,7 @@ body {
     }
 }
 
-/* iOS 特定优化 */
+/* iOS Specific Optimization */
 .ios-touch {
     -webkit-tap-highlight-color: transparent;
 }

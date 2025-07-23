@@ -1,4 +1,5 @@
-/* パフォーマンス最適化：GPU加速とアニメーション最適化 */
+/* Styles for optimizing performance */
+/* Styles for the optimized container */
 .gpu-accelerated {
     transform: translateZ(0);
     backface-visibility: hidden;
@@ -6,7 +7,7 @@
     will-change: transform;
 }
 
-/* 重绘を減らすアニメーショングループ */ 
+/* Styles for reducing repaint animations */
 .animate-transform {
     transition-property: transform;
 }
@@ -19,8 +20,8 @@
     transition-property: all;
 }
 
-/* 最適化アニメーションパフォーマンス */
-/* 最適化コンテナ */
+/* Styles for optimizing animation performance */
+/* Styles for the optimized container */
 .cat-container,
 .diary-container,
 .search-container,
@@ -31,22 +32,22 @@
     -webkit-font-smoothing: antialiased;
 }
 
-/* 最適化スクロールパフォーマンス */
-/* 最適化コンテナ */
+/* Styles for optimizing scroll performance */
+/* Styles for the optimized container */
 .diary-history,
 .tag-suggestions {
     -webkit-overflow-scrolling: touch;
     scroll-behavior: smooth;
 }
 
-/* ページ再配置を減らす */
+/* Styles for reducing page reconfiguration */
 .diary-input-box textarea,
 .search-input,
 .category-select {
     contain: content;
 }
 
-/* アニメーション遅延ロード */
+/* Styles for animation delay loading */
 @media (prefers-reduced-motion: reduce) {
     *,
     *::before,

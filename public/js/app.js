@@ -48,7 +48,7 @@ async function deleteDiary(id) {
     }
 }
 
-// クリック処理
+// Click event for diary input animation
 const diaryInput = document.getElementById('diary-content');
 diaryInput.addEventListener('focus', () => {
     diaryInput.style.animation = 'inputClick 0.4s var(--easing) forwards';

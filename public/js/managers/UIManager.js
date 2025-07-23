@@ -33,7 +33,7 @@ export class UIManager {
             color: white;
             border-radius: 20px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            font-family: 'Hachi Maru Pop', cursive;
+            font-family: 'KleeOne-Regular', cursive;
             z-index: 1000;
             animation: gentleFloat 2s ease-in-out infinite;
         `;
@@ -88,7 +88,7 @@ export class UIManager {
             this.updateCategorySelector(window.diaryManager);
             window.tagManager.updateTagsFilter(window.diaryManager);
             
-            // 入力ボックスのアニメーションを再初期化する
+            // Diary input animation
             if (window.inputAnimator) {
                 window.inputAnimator.initializeInputs();
             }
@@ -137,7 +137,7 @@ export class UIManager {
         const categorySelect = document.getElementById('diary-category');
         const searchCategorySelect = document.getElementById('search-category');
         
-        // カテゴリーの使用頻度を統計する（現在のカテゴリーを除いて重複を避ける）
+        // Count the frequency of category usage (exclude the current category to avoid duplicates)
         const categoryFrequency = {};
         diaryManager.diaries.forEach(diary => {
             if (diary.category) {
@@ -146,16 +146,16 @@ export class UIManager {
             }
         });
 
-        // オプションHTMLを生成する
+        // Generate option HTML
         const generateOptions = (includeAll = false) => {
             let html = includeAll ? '<option value="">全てのカテゴリー</option>' : '';
             
-            // よく使うカテゴリーを追加する（使用頻度前5のカテゴリー）
+            // Add frequently used categories (top 5 categories by usage frequency)
             const frequentCategories = Object.entries(categoryFrequency)
                 .sort(([,a], [,b]) => b - a)
                 .slice(0, 5)
                 .map(([cat]) => cat)
-                .filter(cat => !!cat); // 过滤掉空类别
+                .filter(cat => !!cat); // Filter out empty categories
             
             if (frequentCategories.length > 0) {
                 html += '<optgroup label="よく使うカテゴリー">';
@@ -165,7 +165,7 @@ export class UIManager {
                 html += '</optgroup>';
             }
 
-            // デフォルトカテゴリーグループ
+            // Add default categories
             html += '<optgroup label="すべてのカテゴリー">';
             DiaryManager.defaultCategories.forEach(category => {
                 if (!frequentCategories.includes(category)) {
@@ -174,7 +174,7 @@ export class UIManager {
             });
             html += '</optgroup>';
 
-            // カスタムカテゴリーグループ
+            // Add custom categories
             const customCategories = categories.filter(cat => 
                 !DiaryManager.defaultCategories.includes(cat) && !frequentCategories.includes(cat)
             );

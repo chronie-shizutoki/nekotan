@@ -1,4 +1,4 @@
-/* 日記入力コンポーネントのスタイル */
+/* Diary input component styles */
 .diary-container {
     background: linear-gradient(135deg, var(--container-bg) 0%, #FFE4E1 100%);
     border-radius: 20px;
@@ -24,7 +24,7 @@
     border: 2px solid var(--secondary-pink);
     border-radius: 12px;
     resize: none;
-    font-family: 'Hachi Maru Pop', cursive;
+    font-family: 'KleeOne-Regular', cursive;
     font-size: 1.1rem;
     background: transparent;
     transition: all 0.3s var(--easing);
@@ -33,9 +33,9 @@
     animation: floatIn 0.4s ease-out;
 }
 
-/* 输入框动画样式 */
+/* Input box animation styles */
 .diary-edit-input {
-    font-family: 'Hachi Maru Pop', cursive;
+    font-family: 'KleeOne-Regular', cursive;
     transition: all 0.3s var(--easing);
     transform: translateY(0);
     opacity: 1;
@@ -52,7 +52,7 @@
     animation: floatUp 0.8s var(--easing) forwards;
 }
 
-/* 日记输入框动画 */
+/* Diary input box animation styles */
 .diary-edit-input {
     transition: all 0.3s var(--easing);
     transform-origin: center;
@@ -73,7 +73,7 @@
     outline: none;
 }
 
-/* 输入框占位符动画 */
+/* Input box placeholder animation styles */
 .diary-edit-input::placeholder {
     transition: all 0.3s var(--easing);
     opacity: 0.7;
@@ -94,7 +94,7 @@
     padding: 12px;
     border: 2px solid var(--secondary-pink);
     border-radius: 12px;
-    font-family: 'Hachi Maru Pop', cursive;
+    font-family: 'KleeOne-Regular', cursive;
     font-size: 1rem;
     resize: vertical;
     margin-bottom: 10px;
@@ -109,7 +109,7 @@
 }
 
 
-/* 深色模式适配 */
+/* Dark mode adaptation styles */
 body.dark-mode .diary-container {
     background: linear-gradient(135deg, var(--dark-container-bg) 0%, var(--dark-secondary-bg) 100%);
 }
@@ -130,7 +130,7 @@ body.dark-mode .diary-edit-input::placeholder {
     color: var(--dark-placeholder);
 }
 
-/* 按钮样式 */
+/* Button styles */
 .neko-button {
     background: linear-gradient(45deg, var(--primary-pink), var(--secondary-pink));
     color: white !important;
@@ -138,7 +138,7 @@ body.dark-mode .diary-edit-input::placeholder {
     padding: 12px 25px;
     border-radius: 25px;
     cursor: pointer;
-    font-family: 'Pacifico', cursive;
+    font-family: 'KleeOne-Regular', cursive;
     font-size: 1.1rem;
     flex: 1;
     transition: all 0.3s var(--easing);

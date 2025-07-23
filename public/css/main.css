@@ -1,19 +1,19 @@
 
-/* まずフォントをインポート */
+/* Import fonts */
 @import '../vendor/fonts/fonts.css';
 
-/* 基本スタイルをインポート */
+/* Styles for the basic layout */
 @import 'base/variables.css';
 @import 'base/performance.css';
 
-/* アニメーションの定義をインポート */
+/* Styles for the animations */
 @import 'animations/keyframes.css';
 @import 'animations/input-animations.css';
 
-/* レイアウトコンポーネントをインポート */
+/* Import layout components */
 @import 'components/layout.css';
 
-/* 機能コンポーネントをインポート */
+/* Import functional components */
 @import 'components/clock.css';
 @import 'components/diary.css';
 @import 'components/history.css';
@@ -21,10 +21,10 @@
 @import 'components/tags.css';
 @import 'style.css';
 
-/* 最後にテーマをオーバーライド */
+/* Finally, override the theme */
 @import 'themes/dark.css';
 
-/* デフォルトのスタイルをリセット */
+/* Styles for the default layout */
 * {
     margin: 0;
     padding: 0;

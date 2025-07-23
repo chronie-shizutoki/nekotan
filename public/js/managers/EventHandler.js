@@ -60,14 +60,14 @@ export class EventHandler {
                                     categoryFrequency[d.category] = (categoryFrequency[d.category] || 0) + 1;
                                 });
 
-                                // よく使うカテゴリーを取得
+                                // Get frequently used categories
                                 const frequentCategories = Object.entries(categoryFrequency)
                                     .sort(([,a], [,b]) => b - a)
                                     .slice(0, 5)
                                     .map(([cat]) => cat);
 
                                 let html = '';
-                                // よく使うカテゴリーグループ
+                                // Get frequently used categories
                                 if (frequentCategories.length > 0) {
                                     html += '<optgroup label="よく使うカテゴリー">';
                                     frequentCategories.forEach(cat => {
@@ -78,7 +78,7 @@ export class EventHandler {
                                     html += '</optgroup>';
                                 }
 
-                                // デフォルトカテゴリーグループ
+                                // Get all categories
                                 html += '<optgroup label="すべてのカテゴリー">';
                                 DiaryManager.defaultCategories
                                     .filter(cat => !frequentCategories.includes(cat))
@@ -89,7 +89,7 @@ export class EventHandler {
                                     });
                                 html += '</optgroup>';
 
-                                // カスタムカテゴリーグループ
+                                // Get custom categories
                                 const customCategories = categories.filter(cat => 
                                     !DiaryManager.defaultCategories.includes(cat) && 
                                     !frequentCategories.includes(cat)
@@ -284,14 +284,14 @@ export class EventHandler {
     }
 
     setupEventListeners() {
-        // 文字数カウンター
+        // Character counter
         const diaryInput = document.getElementById('diary-content');
         const charCount = document.getElementById('char-count');
         diaryInput.addEventListener('input', () => {
             window.uiManager.updateCharCount(diaryInput, charCount);
         });
 
-        // 検索機能
+        // Search function
         const searchInput = document.getElementById('search-input');
         const searchCategory = document.getElementById('search-category');
 
@@ -302,20 +302,20 @@ export class EventHandler {
 
         searchCategory.addEventListener('change', () => this.handleSearch());
 
-        // 日記保存
+        // Save diary
         document.getElementById('save-diary').addEventListener('click', () => this.handleSaveDiary());
 
-        // エクスポート
+        // Export
         document.getElementById('export-csv').addEventListener('click', () => this.handleExport('csv'));
         document.getElementById('export-json').addEventListener('click', () => this.handleExport('json'));
 
-        // インポート
+        // Import
         document.getElementById('import-file').addEventListener('change', (event) => {
             this.handleImport(event.target.files[0]);
-            event.target.value = ''; // リセット
+            event.target.value = ''; // Reset
         });
 
-        // タグ入力
+        // Tag input
         const tagInput = document.getElementById('tag-input');
         tagInput.addEventListener('input', (e) => {
             window.tagManager.showSuggestions(e.target.value);
@@ -334,7 +334,7 @@ export class EventHandler {
             }
         });
 
-        // 日記入力のアニメーション
+        // Diary input animation
         diaryInput.addEventListener('focus', () => {
             window.uiManager.handleDiaryInputAnimation(diaryInput, true);
         });

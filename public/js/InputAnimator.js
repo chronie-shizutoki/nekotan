@@ -1,11 +1,11 @@
-// 入力フィールドのアニメーションを管理するクラス
+// Manage the animation of input fields
 export class InputAnimator {
     constructor() {
         this.initializeInputs();
     }
 
     initializeInputs() {
-        // 新しく作成された入力フィールドにアニメーションクラスを追加する
+        // Add animation class to newly created input fields
         document.querySelectorAll('.input-field-animation').forEach(input => {
             if (!input.classList.contains('initialized')) {
                 input.classList.add('new-entry');
@@ -13,11 +13,11 @@ export class InputAnimator {
             }
         });
 
-        // アニメーションが完了したクラスを削除する
+        // Remove the animation class after the animation is complete
         setTimeout(() => {
             document.querySelectorAll('.new-entry').forEach(input => {
                 input.classList.remove('new-entry');
             });
-        }, 800); // CSSアニメーションの時間と一致させる
+        }, 800); // Match the CSS animation duration
     }
 }

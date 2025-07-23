@@ -11,12 +11,12 @@ const rateLimit = require('express-rate-limit');
 const csrf = require('csurf');
 const cookieParser = require('cookie-parser');
 
-// ログディレクトリを作成
+// Create log directory
 const LOG_DIR = path.join(__dirname, 'logs');
 const BACKUP_DIR = path.join(__dirname, 'backups');
 const UPLOADS_DIR = path.join(__dirname, 'public', 'uploads');
 
-// 必要なディレクトリを確認
+// Create necessary directories
 async function ensureDirectories() {
     await Promise.all([
         fs.mkdir(LOG_DIR, { recursive: true }),
@@ -27,10 +27,10 @@ async function ensureDirectories() {
 
 const app = express();
 
-// CORS を有効化
+// Enable CORS
 app.use(cors({
     origin: function(origin, callback) {
-        // 特定のドメインのみを許可
+        // Allow only specific domains
         const allowedOrigins = ['http://localhost:3000', 'https://your-trusted-domain.com'];
         if (!origin || allowedOrigins.includes(origin)) {
             callback(null, true);
@@ -44,13 +44,13 @@ app.use(cors({
     exposedHeaders: ['Content-Type', 'Content-Disposition']
 }));
 
-// 有効化
+// Enable compression
 app.use(compression());
 
-// Cookie を解析
+// Parse cookies
 app.use(cookieParser());
 
-// CSRF 保護の設定
+// Set up CSRF protection
 const csrfProtection = csrf({
   cookie: {
     httpOnly: true,
@@ -59,16 +59,16 @@ const csrfProtection = csrf({
   }
 });
 
-// リクエスト解析
+// Parse request bodies
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(express.text({ type: 'text/csv' }));  // text/csv のサポートを追加
+app.use(express.text({ type: 'text/csv' }));  // Add support for text/csv
 
-// リクエストログを有効化
+// Enable request logging
 const accessLogStream = fsSync.createWriteStream(path.join(LOG_DIR, 'access.log'), { flags: 'a' });
 app.use(morgan('combined', { stream: accessLogStream }));
 
-// 基本的なセキュリティ設定
+// Set basic security headers
 app.use(helmet({
     contentSecurityPolicy: {
         directives: {
@@ -100,10 +100,11 @@ app.use(helmet({
     xssFilter: true
 }));
 
-// APIルート設定は静的ファイルサービスより前に行う必要があります
+// Set up rate limiting for API routes
+// API route setup must be before the static file service
 const apiLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15分
-  max: 100, // 各IPアドレスに対する15分間のリクエスト上限は100件
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // 100 requests per IP address per 15 minutes
   standardHeaders: true,
   legacyHeaders: false,
   message: { error: 'リクエストが多すぎます。しばらく待ってからやり直してください。' }
@@ -112,7 +113,7 @@ app.use('/api', apiLimiter);
 app.use('/api', express.json());
 app.use('/save-diary', apiLimiter);
 
-// 静的ファイルサービスを設定
+// Set up static file service
 app.use(express.static(path.join(__dirname, 'public'), {
     setHeaders: (res, filePath) => {
         if (filePath.endsWith('.css')) {
@@ -125,17 +126,17 @@ app.use(express.static(path.join(__dirname, 'public'), {
     }
 }));
 
-// CSRFトークン取得エンドポイント
+// Get CSRF token endpoint
 app.get('/api/csrf-token', csrfProtection, (req, res) => {
   res.json({ csrfToken: req.csrfToken() });
 });
 
-// 根ルート処理
+// Root route handler
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '静時ねこたん.html'));
 });
 
-// バックアップを作成する
+// Create backup
 async function ensureCSVFile() {
     const csvPath = path.join(__dirname, 'diaries.csv');
     try {
@@ -145,7 +146,7 @@ async function ensureCSVFile() {
     }
 }
 
-// バックアップを作成する
+// Create backup
 async function backupCSV() {
     try {
         const timestamp = new Date().toISOString().replace(/:/g, '-');
@@ -159,7 +160,7 @@ async function backupCSV() {
     }
 }
 
-// 初期化
+// Initialize application
 async function initialize() {
     try {
         await ensureDirectories();
@@ -171,7 +172,7 @@ async function initialize() {
     }
 }
 
-// APIルート処理
+// API route handler for saving diary entries
 app.post('/save-diary', csrfProtection, async (req, res) => {
   res.cookie('XSRF-TOKEN', req.csrfToken());
     try {
@@ -181,7 +182,7 @@ app.post('/save-diary', csrfProtection, async (req, res) => {
             return res.status(400).json({ error: '無効なデータ形式' });
         }
 
-        // CSV形式を検証する
+        // Validate CSV format
         if (!csvData.startsWith('id,date,content,category,tags\n')) {
             console.error('無効なCSV形式');
             return res.status(400).json({ error: '無効なCSV形式' });
@@ -190,16 +191,16 @@ app.post('/save-diary', csrfProtection, async (req, res) => {
         const csvPath = path.join(__dirname, 'diaries.csv');
         await ensureDirectories();
         
-        // 書き込み前にバックアップを作成する
+        // Create backup before writing
         if (fsSync.existsSync(csvPath)) {
             await backupCSV();
         }
         
-        // CSV内容を浄化して注入攻撃を防ぐ
+        // Sanitize CSV content to prevent injection attacks
         const sanitizedCsv = csvData.split('\n').map(line => {
           if (!line.trim()) return line;
           return line.split(',').map(cell => {
-            // =、+、-、@で始まるセルをエスケープする
+            // Escape cells starting with =, +, -, @ to prevent injection attacks
             if (/^[=+\-@]/.test(cell.trim())) {
               return `'${cell}`;
             }
@@ -217,7 +218,7 @@ app.post('/save-diary', csrfProtection, async (req, res) => {
     }
 });
 
-// APIルート処理
+// API route handler for logging
 app.post('/api/logs', csrfProtection, async (req, res) => {
   res.cookie('XSRF-TOKEN', req.csrfToken());
     try {
@@ -225,27 +226,27 @@ app.post('/api/logs', csrfProtection, async (req, res) => {
         if (!Array.isArray(logs)) {
             return res.status(400).json({ error: 'ログ形式が無効です' });
         }
-        // 各ログエントリの構造を検証する
+        // Validate log entry structure
         for (const log of logs) {
             if (typeof log !== 'object' || !log.timestamp || !log.level || !log.message) {
                 return res.status(400).json({ error: 'ログ条目形式が無効です' });
             }
-            // ログのタイムスタンプ形式を検証する
+            // Validate log timestamp format
             if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/.test(log.timestamp)) {
                 return res.status(400).json({ error: 'ログのタイムスタンプ形式が無効です' });
             }
-            // ログレベルを検証する
+            // Validate log level
             const allowedLevels = ['info', 'warn', 'error', 'debug'];
             if (!allowedLevels.includes(log.level)) {
                 return res.status(400).json({ error: 'ログレベルが無効です' });
             }
-            // ログメッセージの長さを制限する
+            // Validate log message length
             if (log.message.length > 1000) {
                 return res.status(400).json({ error: 'ログメッセージが过长です' });
             }
         }
         
-        // ログディレクトリが存在しない場合は、空のログディレクトリを作成する
+        // Create log directory if it doesn't exist
         await fs.mkdir(LOG_DIR, { recursive: true });
         
         const logDate = new Date().toISOString().split('T')[0];
@@ -263,12 +264,12 @@ app.post('/api/logs', csrfProtection, async (req, res) => {
     }
 });
 
-// 日記データを取得する
+// API route handler for retrieving diary data
 app.get('/diaries.csv', async (req, res) => {
     try {
         const csvPath = path.join(__dirname, 'diaries.csv');
         
-        // 日記ファイルが存在しない場合は、空の日記ファイルを作成する
+        // Create diary file if it doesn't exist
         if (!fsSync.existsSync(csvPath)) {
             await ensureCSVFile();
         }
@@ -283,18 +284,18 @@ app.get('/diaries.csv', async (req, res) => {
     }
 });
 
-// エラー処理ミドルウェア
+// Error handling middleware
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send('サーバーにエラーが発生しました！');
 });
 
-// 404 処理
+// 404 Not Found handler
 app.use((req, res, next) => {
     res.status(404).send('要求されたリソースが見つかりません');
 });
 
-// サーバーを起動する
+// Start the server
 const PORT = process.env.PORT || 3000;
 
 initialize().then(() => {

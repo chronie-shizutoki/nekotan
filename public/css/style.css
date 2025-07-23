@@ -1,6 +1,6 @@
-/* 可愛いスタイルのフィルタータグのスタイル */
+/* Styles for the functional components */
 
-/* 日記のカテゴリータグのスタイル */
+/* Styles for the diary category tags */
 .diary-category {
     display: inline-block;
     padding: 5px 12px;
@@ -58,7 +58,7 @@
     box-shadow: 0 6px 15px rgba(255, 105, 180, 0.4);
 }
 
-/* 編集と削除ボタンのスタイル */
+/* Styles for the edit and delete buttons */
 .diary-actions {
     display: flex;
     gap: 10px;
