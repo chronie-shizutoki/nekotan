@@ -1,5 +1,3 @@
-
-
 # 조용한 시간 냥이의 일기장🐾
 
 고양이처럼 부드러운 일기 앱으로, 매일의 소중한 추억을 사랑스럽게 기록할 수 있어요 냥~♡  
@@ -9,10 +7,10 @@
 
 전 세계 고양이들과 친해지기 위해 다국어 지원을 열심히 준비 중이에요!
 
-- 영어 냥: [README-en.md](README-en.md)
-- 한국어 냥: [README-ko.md](README-ko.md)  
-- 중국어(간체) 냥: [README-zh.md](README-zh.md)  
-- 중국어(번체) 냥: [README-tw.md](README-tw.md)  
+- 일본어 냥: [日本語](README.md)
+- 영어 냥: [English](README-en.md)
+- 중국어(간체) 냥: [简体中文](README-zh.md)  
+- 중국어(번체) 냥: [繁體中文](README-tw.md)  
 
 ## 리소스의 집🏠
 
