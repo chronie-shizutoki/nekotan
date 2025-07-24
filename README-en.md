@@ -1,221 +1,186 @@
-# Quiet Time Nekotan's Diary🐾
 
-A diary app that gently records daily memories, just like a cat~♡
 
-✨ With a cute interface to cherish your feelings ✨
+# Quiet Time Nekotan's Diary 🐾
 
-## Internationalization~nyaa
+A diary app gentle as a kitten, where you can adorably record daily memories meow~♡  
+With a sparkling interface that tenderly stores your feelings~✨
 
-This application aims to support adorable multiple languages~♡
+## Going Global Meow~🌍
 
-- [Japanese](README.md)
-- [Korean](README-ko.md)
-- [Chinese (Simplified)](README-zh.md)
-- [Chinese (Traditional)](README-tw.md)
+Striving for multilingual support to befriend cats worldwide!  
 
-## Localized Resources
+- English meow: [README-en.md](README-en.md)  
+- Korean nyan: [README-ko.md](README-ko.md)  
+- Simplified Chinese nyang: [README-zh.md](README-zh.md)  
+- Traditional Chinese nya~: [README-tw.md](README-tw.md)  
 
-All external resources used in this application are localized:
+## Resource Homebase 🏠
 
-### Fonts
+All assets are managed in-house meow:  
 
-Stored in the `public/vendor/fonts` directory:
+### Font-chan  
+Living in `public/vendor/fonts` nya~  
+- KleeOne-Regular.woff2 - Fluffy handwriting  
 
-- KleeOne-Regular.woff2 - Klee One font
+### JavaScript Libraries  
+Napping in `public/vendor/js` 🐾  
+- fastclick.min.js - Quick-tap library (v1.0.6)  
 
-### JavaScript Libraries
+## Paw-some Features ✨  
 
-Stored in the `public/vendor/js` directory:
+- 💕 Purr-fect touch-responsive kitty hearts! Intuitive controls  
+- 📝 Category organization for tidy feelings management meow♪  
+- 🏷️ Tagging up to 10 memories! Instantly find recollections🔖  
+- 🔍 Keyword magic search~✨  
+- 📤 CSV/JSON memory migration support nya📦  
+- 📊 Auto-backups for purr-fect peace of sleep😴💤  
+- 📱 Pawsitively easy mobile operation~🐾  
 
-- fastclick.min.js - FastClick library (v1.0.6)
+## Requirements 🍼  
 
-## Nekotan Features✨
+- Node.js >= 14.0.0 (Must be kitty-approved version)  
+- PM2 (Install globally please)  
 
-- 💕 A cat-like interface that makes your heart dance with its super usability~💖
-- 📝 Cute category classification to neatly organize your feelings~♪📂
-- 🏷️ Tagging function (up to 10 tags!) to easily find memories~🔖
-- 🔍 Search function that finds entries with just a keyword, like magic~✨
-- 📤 Export/import function to carry memories in CSV/JSON~📦
-- 📊 Daily automatic backup for peace of mind, even while sleeping~😴💤
-- 📱 Cute touch operation on mobile devices too~📱💕
+## Getting Started 🐾  
 
-## Requirements🍼
+First, prepare your home for a new kitty!  
 
-- Node.js >= 14.0.0 (at least the cat's version~)
-- PM2 (install globally~)
-
-## Nekotan Installation🐾
-
-First, welcome the repository to your home and prepare the necessary items~🛠️
-
-## How to Contribute🤝
-
-We're looking for help to make Quiet Time Nekotan even cuter and more convenient~🙏
-
-1. Fork the repository and copy it to your home~🍴
-2. Create a new branch with a cute name like "feature/cute-feature"~🌱
-3. Commit your changes with a cute message and push~📤
-4. Create a Pull Request, describing your changes in detail~✉️
-
-Let's make Quiet Time Nekotan grow cuter together~!💕 I'll respond super quickly to your pull requests~✧*｡٩(ˊᗜˋ*)و✧*｡ Thank you for your contribution~♡
 ```bash
-# Clone the repository nyan~ 
-git clone https://github.com/quiettimejsg/nekotan.git
-cd nekochan
+# Bring me home nya~
+git clone https://github.com/quiettimejsg/nekotan.git  
+cd nekochan  
 
-# Install dependencies nyan~
-npm install
+# Prepare treats meow
+npm install  
 
-# Install PM2 globally nyan~
+# Summon the Guardian
 npm install -g pm2
 ```
 
-## Cute Environment Settings✨
+## Home Customization ✨  
 
-Create a `.env` file to cutely customize your room settings~🔧:
+Configure preferences in `.env` file nya~:  
 
 ```env
-# Port number setting (don't change~)🔒
-PORT=3000
-# Environment setting (production/development)🌳
-NODE_ENV=production
-# Maximum file size (5MB)📦
-MAX_FILE_SIZE=5242880
-# Log level (information amount adjustment)📝
-LOG_LEVEL=info
-# Backup retention period (30 days)⏳
-BACKUP_RETENTION_DAYS=30
-# CORS setting (allow access from anyone)🌐
-CORS_ORIGIN=*
+PORT=3000                 # House door number🚪  
+NODE_ENV=production       # Going-out mode🎀  
+MAX_FILE_SIZE=5242880     # Photo size limit (5MB)📸  
+LOG_LEVEL=info            # Chatty level💬  
+BACKUP_RETENTION_DAYS=30  # Memory preservation period📆  
+CORS_ORIGIN=*             # Everybody-friends setting🌈  
 ```
 
-## Startup Method
+## Startup Commands 🐾  
 
-Start the app lively in development environment~💻✨:
+Play mode activation:  
 ```bash
-npm run dev
-```
+npm run dev  # Excited development mode💫  
+```  
 
-Run stably in production environment~🚀:
+Professional mode:  
 ```bash
-npm run prod
-```
+npm run prod  # Serious business mode👑  
+```  
 
-Other commands:
-- `npm run stop`: Stop the app nyan~🛑
-- `npm run restart`: Restart the app lively~🔄
-- `npm run logs`: Check the logs to see how things are going~🔍
+Other care commands:  
+- `npm run stop`: Goodnight meow~🌙  
+- `npm run restart`: Energetic reboot!🔁  
+- `npm run logs`: Read today's story📖  
 
-## How to Use Cutely~♡
+## How to Use 💖  
 
-1. Start the app and log in as if you're admiring a cat~🔑✨
-2. Cutely click the pink "New Diary" button~✏️💖
-3. Cutely enter the diary title and your feelings~📝💭
-4. Select categories and tags to organize stylishly~🏷️🎀
-5. Gently press the "Save" button to securely store your precious memories~💾💕
+1.  Login and poke the kitty screen✨  
+2.  Tap the bouncy "New Diary" button!  
+3.  Enter title and feelings meow-style📝  
+4.  Stylish organization with categories & tags🎀  
+5.  "Save" to fluffy heart storage💕  
 
-## Nekotan Directory Structure🐾
+## Home Structure 🐾  
 
 ```
 nekochan/
-├── .github/                            # GitHub related settings📁
-│   └── workflows/                      # Automation workflows⚙️
-│       └── code-stats.yml              # Code statistics workflow📊
-├── public/                             # Folder with static files🐱
-│   ├── css/                            # Style sheets
-│   │   ├── animations/                 # CSS files for animations
-│   │   │   ├── input-animations.css    # CSS for input animations
-│   │   │   ├── keyframe.css            # CSS for keyframe animations
-│   │   │   ├── sakura.css              # CSS for cherry blossoms
-│   │   ├── base/                       # Base CSS files
-│   │   │   ├── performance.css         # CSS for performance
-│   │   │   ├── variables.css           # CSS variables
-│   │   ├── components/                 # CSS files for components🧩
-│   │   │   ├── alerts.css              # Styles for alerts🔔
-│   │   │   ├── buttons.css             # Styles for buttons🎮
-│   │   │   ├── clock.css               # Styles for clock⏰
-│   │   │   ├── diary.css               # Styles for diary display/input📖
-│   │   │   ├── history.css             # Styles for diary history📜
-│   │   │   ├── layout.css              # Styles for application layout🏠
-│   │   │   ├── search.css              # Styles for diary search🔍
-│   │   │   └── tags.css                # Styles for tags🏷️
-│   │   ├── themes/                     # CSS files for themes🎨
-│   │   │   └── dark.css                # CSS for dark theme🌙
-│   │   ├── main.css                    # Main style sheet✨
-│   │   └── style.css                   # Common style sheet🎀
-│   ├── js/                             # Client-side JS
-│   │   ├── managers/                   # Manager files
-│   │   │   ├── EventHandler.js         # Event handler file
-│   │   │   ├── TagManager.js           # Tag management file
-│   │   │   └── UIManager.js            # UI management file
-│   │   ├── app.js                      # Main application file🌟
-│   │   ├── DiaryManager.js             # File providing diary management functions📝
-│   │   ├── InputAnimator.js            # File handling input animations✨
-│   │   ├── Logger.js                   # File providing logging functions📜
-│   │   ├── sakura.js                   # File implementing cherry blossom features🌸
-│   │   └── TimeUpdater.js              # File providing time update functions⏰
-│   ├── uploads/                        # Place where uploaded images sleep📸
-│   └── vendor/                         # Third-party resources
-│       ├── fonts/                      # Font files
-│       │   ├── font.css                # Style sheet for fonts
-│       │   ├── KleeOne-Regular.ttf     # Klee One regular font file
-│       │   └── OFL.txt                 # SIL Open Font License file
-│       ├── js/                         # JavaScript libraries
-│       │   └── fastclick.min.js        # FastClick 1.6 library
-│       └── picture/                    # Home for image files🐾
-│           └── sakura.svg              # SVG file for cherry blossoms🌸
-├── .vscode/                            # VSCode settings folder💻
-│   └── launch.json                     # Debug configuration file🚀
-├── .cloc-exclude                       # cloc statistics exclusion settings🔍
-├── .env.example                        # Example environment variables file🌰
-├── .gitignore                          # Git ignore settings🙈
-├── diaries.csv                         # Diary data file📝
-├── LICENSE                             # License file📜
-├── 静時ねこたん.html                     # Main page🎀
-├── backup-20250524-194510.tar.gz       # Backup file💾
-├── nekochan-1.0.0.tgz                  # Application package file📦
-├── package-lock.json                   # Package lock file🔒
-├── logs/                               # Log files recording app's daily life📖
-├── backups/                            # Backup files protecting important data💖
-├── server.js                           # Server core file❤️
-├── ecosystem.config.js                 # PM2 magic configuration file🪄
-└── package.json                        # Package information and caretaker file📦
+├── .github/                            # GitHub mailbox✉️
+│   └── workflows/                      # Auto-work machine⚙️
+│       └── code-stats.yml              # Code height measurement📏
+├── public/                             # Showroom for everyone✨
+│   ├── css/                            # Fashion wardrobe👗
+│   │   ├── animations/                 # Movement cookbook💫
+│   │   │   ├── input-animations.css    # Text-entry dance💃
+│   │   │   ├── keyframe.css            # Sparkle secrets✨
+│   │   │   ├── sakura.css              # Cherry blossom choreography🌸
+│   │   ├── base/                       # Skincare set💅
+│   │   │   ├── performance.css         # Speed tricks🐇
+│   │   │   ├── variables.css           # Color palette🎨
+│   │   ├── components/                 # Parts toybox🧸
+│   │   │   ├── alerts.css              # Notification cards🔔
+│   │   │   ├── buttons.css             # Squishy buttons🎮
+│   │   │   ├── clock.css               # Ticking clock⏰
+│   │   │   ├── diary.css               # Diary design📖
+│   │   │   ├── history.css             # Memory album📚
+│   │   │   ├── layout.css              # Room layout🏠
+│   │   │   ├── search.css              # Treasure hunt kit🔍
+│   │   │   └── tags.css                # Kitty tag collection🏷️
+│   │   ├── themes/                     # Outfit changer👘
+│   │   │   └── dark.css                # Moonlight mode🌙
+│   │   ├── main.css                    # Main outfit✨
+│   │   └── style.css                   # Universal style set🎀
+│   ├── js/                             # Moving toybox🎪
+│   │   ├── managers/                   # Caretakers👩‍🍼
+│   │   │   ├── EventHandler.js         # Event coordinator🎪
+│   │   │   ├── TagManager.js           # Tag organizer🏷️
+│   │   │   └── UIManager.js            # Appearance designer🎨
+│   │   ├── app.js                      # Heartbeat❤️
+│   │   ├── DiaryManager.js             # Diary keeper📝
+│   │   ├── InputAnimator.js            # Magic motion expert✨
+│   │   ├── Logger.js                   # Memory recorder📜
+│   │   ├── sakura.js                   # Cherry blossom machine🌸
+│   │   └── TimeUpdater.js              # Time announcer⏰
+│   ├── uploads/                        # Photo album📸
+│   └── vendor/                         # Friends' houses🏠
+│       ├── fonts/                      # Letter playground✏️
+│       │   ├── font.css                # Font clothing👕
+│       │   ├── KleeOne-Regular.ttf     # Fluffy letters🐾
+│       │   └── OFL.txt                 # Promise card📜
+│       ├── js/                         # Utility toolbox🧰
+│       │   └── fastclick.min.js        # Quick-tap button⚡
+│       └── picture/                    # Decoration artbox🖼️
+│           └── sakura.svg              # Cherry blossom card🌸
+├── .vscode/                            # Art supplies🎨
+│   └── launch.json                     # Magic spellbook🪄
+├── .cloc-exclude                       # Secret memo🙈
+├── .env.example                        # Room setup example🏠
+├── .gitignore                          # Hide-from-view list🙈
+├── diaries.csv                         # Memory jewel box💎
+├── LICENSE                             # Promise card📜
+├── QuietTimeNekotan.html               # Front door🚪
+├── backup-20250524-194510.tar.gz       # Memory backup💾
+├── nekochan-1.0.0.tgz                  # Moving kit📦
+├── package-lock.json                   # Treat list🔒
+├── logs/                               # Daily diary📖
+├── backups/                            # Treasure vault of memories💖
+├── server.js                           # Heart core❤️
+├── ecosystem.config.js                 # Caretaker manual📖
+└── package.json                        # Caretaker handbook📔
 ```
 
-## About Backups
+## Memory Guardianship 💾  
 
-- CSV files are automatically backed up every day~💾
-- Backup files are carefully stored in the `backups/` folder~📁
-- By default, they're cherished for 30 days, but you can change this with environment variables~📅
+- Automatic daily backups meow~  
+- Preserved for 30 days in `backups/` folder  
+- Customizable duration via environment variables📅  
 
-## Security
+## Safety Measures 🔐  
 
-- Security header settings protected by Helmet.js🎩
-- CORS settings for friendly communication🤝
-- Checking input data to block suspicious things~🔍
-- Gentle error handling system that explains issues clearly💬
+- Helmet protection (Helmet.js)🧢  
+- Friendly communication setup (CORS)🤝  
+- Suspicious inputs blocked!🚫  
 
-## Logs📖
+## Licensing 📜  
 
-The app's daily life and care records are here~:
-- Application logs: `logs/output.log` → App's daily record✨
-- Error logs: `logs/error.log` → Helpful notes for troubleshooting📝
-- Access logs: `logs/access.log` → Customer ledger of when visitors came👀
+AGPL-3.0 license nya~  
+Font-chan guarded by SIL Open Font License 1.1  
 
-## Nekotan License📜
-
-AGPL-3.0 license~📜
-
-### Third-party Licenses
-
-Font files are licensed under SIL Open Font License 1.1:
-
-- Klee One: Copyright 2020 Fontworks Inc.
-
-FastClick is MIT licensed~♡
-
-Thank you for using Nekotan~♡ Please enjoy wonderful days with Quiet Time Nekotan's Diary~🐾💕
-
-✨ I'm always here to gently store your precious memories~ Feel free to use me anytime~🐾💕
-
-Thank you for reading until the end~! Let's have wonderful days together with Quiet Time Nekotan~✨
+### Final Meow~ 💕  
+Always watching over your precious memories  
+With big round eyes meow 🐾  
+May you record many wonderful days~✨  
