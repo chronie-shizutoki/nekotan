@@ -7,10 +7,10 @@
 
 为了和全世界的猫咪做朋友，正在努力进行多语言适配喵！
 
+- 日语喵: [README.md](README.md)
 - 英语喵: [English](README-en.md)
-- 韩语喵: [README-ko.md](README-ko.md)
-- 中文(简体)喵: [README-zh.md](README-zh.md)
-- 中文(繁体)喵: [README-tw.md](README-tw.md)
+- 韩语喵: [한국어](README-ko.md)
+- 中文(繁体)喵: [繁體中文](README-tw.md)
 
 ## 资源的家🏠
 
