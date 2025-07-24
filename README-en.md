@@ -1,5 +1,3 @@
-
-
 # Quiet Time Nekotan's Diary 🐾
 
 A diary app gentle as a kitten, where you can adorably record daily memories meow~♡  
@@ -9,10 +7,10 @@ With a sparkling interface that tenderly stores your feelings~✨
 
 Striving for multilingual support to befriend cats worldwide!  
 
-- English meow: [README-en.md](README-en.md)  
-- Korean nyan: [README-ko.md](README-ko.md)  
-- Simplified Chinese nyang: [README-zh.md](README-zh.md)  
-- Traditional Chinese nya~: [README-tw.md](README-tw.md)  
+- Japanese nyan: [日本語](README.md)
+- Korean nyan: [한국어](README-ko.md)  
+- Simplified Chinese nyang: [简体中文](README-zh.md)  
+- Traditional Chinese nya~: [繁體中文](README-tw.md)  
 
 ## Resource Homebase 🏠
 
@@ -152,7 +150,7 @@ nekochan/
 ├── .gitignore                          # Hide-from-view list🙈
 ├── diaries.csv                         # Memory jewel box💎
 ├── LICENSE                             # Promise card📜
-├── QuietTimeNekotan.html               # Front door🚪
+├── 静時ねこたん.html                     # Front door🚪
 ├── backup-20250524-194510.tar.gz       # Memory backup💾
 ├── nekochan-1.0.0.tgz                  # Moving kit📦
 ├── package-lock.json                   # Treat list🔒
