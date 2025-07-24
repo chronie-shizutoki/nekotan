@@ -1,221 +1,184 @@
-# 静时猫猫的日记帐🐾
+# 静时喵喵的日记本🐾
 
-像猫咪一样温柔、可爱地记录每天回忆的日记应用喵～♡
+像猫咪一样温柔的日记应用，可以可爱地记录每天的回忆喵～♡
+拥有闪闪发光的界面，轻轻保管你的小心情哦～✨
 
-✨ 可爱的界面，用心保管您的心情 ✨
+## 国际化喵～🌍
 
-## 国际化
+为了和全世界的猫咪做朋友，正在努力进行多语言适配喵！
 
-本应用致力于实现超可爱的多语言支持喵～♡
+- 英语喵: [English](README-en.md)
+- 韩语喵: [README-ko.md](README-ko.md)
+- 中文(简体)喵: [README-zh.md](README-zh.md)
+- 中文(繁体)喵: [README-tw.md](README-tw.md)
 
-- [日语](README.md)
-- [英语](README-en.md)
-- [韩语](README-ko.md)
-- [繁体中文](README-tw.md)
+## 资源的家🏠
 
-## 本地化资源
+使用的素材都在家里管理喵：
 
-本应用使用的所有外部资源均已本地化：
+### 字体宝宝
+在 `public/vendor/fonts` 里喵～
+- KleeOne-Regular.woff2 - 软绵绵字体
 
-### 字体
+### JavaScript 库
+在 `public/vendor/js` 里午睡中🐾
+- fastclick.min.js - 快速点击库 (v1.0.6)
 
-存储在`public/vendor/fonts`目录中：
+## 喵喵自夸功能✨
 
-- KleeOne-Regular.woff2 - Klee One 字体
+- 💕 轻轻一碰就有喵喵爱心弹出来！操作超直观
+- 📝 分类整理让心情变得清清爽爽喵♪
+- 🏷️ 最多可贴10个标签！回忆瞬间就能找到🔖
+- 🔍 一个关键词就能像魔法一样搜索～✨
+- 📤 可以用 CSV/JSON 搬家回忆喵📦
+- 📊 自动备份让你安心睡大觉😴💤
+- 📱 手机上也能用肉球轻松操作～🐾
 
-### JavaScript库
+## 需要的东西🍼
 
-存储在`public/vendor/js`目录中：
+- Node.js >= 14.0.0 (需要喵喵版本以上哦)
+- PM2 (请全局安装喵)
 
-- fastclick.min.js - FastClick 库 (v1.0.6)
+## 开始方法🐾
 
-## 特色✨
+先把喵喵接回家的准备工作做好喵！
 
-- 💕 猫咪风格界面，触摸即心动的超易用性～💖
-- 📝 可爱的分类功能，让心情整洁有序♪📂
-- 🏷️ 标签功能（最多10个喵！）让回忆轻松找到🔖
-- 🔍 关键词快速搜索功能，像魔法一样喵～✨
-- 📤 CSV/JSON格式导入导出功能，随身携带回忆♪📦
-- 📊 每日自动备份功能，安心睡眠喵～😴💤
-- 📱 移动设备也能指尖可爱操作哦～📱💕
-
-## 运行所需环境🍼
-
-- Node.js >= 14.0.0 (版本以上喵～)
-- PM2 (请全局安装～)
-
-## 猫咪安装方法🐾
-
-首先将仓库带回家，准备必要的物品喵～🛠️
-
-## 协作方式🤝
-
-招募帮助让猫猫变得更可爱、更便利喵～🙏
-
-1. 将仓库猫咪式分叉，复制到自己家喵～🍴
-2. 创建新分支，像"feature/可爱功能"这样可爱地命名喵～🌱
-3. 提交更改，消息也要可爱地写然后推送喵～📤
-4. 创建Pull Request，详细说明更改内容并发送喵～✉️
-
-让我们一起让静时猫变得更可爱吧喵～！💕 发送Pull Request的话，会超快回复哦～✧*｡٩(ˊᗜˋ*)و✧*｡ 感谢您的合作喵～♡
 ```bash
-# 克隆仓库～
+# 把喵喵带回家喵～
 git clone https://github.com/quiettimejsg/nekotan.git
 cd nekochan
 
-# 安装依赖包～
+# 准备点心喵
 npm install
 
-# 全局安装PM2喵～
+# 呼叫守护者喵
 npm install -g pm2
 ```
 
-## 可爱环境设置✨
+## 房间布置✨
 
-创建`.env`文件，可爱地自定义房间设置喵～🔧:
+用 `.env` 文件按喜好设置喵～：
 
 ```env
-# 端口号设置（请勿更改喵～）🔒
-PORT=3000
-# 环境设置（生产/开发）🌳
-NODE_ENV=production
-# 最大文件大小（5MB）📦
-MAX_FILE_SIZE=5242880
-# 日志级别（信息量调整）📝
-LOG_LEVEL=info
-# 备份保留期（30天）⏳
-BACKUP_RETENTION_DAYS=30
-# CORS设置（允许所有访问）🌐
-CORS_ORIGIN=*
+PORT=3000                 # 家门号🚪
+NODE_ENV=production       # 出门模式设置🎀
+MAX_FILE_SIZE=5242880     # 照片大小(5MB)📸
+LOG_LEVEL=info            # 聊天量设置💬
+BACKUP_RETENTION_DAYS=30  # 回忆保存期限📆
+CORS_ORIGIN=*             # 大家做好朋友设置🌈
 ```
 
-## 启动方法
+## 启动命令🐾
 
-开发环境中让应用精神地启动喵～💻✨:
+玩耍模式启动：
 ```bash
-npm run dev
+npm run dev  # 兴奋的开发模式💫
 ```
 
-生产环境中让应用稳定运行喵～🚀:
+正式模式工作：
 ```bash
-npm run prod
+npm run prod  # 认真喵模式👑
 ```
 
-其他命令:
-- `npm run stop`: 猫咪式停止应用喵～🛑
-- `npm run restart`: 精神地重启应用喵～🔄
-- `npm run logs`: 查看日志检查状况喵～🔍
+其他照顾命令：
+- `npm run stop`：晚安喵～🌙
+- `npm run restart`：元气满满重启！🔁
+- `npm run logs`：看看今天的故事📖
 
-## 可爱使用方法～♡
+## 使用方法💖
 
-1. 启动应用，猫咪式登录喵～🔑✨
-2. 点击粉色的"新日记"按钮喵～✏️💖
-3. 可爱地输入日记标题和心情喵～📝💭
-4. 选择分类和标签，时尚地整理喵～🏷️🎀
-5. 点击"保存"按钮，好好保管珍贵回忆喵～💾💕
+1.  登录后点点喵喵画面✨
+2.  戳戳圆鼓鼓的「新建日记」按钮！
+3.  喵喵地输入标题和心情📝
+4.  用分类和标签时尚整理🎀
+5.  「保存」到软绵绵的爱心收藏💕
 
-## 猫咪目录结构🐾
+## 家的结构🐾
 
 ```
 nekochan/
-├── .github/                            # GitHub相关设置文件📁
-│   └── workflows/                      # 自动化工作流设置⚙️
-│       └── code-stats.yml              # 代码统计工作流📊
-├── public/                             # 静态文件猫咪之家🐱
-│   ├── css/                            # 样式表
-│   │   ├── animations/                 # 动画CSS文件
-│   │   │   ├── input-animations.css    # 输入动画CSS文件
-│   │   │   ├── keyframe.css            # 关键帧动画CSS文件
-│   │   │   ├── sakura.css              # 樱花CSS文件
-│   │   ├── base/                       # 基础CSS文件
-│   │   │   ├── performance.css         # 性能CSS文件
-│   │   │   ├── variables.css           # 变量CSS文件
-│   │   ├── components/                 # 组件CSS文件🧩
-│   │   │   ├── alerts.css              # 警报显示样式表🔔
-│   │   │   ├── buttons.css             # 按钮样式表🎮
-│   │   │   ├── clock.css               # 时钟显示样式表⏰
-│   │   │   ├── diary.css               # 日记显示·输入样式表📖
-│   │   │   ├── history.css             # 日记历史显示样式表📜
-│   │   │   ├── layout.css              # 应用布局样式表🏠
-│   │   │   ├── search.css              # 日记搜索样式表🔍
-│   │   │   └── tags.css                # 标签显示样式表🏷️
-│   │   ├── themes/                     # 主题CSS文件🎨
-│   │   │   └── dark.css                # 深色主题CSS文件🌙
-│   │   ├── main.css                    # 主样式表✨
-│   │   └── style.css                   # 通用样式表🎀
-│   ├── js/                             # 客户端JS
-│   │   ├── managers/                   # 管理器文件
-│   │   │   ├── EventHandler.js         # 事件处理器文件
-│   │   │   ├── TagManager.js           # 标签管理文件
-│   │   │   └── UIManager.js            # UI管理文件
-│   │   ├── app.js                      # 应用主文件🌟
-│   │   ├── DiaryManager.js             # 日记管理功能文件📝
-│   │   ├── InputAnimator.js            # 输入动画处理文件✨
-│   │   ├── Logger.js                   # 日志记录功能文件📜
-│   │   ├── sakura.js                   # 樱花相关功能文件🌸
-│   │   └── TimeUpdater.js              # 时间更新功能文件⏰
-│   ├── uploads/                        # 上传图片存放处📸
-│   └── vendor/                         # 第三方资源
-│       ├── fonts/                      # 字体文件
-│       │   ├── font.css                # 字体样式表
-│       │   ├── KleeOne-Regular.ttf     # Klee One 常规字体文件
-│       │   └── OFL.txt                 # SIL Open Font License许可证文件
-│       ├── js/                         # JavaScript库
-│       │   └── fastclick.min.js        # FastClick1.6 库
-│       └── picture/                    # 图片文件之家🐾
-│           └── sakura.svg              # 樱花SVG文件🌸
-├── .vscode/                            # VSCode设置文件夹💻
-│   └── launch.json                     # 调试设置文件🚀
-├── .cloc-exclude                       # cloc统计排除设置文件🔍
-├── .env.example                        # 环境变量示例文件🌰
-├── .gitignore                          # Git忽略设置文件🙈
-├── diaries.csv                         # 日记数据文件📝
-├── LICENSE                             # 许可证文件📜
-├── 静时ねこたん.html                     # 主页面🎀
-├── backup-20250524-194510.tar.gz       # 备份文件💾
-├── nekochan-1.0.0.tgz                  # 应用程序包文件📦
-├── package-lock.json                   # 包锁定文件🔒
-├── logs/                               # 应用日志文件📖
-├── backups/                            # 备份文件💖
-├── server.js                           # 服务器核心文件❤️
-├── ecosystem.config.js                 # PM2配置文件🪄
-└── package.json                        # 包信息文件📦
+├── .github/                            # GitHub 的信箱✉️
+│   └── workflows/                      # 自动工作机器⚙️
+│       └── code-stats.yml              # 代码身高测量📏
+├── public/                             # 给大家看的房间✨
+│   ├── css/                            # 时尚衣橱👗
+│   │   ├── animations/                 # 动作食谱书💫
+│   │   │   ├── input-animations.css    # 文字输入舞蹈💃
+│   │   │   ├── keyframe.css            # 闪闪动作的秘密✨
+│   │   │   ├── sakura.css              # 樱花的飘落方式🌸
+│   │   ├── base/                       # 肌肤护理套装💅
+│   │   │   ├── performance.css         # 快速移动技巧🐇
+│   │   │   ├── variables.css           # 调色板🎨
+│   │   ├── components/                 # 零件玩具箱🧸
+│   │   │   ├── alerts.css              # 通知卡片🔔
+│   │   │   ├── buttons.css             # Q弹按钮🎮
+│   │   │   ├── clock.css               # 滴答时钟⏰
+│   │   │   ├── diary.css               # 日记本设计📖
+│   │   │   ├── history.css             # 回忆相册📚
+│   │   │   ├── layout.css              # 房间布局🏠
+│   │   │   ├── search.css              # 寻宝套装🔍
+│   │   │   └── tags.css                # 喵喵标签收藏🏷️
+│   │   ├── themes/                     # 衣服切换器👘
+│   │   │   └── dark.css                # 月亮模式🌙
+│   │   ├── main.css                    # 主衣服✨
+│   │   └── style.css                   # 通用时尚套装🎀
+│   ├── js/                             # 会动的玩具箱🎪
+│   │   ├── managers/                   # 照顾专员👩‍🍼
+│   │   │   ├── EventHandler.js         # 事件接待员🎪
+│   │   │   ├── TagManager.js           # 标签整理员🏷️
+│   │   │   └── UIManager.js            # 外观设计师🎨
+│   │   ├── app.js                      # 心脏扑通扑通❤️
+│   │   ├── DiaryManager.js             # 日记守护员📝
+│   │   ├── InputAnimator.js            # 魔法动作师✨
+│   │   ├── Logger.js                   # 回忆记录员📜
+│   │   ├── sakura.js                   # 樱花吹雪机🌸
+│   │   └── TimeUpdater.js              # 时间通知员⏰
+│   ├── uploads/                        # 照片相册📸
+│   └── vendor/                         # 朋友的家🏠
+│       ├── fonts/                      # 文字游乐场✏️
+│       │   ├── font.css                # 文字的衣服👕
+│       │   ├── KleeOne-Regular.ttf     # 软绵绵文字🐾
+│       │   └── OFL.txt                 # 约定卡片📜
+│       ├── js/                         # 便利工具箱🧰
+│       │   └── fastclick.min.js        # 快速点击按钮⚡
+│       └── picture/                    # 装饰画箱🖼️
+│           └── sakura.svg              # 樱花明信片🌸
+├── .vscode/                            # 画画工具箱🎨
+│   └── launch.json                     # 魔法咒语书🪄
+├── .cloc-exclude                       # 秘密备忘录🙈
+├── .env.example                        # 房间设置样板🏠
+├── .gitignore                          # 不看清单🙈
+├── diaries.csv                         # 回忆宝石箱💎
+├── LICENSE                             # 约定卡片📜
+├── 静時ねこたん.html                     # 玄关大门🚪
+├── backup-20250524-194510.tar.gz       # 回忆备份💾
+├── nekochan-1.0.0.tgz                  # 搬家套装📦
+├── package-lock.json                   # 点心清单🔒
+├── logs/                               # 每天的日记本📖
+├── backups/                            # 回忆的宝物库💖
+├── server.js                           # 心脏部分扑通扑通❤️
+├── ecosystem.config.js                 # 照顾手册📖
+└── package.json                        # 照顾员手册📔
 ```
 
-## 备份说明
+## 回忆的守护💾
 
-- CSV文件每天自动备份喵～💾
-- 备份文件安全保存在`backups/`文件夹中喵～📁
-- 默认保留30天，但可通过环境变量更改喵～📅
+- 每天都会自动备份喵～
+- 在 `backups/` 文件夹里保管30天
+- 可以用环境变量修改期限喵📅
 
-## 安全
+## 安全措施🔐
 
-- 使用Helmet.js设置安全头保护喵～🎩
-- CORS设置确保友好通信喵～🤝
-- 检查输入数据，拒绝可疑内容喵～🔍
-- 错误发生时友好提示的处理系统喵～💬
+- 头盔保护头部 (Helmet.js)🧢
+- 和大家友好通信设置 (CORS)🤝
+- 可疑输入统统拒之门外！🚫
 
-## 日志们📖
+## 关于许可证📜
 
-应用的日常和管理记录在这里喵～:
-- 应用日志: `logs/output.log` → 应用的每日记录✨
-- 错误日志: `logs/error.log` → 故障时的帮助笔记📝
-- 访问日志: `logs/access.log` → 访客记录👀
+使用 AGPL-3.0 许可证喵～
+字体宝宝使用 SIL Open Font License 1.1 看家
 
-## 猫咪许可证📜
-
-AGPL-3.0许可证喵～📜
-
-### 第三方许可证
-
-字体文件采用SIL Open Font License 1.1许可证：
-
-- Klee One: Copyright 2020 Fontworks Inc.
-
-FastClick采用MIT许可证喵～♡
-
-感谢使用喵～♡ 请与静时猫猫的日记帐一起度过美好的每一天～🐾💕
-
-✨ 一直用心保管您珍贵的回忆喵～ 请随时放心使用喵～🐾💕
-
-感谢阅读到最后喵～！让我们一起度过美好的每一天～✨
+### 最后喵～💕
+永远用圆溜溜的大眼睛，
+守护着你珍贵的回忆喵🐾
+愿你记录下更多美好的每一天～✨
