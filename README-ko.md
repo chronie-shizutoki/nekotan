@@ -1,221 +1,186 @@
-# 조용한 시간 네코탄의 일기장🐾
 
-고양이처럼 부드럽게 매일의 추억을 귀엽게 기록할 수 있는 일기 앱이에요~♡
 
-✨ 귀여운 인터페이스로 당신의 감정을 소중히保管해드려요 ✨
+# 조용한 시간 냥이의 일기장🐾
 
-## 국제화에요~냐
+고양이처럼 부드러운 일기 앱으로, 매일의 소중한 추억을 사랑스럽게 기록할 수 있어요 냥~♡  
+반짝반짝 인터페이스로 여러분의 마음을 살며시 보관해 드릴게요~✨
 
-이 애플리케이션은 너무나 귀여운 다국어 지원을 목표로 하고 있어요~♡
+## 국제화 냥~🌍
 
-- [일본어](README.md)
-- [영어](README-en.md)
-- [중국어(간체)](README-zh.md)
-- [중국어(번체)](README-tw.md)
+전 세계 고양이들과 친해지기 위해 다국어 지원을 열심히 준비 중이에요!
 
-## 현지화 리소스
+- 영어 냥: [README-en.md](README-en.md)
+- 한국어 냥: [README-ko.md](README-ko.md)  
+- 중국어(간체) 냥: [README-zh.md](README-zh.md)  
+- 중국어(번체) 냥: [README-tw.md](README-tw.md)  
 
-이 애플리케이션에서 사용하는 외부 리소스는 모두 현지화되어 있습니다:
+## 리소스의 집🏠
 
-### 폰트
+사용된 자료들은 모두 집에서 관리하고 있어요 냥:
 
-`public/vendor/fonts` 디렉토리에 저장됨:
+### 폰트宝宝  
+`public/vendor/fonts` 안에 있어요 냥~  
+- KleeOne-Regular.woff2 - 포슬포슬 폰트  
 
-- KleeOne-Regular.woff2 - Klee One 폰트
+### JavaScript 라이브러리  
+`public/vendor/js` 에서 낮잠 중이에요🐾  
+- fastclick.min.js - 빠른 탭 라이브러리 (v1.0.6)  
 
-### JavaScript 라이브러리
+## 냥이 자랑 기능✨  
 
-`public/vendor/js` 디렉토리에 저장됨:
+- 💕 터치만 해도 냥이 하트가 통통! 직관적 조작  
+- 📝 카테고리 분류로 마음까지 깔끔 정리 냥♪  
+- 🏷️ 태그 10개까지! 추억을 쏙 찾아요🔖  
+- 🔍 키워드 하나로 마법 같은 검색~✨  
+- 📤 CSV/JSON으로 추억 이사 가능 냥📦  
+- 📊 자동 백업으로 편안한 숙면😴💤  
+- 📱 모바일에서도 폭신폭신 조작~🐾  
 
-- fastclick.min.js - FastClick 라이브러리 (v1.0.6)
+## 필요한 것🍼  
 
-## 네코탄 특징✨
+- Node.js >= 14.0.0 (냥이 버전 이상이어야 해요)  
+- PM2 (전역 설치 필수 냥)  
 
-- 💕 고양이 같은 인터페이스로 터치만으로 하트가 뛰는 초 사용성이에요~💖
-- 📝 귀여운 카테고리 분류 기능으로 감정을 깔끔하게 정리해요~♪📂
-- 🏷️ 태그 기능 (최대 10개까지!)으로 추억을 쉽게 찾을 수 있어요~🔖
-- 🔍 작은 키워드로 바로 찾아주는 검색 기능, 마법처럼요~✨
-- 📤 CSV/JSON으로 추억을 가지고 다닐 수 있는 내보내기/가져오기 기능이에요~📦
-- 📊 매일 자동으로 백업해주는安心 기능, 잠자면서도安心해요~😴💤
-- 📱 모바일에서도 손가락으로 귀엽게 조작할 수 있어요~📱💕
+## 시작 방법🐾  
 
-## 실행에 필요한 것들🍼
+먼저 냥이를 집에 모실 준비를 해요!  
 
-- Node.js >= 14.0.0 (고양이 버전 이상이에요~)
-- PM2 (전역 설치해주세요~)
-
-## 네코탄 설치 방법🐾
-
-먼저 리포지토리를 집으로迎え들여 필요한 것을 준비해요~🛠️
-
-## 협력하는 방법🤝
-
-조용한 시간 네코탄을 더 귀엽고 더 편리하게 만들어주는 도움을 구합니다~🙏
-
-1. 리포지토리를 포크해서 자신의 집에 복사해요~🍴
-2. 새로운 브랜치를 "feature/귀여운기능"처럼 귀엽게 만드세요~🌱
-3. 변경 사항을 커밋하고 메시지도 귀엽게 작성해서 푸시해요~📤
-4. Pull Request를 작성해서 변경 내용을 자세히 알려주고 보내주세요~✉️
-
-함께 조용한 시간 네코탄을 더 귀엽게 성장시켜요!💕 Pull Request를 보내주시면 답변을超~빨리 드릴게요~✧*｡٩(ˊᗜˋ*)و✧*｡ 협력해주셔서 감사해요~♡
 ```bash
-# 리포지토리를 클론해요~ 
-git clone https://github.com/quiettimejsg/nekotan.git
-cd nekochan
+# 집으로 데려오기 냥~
+git clone https://github.com/quiettimejsg/nekotan.git  
+cd nekochan  
 
-# 의존 패키지를 설치해요~ 
-npm install
+# 간식 준비 냥
+npm install  
 
-# PM2를 전역에 설치해요~ 
+# 보호자 불러오기 냥
 npm install -g pm2
 ```
 
-## 귀여운 환경 설정✨
+## 방 꾸미기✨  
 
-`.env` 파일을 생성하여 방 설정을 귀엽게 커스터마이즈해요~🔧:
+`.env` 파일로 취향에 맞게 설정 냥~:  
 
 ```env
-# 포트 번호 설정 (변경하지 마세요~)🔒
-PORT=3000
-# 환경 설정 (운영/개발)🌳
-NODE_ENV=production
-# 최대 파일 크기 (5MB)📦
-MAX_FILE_SIZE=5242880
-# 로그 레벨 (정보량 조정)📝
-LOG_LEVEL=info
-# 백업 보존 기간 (30일)⏳
-BACKUP_RETENTION_DAYS=30
-# CORS 설정 (누구나 접근 허용)🌐
-CORS_ORIGIN=*
+PORT=3000                 # 집 현관 번호🚪  
+NODE_ENV=production       # 외출 모드 설정🎀  
+MAX_FILE_SIZE=5242880     # 사진 크기(5MB)📸  
+LOG_LEVEL=info            # 이야기량 설정💬  
+BACKUP_RETENTION_DAYS=30  # 추억 보관 기간📆  
+CORS_ORIGIN=*             # 모두 친구 설정🌈  
 ```
 
-## 시작 방법
+## 실행 명령어🐾  
 
-개발 환경에서 애플리케이션을 활기차게 시작해요~💻✨:
+놀이 모드 실행:  
 ```bash
-npm run dev
-```
+npm run dev  # 신나는 개발 모드💫  
+```  
 
-운영 환경에서 안정적으로 실행해요~🚀:
+실전 모드 실행:  
 ```bash
-npm run prod
-```
+npm run prod  # 진지 냥 모드👑  
+```  
 
-기타 명령어:
-- `npm run stop`: 애플리케이션을 멈춰요~🛑
-- `npm run restart`: 애플리케이션을 활기차게 재시작해요~🔄
-- `npm run logs`: 로그를 보고 상태를 확인해요~🔍
+기타 관리 명령어:  
+- `npm run stop`: 잘 자요 냥~🌙  
+- `npm run restart`: 활기차게 재시작!🔁  
+- `npm run logs`: 오늘의 이야기 보기📖  
 
-## 귀엽게 사용하는 방법~♡
+## 사용 방법💖  
 
-1. 애플리케이션을 시작하고 고양이를 어루만지듯 로그인해요~🔑✨
-2. 핑크색 "새 일기" 버튼을 부드럽게 클릭해요~✏️💖
-3. 일기 제목과 감정을 귀엽게 입력해요~📝💭
-4. 카테고리와 태그를 선택해 멋지게 정리해요~🏷️🎀
-5. "저장" 버튼을 살며시 누르고 소중한 추억을 확실히保管해요~💾💕
+1.  로그인 후 냥이 화면 톡톡✨  
+2.  통통한 "새 일기" 버튼 터치!  
+3.  제목과 마음을 냥냥 입력📝  
+4.  카테고리와 태그로 스타일리시 정리🎀  
+5.  "저장"으로 폭신한 하트에 보관💕  
 
-## 네코탄 디렉토리 구조🐾
+## 집 구조🐾  
 
 ```
 nekochan/
-├── .github/                            # GitHub 관련 설정 파일📁
-│   └── workflows/                      # 자동화 워크플로우 설정⚙️
-│       └── code-stats.yml              # 코드 통계 워크플로우📊
-├── public/                             # 정적 파일이 들어있는 폴더🐱
-│   ├── css/                            # 스타일시트
-│   │   ├── animations/                 # 애니메이션용 CSS 파일
-│   │   │   ├── input-animations.css    # 입력 애니메이션용 CSS 파일
-│   │   │   ├── keyframe.css            # 키프레임 애니메이션용 CSS 파일
-│   │   │   ├── sakura.css              # 벚꽃용 CSS 파일
-│   │   ├── base/                       # 기본 CSS 파일
-│   │   │   ├── performance.css         # 성능용 CSS 파일
-│   │   │   ├── variables.css           # 변수용 CSS 파일
-│   │   ├── components/                 # 컴포넌트용 CSS 파일🧩
-│   │   │   ├── alerts.css              # 알림 표시 관련 스타일시트🔔
-│   │   │   ├── buttons.css             # 버튼 관련 스타일시트🎮
-│   │   │   ├── clock.css               # 시계 표시 관련 스타일시트⏰
-│   │   │   ├── diary.css               # 일기 표시·입력 관련 스타일시트📖
-│   │   │   ├── history.css             # 일기 기록 표시 관련 스타일시트📜
-│   │   │   ├── layout.css              # 애플리케이션 레이아웃 관련 스타일시트🏠
-│   │   │   ├── search.css              # 일기 검색 관련 스타일시트🔍
-│   │   │   └── tags.css                # 태그 표시 관련 스타일시트🏷️
-│   │   ├── themes/                     # 테마용 CSS 파일🎨
-│   │   │   └── dark.css                # 다크 테마용 CSS 파일🌙
-│   │   ├── main.css                    # 메인 스타일시트✨
-│   │   └── style.css                   # 공통 스타일시트🎀
-│   ├── js/                             # 클라이언트 사이드 JS
-│   │   ├── managers/                   # 매니저 파일
-│   │   │   ├── EventHandler.js         # 이벤트 핸들러 파일
-│   │   │   ├── TagManager.js           # 태그 관리 파일
-│   │   │   └── UIManager.js            # UI 관리 파일
-│   │   ├── app.js                      # 애플리케이션 메인 파일🌟
-│   │   ├── DiaryManager.js             # 일기 관리 기능을 제공하는 파일📝
-│   │   ├── InputAnimator.js            # 입력 관련 애니메이션 처리를 하는 파일✨
-│   │   ├── Logger.js                   # 로그 기록 기능을 제공하는 파일📜
-│   │   ├── sakura.js                   # 벚꽃 관련 기능을 구현한 파일🌸
-│   │   └── TimeUpdater.js              # 시간 업데이트 기능을 제공하는 파일⏰
-│   ├── uploads/                        # 업로드한 이미지가 자는 곳📸
-│   └── vendor/                         # 서드파티 리소스
-│       ├── fonts/                      # 폰트 파일
-│       │   ├── font.css                # 폰트 관련 스타일시트
-│       │   ├── KleeOne-Regular.ttf     # Klee One 레귤러 폰트 파일
-│       │   └── OFL.txt                 # SIL Open Font License 라이센스 파일
-│       ├── js/                         # JavaScript 라이브러리
-│       │   └── fastclick.min.js        # FastClick 1.6 라이브러리
-│       └── picture/                    # 이미지 파일들의 집🐾
-│           └── sakura.svg              # 벚꽃용 SVG 파일🌸
-├── .vscode/                            # VSCode 설정 폴더💻
-│   └── launch.json                     # 디버그 설정 파일🚀
-├── .cloc-exclude                       # cloc 통계 제외 설정 파일🔍
-├── .env.example                        # 환경 변수 예제 파일🌰
-├── .gitignore                          # Git 무시 설정 파일🙈
-├── diaries.csv                         # 일기 데이터 파일📝
-├── LICENSE                             # 라이센스 파일📜
-├── 静時ねこたん.html                     # 메인 페이지🎀
-├── backup-20250524-194510.tar.gz       # 백업 파일💾
-├── nekochan-1.0.0.tgz                  # 애플리케이션 패키지 파일📦
-├── package-lock.json                   # 패키지 록 파일🔒
-├── logs/                               # 앱의 일상을 기록하는 로그 파일📖
-├── backups/                            # 소중한 데이터를 지키는 백업 파일💖
-├── server.js                           # 서버의 심장부 파일❤️
-├── ecosystem.config.js                 # PM2의 마법 설정 파일🪄
-└── package.json                        # 패키지 정보와 관리자 파일📦
+├── .github/                            # GitHub 편지함✉️
+│   └── workflows/                      # 자동 작업 기계⚙️
+│       └── code-stats.yml              # 코드 키 재기📏
+├── public/                             # 모두에게 보여주는 방✨
+│   ├── css/                            # 스타일리시 옷장👗
+│   │   ├── animations/                 # 동작 레시피북💫
+│   │   │   ├── input-animations.css    # 글자 입력 댄스💃
+│   │   │   ├── keyframe.css            # 반짝임의 비밀✨
+│   │   │   ├── sakura.css              # 벚꽃 날리기🌸
+│   │   ├── base/                       # 피부 관리 세트💅
+│   │   │   ├── performance.css         # 빠른 동작 비결🐇
+│   │   │   ├── variables.css           # 색상 팔레트🎨
+│   │   ├── components/                 # 부품 장난감 상자🧸
+│   │   │   ├── alerts.css              # 알림 카드🔔
+│   │   │   ├── buttons.css             # 말랑말랑 버튼🎮
+│   │   │   ├── clock.css               # 똑딱 시계⏰
+│   │   │   ├── diary.css               # 일기장 디자인📖
+│   │   │   ├── history.css             # 추억 앨범📚
+│   │   │   ├── layout.css              # 방 구조🏠
+│   │   │   ├── search.css              # 보물찾기 세트🔍
+│   │   │   └── tags.css                # 냥이 태그 컬렉션🏷️
+│   │   ├── themes/                     # 옷 바꾸기👘
+│   │   │   └── dark.css                # 달님 모드🌙
+│   │   ├── main.css                    # 메인 옷✨
+│   │   └── style.css                   # 공통 스타일 세트🎀
+│   ├── js/                             # 움직이는 장난감 상자🎪
+│   │   ├── managers/                   # 보호자👩‍🍼
+│   │   │   ├── EventHandler.js         # 이벤트 접수원🎪
+│   │   │   ├── TagManager.js           # 태그 정리사🏷️
+│   │   │   └── UIManager.js            # 외관 디자이너🎨
+│   │   ├── app.js                      # 심장 뛰뛰❤️
+│   │   ├── DiaryManager.js             # 일기 지키미📝
+│   │   ├── InputAnimator.js            # 마법 동작사✨
+│   │   ├── Logger.js                   # 추억 기록원📜
+│   │   ├── sakura.js                   # 벚꽃 마법🌸
+│   │   └── TimeUpdater.js              # 시간 알리미⏰
+│   ├── uploads/                        # 사진 앨범📸
+│   └── vendor/                         # 친구 집🏠
+│       ├── fonts/                      # 글자 놀이터✏️
+│       │   ├── font.css                # 글자 옷👕
+│       │   ├── KleeOne-Regular.ttf     # 포슬포슬 글자🐾
+│       │   └── OFL.txt                 # 약속 카드📜
+│       ├── js/                         # 편리 도구 상자🧰
+│       │   └── fastclick.min.js        # 빠른 탭 버튼⚡
+│       └── picture/                    # 장식 그림 상자🖼️
+│           └── sakura.svg              # 벚꽃 엽서🌸
+├── .vscode/                            # 그림 도구 상자🎨
+│   └── launch.json                     # 마법 주문서🪄
+├── .cloc-exclude                       # 비밀 메모🙈
+├── .env.example                        # 방 설정 예시🏠
+├── .gitignore                          # 보이지 않기 목록🙈
+├── diaries.csv                         # 추억 보석 상자💎
+├── LICENSE                             # 약속 카드📜
+├── 静時ねこたん.html                     # 현관 문🚪
+├── backup-20250524-194510.tar.gz       # 추억 백업💾
+├── nekochan-1.0.0.tgz                  # 이사 가방📦
+├── package-lock.json                   # 간식 목록🔒
+├── logs/                               # 매일의 일기장📖
+├── backups/                            # 추억의 보물상자💖
+├── server.js                           # 심장부 뛰뛰❤️
+├── ecosystem.config.js                 # 보호자 설명서📖
+└── package.json                        # 보호자 수첩📔
 ```
 
-## 백업에 대해
+## 추억 보관함💾  
 
-- CSV 파일은 매일 자동으로 백업됩니다~💾
-- 백업 파일은 `backups/` 폴더에 소중히保管됩니다~📁
-- 기본적으로 30일 동안 보관되지만 환경 변수로 변경할 수 있어요~📅
+- 매일 자동 백업 돼요 냥~  
+- `backups/` 폴더에서 30일간 보관  
+- 환경변수로 기간 변경 가능 냥📅  
 
-## 보안
+## 안전 조치🔐  
 
-- Helmet.js로 머리를 보호하는 보안 헤더 설정🎩
-- CORS 설정으로 친절하게 통신하도록 하고 있어요~🤝
-- 입력 데이터를 검사하여 수상한 것을 통과시키지 않아요~🔍
-- 오류가 발생해도 친절하게 알려주는 처리 시스템💬
+- 헬멧으로 머리 보호 (Helmet.js)🧢  
+- 모두와 친근한 통신 설정 (CORS)🤝  
+- 수상한 입력은 차단!🚫  
 
-## 로그들📖
+## 라이선스 정보📜  
 
-앱의 일상과 관리 기록이 여기에 있어요~:
-- 애플리케이션 로그: `logs/output.log` → 앱의 일기장✨
-- 오류 로그: `logs/error.log` → 트러블 시 도움 메모📝
-- 액세스 로그: `logs/access.log` → 언제 왔는지 방문자帐簿👀
+AGPL-3.0 라이선스 냥~  
+폰트宝宝는 SIL Open Font License 1.1 로 지킴이  
 
-## 네코탄 라이센스📜
-
-AGPL-3.0 라이센스입니다~📜
-
-### 서드파티 라이센스
-
-폰트 파일은 SIL Open Font License 1.1로 라이센스가 부여되어 있습니다:
-
-- Klee One: Copyright 2020 Fontworks Inc.
-
-FastClick은 MIT 라이센스입니다~♡
-
-사용해주셔서 감사해요~♡ 조용한 시간 네코탄의 일기장과 함께 멋진 매일을 보내주세요~🐾💕
-
-✨ 항상 당신의 소중한 추억을 살며시保管하고 있어요~ 언제든지安心하게 사용해주세요~🐾💕
-
-끝까지 읽어주셔서 감사해요~! 조용한 시간 네코탄과 함께 멋진 매일을 보내요~✨
+### 마지막으로 냥~💕  
+항상 여러분의 소중한 추억을,  
+동그란 눈으로 지켜볼게요 냥🐾  
+행복한 매일이 가득 기록되길~✨  
