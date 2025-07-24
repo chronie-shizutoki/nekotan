@@ -7,10 +7,10 @@
 
 世界中の猫ちゃんと仲良くするために、多言語対応をがんばってるにゃ！  
 
-- 英語だにゃ: [README-en.md](README-en.md)  
-- 韓国語ニャン: [README-ko.md](README-ko.md)  
-- 中国語(簡体字)にゃん: [README-zh.md](README-zh.md)  
-- 中国語(繁体字)にゃ～: [README-tw.md](README-tw.md)  
+- 英語だにゃ: [English](README-en.md)  
+- 韓国語ニャン: [한국어](README-ko.md)  
+- 中国語(簡体字)にゃん: [简体中文](README-zh.md)  
+- 中国語(繁体字)にゃ～: [繁體中文](README-tw.md)
 
 ## リソースのおうち🏠
 
