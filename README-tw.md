@@ -1,4 +1,3 @@
-
 # 靜時喵喵的日記本🐾
 
 像貓咪一樣溫柔的日記應用，可以可愛地記錄每天的點點滴滴喵嗚～♡  
@@ -8,10 +7,10 @@
 
 為了和全世界的貓咪做好朋友，正在努力進行多語言支援喵！
 
-- 英語喵: [README-en.md](README-en.md)  
-- 韓語喵: [README-ko.md](README-ko.md)  
-- 中文(簡體)喵: [README-zh.md](README-zh.md)  
-- 中文(繁體)喵: [README-tw.md](README-tw.md)  
+- 日語喵: [日本語](README.md)
+- 英語喵: [English](README-en.md)  
+- 韓語喵: [한국어](README-ko.md)  
+- 中文(簡體)喵: [简体中文](README-zh.md)  
 
 ## 資源的家🏠
 
@@ -151,7 +150,7 @@ nekochan/
 ├── .gitignore                          # 不看清單🙈
 ├── diaries.csv                         # 回憶寶石箱💎
 ├── LICENSE                             # 約定卡片📜
-├── 靜時喵喵.html                       # 玄關大門🚪
+├── 静時ねこたん.html                     # 玄關大門🚪
 ├── backup-20250524-194510.tar.gz       # 回憶備份💾
 ├── nekochan-1.0.0.tgz                  # 搬家套組📦
 ├── package-lock.json                   # 點心清單🔒
