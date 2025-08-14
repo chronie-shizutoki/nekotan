@@ -29,7 +29,15 @@ const app = express();
 
 // Enable CORS
 app.use(cors({
-    origin: '*',
+    origin: function(origin, callback) {
+        // Allow only specific domains
+        const allowedOrigins = process.env.NODE_ENV === 'development' ? ['http://localhost:3000', 'http://localhost:8080', 'http://127.0.0.1:3000', 'http://127.0.0.1:8080'] : ['https://your-trusted-domain.com'];
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('不許可のクロスドメイン要求'));
+        }
+    },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'X-CSRF-Token'],
@@ -42,14 +50,14 @@ app.use(compression());
 // Parse cookies
 app.use(cookieParser());
 
-// CSRF protection has been disabled
-// const csrfProtection = csrf({
-//   cookie: {
-//     httpOnly: true,
-//     secure: process.env.NODE_ENV === 'production',
-//     sameSite: 'strict'
-//   }
-// });
+// Set up CSRF protection
+const csrfProtection = csrf({
+  cookie: {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'strict'
+  }
+});
 
 // Parse request bodies
 app.use(express.json());
@@ -60,20 +68,50 @@ app.use(express.text({ type: 'text/csv' }));  // Add support for text/csv
 const accessLogStream = fsSync.createWriteStream(path.join(LOG_DIR, 'access.log'), { flags: 'a' });
 app.use(morgan('combined', { stream: accessLogStream }));
 
-// Security headers removed as per instruction
-// app.use(helmet(...));
-// Note: Strict security settings should be restored in production environments.
-// Request rate limiting has been disabled
-// const apiLimiter = rateLimit({
-//   windowMs: 15 * 60 * 1000, // 15 minutes
-//   max: 100, // 100 requests per IP address per 15 minutes
-//   standardHeaders: true,
-//   legacyHeaders: false,
-//   message: { error: 'リクエストが多すぎます。しばらく待ってからやり直してください。' }
-// });
-// app.use('/api', apiLimiter);
+// Set basic security headers
+app.use(helmet({
+    contentSecurityPolicy: {
+        directives: {
+            defaultSrc: ["'none'"],
+            scriptSrc: ["'self'"],
+            styleSrc: ["'self'"],
+            fontSrc: ["'self'"],
+            imgSrc: ["'self'"],
+            connectSrc: process.env.NODE_ENV === 'development' ? ["'self'", "http://localhost:*", "ws://localhost:*"] : ["'self'"],
+            manifestSrc: ["'self'"],
+            frameSrc: ["'none'"],
+            objectSrc: ["'none'"],
+            workerSrc: ["'none'"],
+            frameAncestors: ["'none'"],
+            formAction: ["'self'"],
+            baseUri: ["'none'"],
+            sandbox: ['allow-same-origin', 'allow-scripts', 'allow-forms', 'allow-modals', 'allow-downloads']
+        }
+    },
+    crossOriginEmbedderPolicy: true,
+    crossOriginOpenerPolicy: { policy: "same-origin" },
+    crossOriginResourcePolicy: { policy: "same-origin" },
+    dnsPrefetchControl: false,
+    frameguard: { action: 'deny' },
+    hsts: true,
+    ieNoOpen: true,
+    noSniff: true,
+    referrerPolicy: { policy: 'no-referrer' },
+    xssFilter: true
+}));
+
+// Set up rate limiting for API routes
+// API route setup must be before the static file service
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // 100 requests per IP address per 15 minutes
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: 'リクエストが多すぎます。しばらく待ってからやり直してください。' }
+});
+app.use('/api', apiLimiter);
 app.use('/api', express.json());
-// app.use('/save-diary', apiLimiter);
+app.use('/save-diary', apiLimiter);
 
 // Set up static file service
 app.use(express.static(path.join(__dirname, 'public'), {
@@ -88,16 +126,17 @@ app.use(express.static(path.join(__dirname, 'public'), {
     }
 }));
 
-// CSRF token endpoint has been disabled
-// app.get('/api/csrf-token', csrfProtection, (req, res) => {
-//   res.json({ csrfToken: req.csrfToken() });
-// });
+// Get CSRF token endpoint
+app.get('/api/csrf-token', csrfProtection, (req, res) => {
+  res.json({ csrfToken: req.csrfToken() });
+});
 
-// Simplify the root route handler (without CSRF)
-app.get('/', async (req, res) => {
+// Root route handler with CSRF token injection
+app.get('/', csrfProtection, async (req, res) => {
     try {
         const htmlPath = path.join(__dirname, 'index.html');
         let htmlContent = await fs.readFile(htmlPath, 'utf8');
+        htmlContent = htmlContent.replace('{{csrfToken}}', req.csrfToken());
         res.send(htmlContent);
     } catch (error) {
         console.error('HTMLファイルの読み込みエラー:', error);
@@ -142,13 +181,12 @@ async function initialize() {
 }
 
 // API route handler for saving diary entries
-app.post('/save-diary', async (req, res) => {
-  // CSRF protection has been disabled
-  // console.log('CSRF Token Validation:', req.csrfToken());
-  // console.log('Incoming X-CSRF-Token header:', req.headers['x-csrf-token']);
-  // res.setHeader('X-CSRF-Token', req.csrfToken());
+app.post('/save-diary', csrfProtection, async (req, res) => {
+  console.log('CSRF Token Validation:', req.csrfToken());
+  console.log('Incoming X-CSRF-Token header:', req.headers['x-csrf-token']);
+  res.setHeader('X-CSRF-Token', req.csrfToken());
   
-  // res.cookie('XSRF-TOKEN', req.csrfToken());
+  res.cookie('XSRF-TOKEN', req.csrfToken());
     try {
         const csvData = req.body;
         if (!csvData || typeof csvData !== 'string') {
@@ -193,9 +231,8 @@ app.post('/save-diary', async (req, res) => {
 });
 
 // API route handler for logging
-app.post('/api/logs', async (req, res) => {
-  // CSRF protection has been disabled
-  // res.cookie('XSRF-TOKEN', req.csrfToken());
+app.post('/api/logs', csrfProtection, async (req, res) => {
+  res.cookie('XSRF-TOKEN', req.csrfToken());
     try {
         const logs = req.body;
         if (!Array.isArray(logs)) {
@@ -256,14 +293,12 @@ app.post('/api/logs', async (req, res) => {
 });
 
 // API route handler for deleting diary entries
-app.delete('/delete-diary/:id', async (req, res) => {
-  // CSRF protection has been disabled
-  // res.cookie('XSRF-TOKEN', req.csrfToken());
+app.delete('/delete-diary/:id', csrfProtection, async (req, res) => {
+  res.cookie('XSRF-TOKEN', req.csrfToken());
   try {
     const diaryId = req.params.id;
-// Simplify ID validation
-    if (!diaryId) {
-      return res.status(400).json({ error: '日記IDが必要です' });
+    if (!diaryId || isNaN(diaryId)) {
+      return res.status(400).json({ error: '無効な日記IDです' });
     }
 
     const csvPath = path.join(__dirname, 'diaries.csv');
