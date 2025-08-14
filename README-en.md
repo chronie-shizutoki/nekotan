@@ -150,7 +150,7 @@ nekochan/
 ├── .gitignore                          # Hide-from-view list🙈
 ├── diaries.csv                         # Memory jewel box💎
 ├── LICENSE                             # Promise card📜
-├── 静時ねこたん.html                     # Front door🚪
+├── index.html                          # Front door🚪
 ├── backup-20250524-194510.tar.gz       # Memory backup💾
 ├── nekochan-1.0.0.tgz                  # Moving kit📦
 ├── package-lock.json                   # Treat list🔒

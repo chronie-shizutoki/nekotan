@@ -134,7 +134,7 @@ app.get('/api/csrf-token', csrfProtection, (req, res) => {
 // Root route handler with CSRF token injection
 app.get('/', csrfProtection, async (req, res) => {
     try {
-        const htmlPath = path.join(__dirname, '静時ねこたん.html');
+        const htmlPath = path.join(__dirname, 'index.html');
         let htmlContent = await fs.readFile(htmlPath, 'utf8');
         htmlContent = htmlContent.replace('{{csrfToken}}', req.csrfToken());
         res.send(htmlContent);

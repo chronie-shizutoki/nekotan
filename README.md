@@ -150,7 +150,7 @@ nekochan/
 ├── .gitignore                          # 見せないリスト🙈
 ├── diaries.csv                         # 思い出宝石箱💎
 ├── LICENSE                             # お約束カード📜
-├── 静時ねこたん.html                     # 玄関ドア🚪
+├── index.html                          # 玄関ドア🚪
 ├── backup-20250524-194510.tar.gz       # 思い出バックアップ💾
 ├── nekochan-1.0.0.tgz                  # お引越しセット📦
 ├── package-lock.json                   # おやつリスト🔒

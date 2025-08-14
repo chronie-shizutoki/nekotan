@@ -1,6 +1,6 @@
 module.exports = {
   apps: [{
-    name: 'nekochan',
+    name: 'nekotan',
     script: 'server.js',
     instances: 1,
     autorestart: true,

@@ -16,7 +16,7 @@
 
 사용된 자료들은 모두 집에서 관리하고 있어요 냥:
 
-### 폰트宝宝  
+### 폰트
 `public/vendor/fonts` 안에 있어요 냥~  
 - KleeOne-Regular.woff2 - 포슬포슬 폰트  
 
@@ -150,7 +150,7 @@ nekochan/
 ├── .gitignore                          # 보이지 않기 목록🙈
 ├── diaries.csv                         # 추억 보석 상자💎
 ├── LICENSE                             # 약속 카드📜
-├── 静時ねこたん.html                     # 현관 문🚪
+├── index.html                          # 현관 문🚪
 ├── backup-20250524-194510.tar.gz       # 추억 백업💾
 ├── nekochan-1.0.0.tgz                  # 이사 가방📦
 ├── package-lock.json                   # 간식 목록🔒
